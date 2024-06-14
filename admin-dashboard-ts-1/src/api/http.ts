@@ -88,3 +88,29 @@ export async function getSales() {
     const responseData = await response.json();
     return responseData;
 };
+
+export async function getSalesPlot() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
+export async function getUnitsPlot() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
