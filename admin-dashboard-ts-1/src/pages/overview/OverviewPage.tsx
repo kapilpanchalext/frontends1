@@ -23,7 +23,6 @@ const OverviewPage = (props: Props) => {
     //     console.error("Expected data to be an array, but got:", data);
     //     return <p>Error: Invalid data format</p>;
     // }
-
   return (
     <Box m="1.5rem 2.5rem">
         <Header title={'OVERVIEW'} subtitle={'Overview of general revenue and profit.'}/>
