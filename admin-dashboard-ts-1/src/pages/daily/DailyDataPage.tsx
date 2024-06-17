@@ -64,134 +64,135 @@ const DailyDataPage = (props: Props) => {
         console.log(totalDataPlot);
     }
 
-    
-
   return (
     <Box m="1.5rem 2.5rem">
         <Header title={'DAILY DATA'} subtitle={'Chart of Daily Sales.'}/>
         <Box height="75vh">
-            {/* <Box justifyContent="flex-end" >*/}
-                <DatePicker
-                    selected={startDate}
-                    onChange={(date: Date) => setStartDate(date)}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                />
-                <DatePicker
-                    selected={endDate}
-                    onChange={(date: Date) => setEndDate(date)}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                />
-                
-                <ResponsiveLine
-                    data={ totalDataPlot.slice(0, 5) }
-                    theme={{
-                    axis: {
-                        domain:{
-                            line: {
-                                stroke: theme.palette.secondary[200]
-                            }
-                        },
-                        legend: {
-                            text: {
-                                fill: theme.palette.secondary[200]
-                            },                                
-                        },
-                        ticks : {
-                            line: {
-                                stroke: theme.palette.secondary[200],
-                                strokeWidth: 1
-                            },
-                            text: {
-                                fill: theme.palette.secondary[200]
-                            }
+            <Box display="flex" justifyContent="flex-end" >
+                <Box>
+                    <DatePicker
+                        selected={startDate}
+                        onChange={(date: Date) => setStartDate(date)}
+                        selectsStart
+                        startDate={startDate}
+                        endDate={endDate}
+                    />
+                </Box>
+                <Box>
+                    <DatePicker
+                        selected={endDate}
+                        onChange={(date: Date) => setEndDate(date)}
+                        selectsEnd
+                        startDate={startDate}
+                        endDate={endDate}
+                        minDate={startDate}
+                    />
+                </Box>
+            </Box>
+            <ResponsiveLine
+                data={ totalDataPlot.slice(0, 5) }
+                theme={{
+                axis: {
+                    domain:{
+                        line: {
+                            stroke: theme.palette.secondary[200]
                         }
                     },
-                    legends: {
+                    legend: {
                         text: {
                             fill: theme.palette.secondary[200]
-                        },
+                        },                                
                     },
-                    tooltip: {
-                        container: {
-                            color: theme.palette.primary.main
+                    ticks : {
+                        line: {
+                            stroke: theme.palette.secondary[200],
+                            strokeWidth: 1
+                        },
+                        text: {
+                            fill: theme.palette.secondary[200]
                         }
                     }
+                },
+                legends: {
+                    text: {
+                        fill: theme.palette.secondary[200]
+                    },
+                },
+                tooltip: {
+                    container: {
+                        color: theme.palette.primary.main
+                    }
+                }
+            }}
+                margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
+                xScale={{ type: 'point' }}
+                yScale={{
+                    type: 'linear',
+                    min: 'auto',
+                    max: 'auto',
+                    stacked: false,
+                    reverse: false
                 }}
-                    margin={{ top: 50, right: 50, bottom: 70, left: 60 }}
-                    xScale={{ type: 'point' }}
-                    yScale={{
-                        type: 'linear',
-                        min: 'auto',
-                        max: 'auto',
-                        stacked: false,
-                        reverse: false
-                    }}
-                    yFormat=" >-.2f"
-                    curve="catmullRom"
-                    axisTop={null}
-                    axisRight={null}
-                    axisBottom={{
-                        tickSize: 5,
-                        tickPadding: 5,
-                        tickRotation: 90,
-                        legend: 'Month',
-                        legendOffset: 60,
-                        legendPosition: 'middle',
-                        truncateTickAt: 0
-                    }}
-                    axisLeft={{
-                        tickSize: 5,
-                        tickPadding: 5,
-                        tickRotation: 0,
-                        legend: 'Total',
-                        legendOffset: -50,
-                        legendPosition: 'middle',
-                        truncateTickAt: 0
-                    }}
-                    enableGridX={false}
-                    enableGridY={false}
-                    lineWidth={1}
-                    pointSize={5}
-                    pointColor={{ theme: 'background' }}
-                    pointBorderWidth={1}
-                    pointBorderColor={{ from: 'serieColor' }}
-                    pointLabel="data.yFormatted"
-                    pointLabelYOffset={-12}
-                    enableTouchCrosshair={true}
-                    useMesh={true}
-                    legends={[
-                        {
-                            anchor: 'top-right',
-                            direction: 'column',
-                            justify: false,
-                            translateX: 50,
-                            translateY: 0,
-                            itemsSpacing: 0,
-                            itemDirection: 'left-to-right',
-                            itemWidth: 80,
-                            itemHeight: 20,
-                            itemOpacity: 0.75,
-                            symbolSize: 12,
-                            symbolShape: 'circle',
-                            symbolBorderColor: 'rgba(0, 0, 0, .5)',
-                            effects: [
-                                {
-                                    on: 'hover',
-                                    style: {
-                                        itemBackground: 'rgba(0, 0, 0, .03)',
-                                        itemOpacity: 1
-                                    }
+                yFormat=" >-.2f"
+                curve="catmullRom"
+                axisTop={null}
+                axisRight={null}
+                axisBottom={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 90,
+                    legend: 'Month',
+                    legendOffset: 60,
+                    legendPosition: 'middle',
+                    truncateTickAt: 0
+                }}
+                axisLeft={{
+                    tickSize: 5,
+                    tickPadding: 5,
+                    tickRotation: 0,
+                    legend: 'Total',
+                    legendOffset: -50,
+                    legendPosition: 'middle',
+                    truncateTickAt: 0
+                }}
+                enableGridX={false}
+                enableGridY={false}
+                lineWidth={1}
+                pointSize={5}
+                pointColor={{ theme: 'background' }}
+                pointBorderWidth={1}
+                pointBorderColor={{ from: 'serieColor' }}
+                pointLabel="data.yFormatted"
+                pointLabelYOffset={-12}
+                enableTouchCrosshair={true}
+                useMesh={true}
+                legends={[
+                    {
+                        anchor: 'top-right',
+                        direction: 'column',
+                        justify: false,
+                        translateX: 50,
+                        translateY: 0,
+                        itemsSpacing: 0,
+                        itemDirection: 'left-to-right',
+                        itemWidth: 80,
+                        itemHeight: 20,
+                        itemOpacity: 0.75,
+                        symbolSize: 12,
+                        symbolShape: 'circle',
+                        symbolBorderColor: 'rgba(0, 0, 0, .5)',
+                        effects: [
+                            {
+                                on: 'hover',
+                                style: {
+                                    itemBackground: 'rgba(0, 0, 0, .03)',
+                                    itemOpacity: 1
                                 }
-                            ]
-                        }
-                    ]}
-                />
-            {/* </Box> */}
+                            }
+                        ]
+                    }
+                ]}
+            />
         </Box>
     </Box>
   )
