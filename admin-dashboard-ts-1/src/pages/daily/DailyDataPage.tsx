@@ -1,6 +1,6 @@
 import { Box, useTheme } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react'
+import { useEffect, useState } from 'react'
 import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -17,21 +17,28 @@ const DailyDataPage = (props: Props) => {
     const [endDate, setEndDate] = useState(new Date("2021-03-01"));
     const theme = useTheme();
     
-    const { data: salesDataDaily, isLoading: isSalesLoading } = useQuery({
+    const { data: salesDataDaily, isLoading: isSalesLoading, refetch: refetchSalesData } = useQuery({
         queryKey: ['sales-plot-monthly'],
         queryFn: () => getSalesPlotDaily(startDate.getTime(), endDate.getTime()),
+        enabled: true
     });
 
-    const { data: unitsDataDaily, isLoading: isUnitsLoading } = useQuery({
+    const { data: unitsDataDaily, isLoading: isUnitsLoading, refetch: refetchUnitsData } = useQuery({
         queryKey: ['units-plot-monthly'],
         queryFn: () => getUnitsPlotDaily(startDate.getTime(), endDate.getTime()),
+        enabled: true
     });
+
+    useEffect(() => {
+        refetchSalesData();
+        refetchUnitsData();
+    }, [startDate, endDate, refetchSalesData, refetchUnitsData]);
 
     const salesDataDailyArray: PlotMonthlyData = salesDataDaily;
     const unitsDataDailyArray: PlotMonthlyData = unitsDataDaily;
     let totalDataPlot: Serie[] = [];
 
-    if(!isSalesLoading || !isUnitsLoading) {
+    if(!isSalesLoading && !isUnitsLoading) {
         if (!Array.isArray(salesDataDaily.data) || !Array.isArray(unitsDataDaily.data)) {
             console.error("Expected data to be an array, but got:", salesDataDaily.data || unitsDataDaily.data);
             return <p>Error: Invalid data format</p>;
@@ -41,21 +48,23 @@ const DailyDataPage = (props: Props) => {
             {
                 id: 'Sales Data',
                 data: salesDataDailyArray.data.map((data) => ({
-                    x: data.x,
-                    y: data.y,
+                    x: data.x === null ? 0 : data.x,
+                    y: data.y === null ? 0 : data.y,
                 })),
             },
             {
                 id: 'Units Data',
                 data: unitsDataDailyArray.data.map((data) => ({
-                    x: data.x,
-                    y: data.y,
+                    x: data.x === null ? 0 : data.x,
+                    y: data.y === null ? 0: data.y,
                 })),
             },
         ];
 
         console.log(totalDataPlot);
     }
+
+    
 
   return (
     <Box m="1.5rem 2.5rem">
