@@ -14,6 +14,7 @@ import TransactionsPage from './pages/transactions/TransactionsPage';
 import GeographyPage from './pages/geography/GeographyPage';
 import OverviewPage from './pages/overview/OverviewPage';
 import DailyDataPage from './pages/daily/DailyDataPage';
+import MonthlyDataPage from './pages/monthly/MonthlyDataPage';
 
 function App() {
   
@@ -63,6 +64,10 @@ function App() {
         {
           path: '/daily',
           element: <DailyDataPage/>
+        },
+        {
+          path: '/monthly',
+          element: <MonthlyDataPage/>
         }
       ]
     },

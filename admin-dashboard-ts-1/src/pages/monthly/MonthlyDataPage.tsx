@@ -1,92 +1,61 @@
 import { Box, useTheme } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useState } from 'react'
-import DatePicker from "react-datepicker";
-
-import "react-datepicker/dist/react-datepicker.css";
-import { getSalesPlotDaily, getUnitsPlotDaily } from '../../api/http';
-import { PlotMonthlyData } from '../../model/PlotMonthlyData';
 import Header from '../../components/header/Header';
 import { ResponsiveLine, Serie } from '@nivo/line';
+import { useQuery } from '@tanstack/react-query';
+import { getSalesPlotMonthly, getUnitsPlotMonthly } from '../../api/http';
+import { PlotMonthlyData } from '../../model/PlotMonthlyData';
+import { MonthsUtil } from '../../util/MonthsUtil';
 
 type Props = {}
 
-const DailyDataPage = (props: Props) => {
-
-    const [startDate, setStartDate] = useState(new Date("2021-02-01"));
-    const [endDate, setEndDate] = useState(new Date("2021-03-01"));
+const MonthlyDataPage = (props: Props) => {
     const theme = useTheme();
-    
-    const { data: salesDataDaily, isLoading: isSalesLoading, refetch: refetchSalesData } = useQuery({
-        queryKey: ['sales-plot-daily'],
-        queryFn: () => getSalesPlotDaily(startDate.getTime(), endDate.getTime()),
+
+    const { data: salesDataMonthly, isLoading: isSalesLoading } = useQuery({
+        queryKey: ['sales-plot-monthly'],
+        queryFn: () => getSalesPlotMonthly(),
         enabled: true
     });
 
-    const { data: unitsDataDaily, isLoading: isUnitsLoading, refetch: refetchUnitsData } = useQuery({
-        queryKey: ['units-plot-daily'],
-        queryFn: () => getUnitsPlotDaily(startDate.getTime(), endDate.getTime()),
+    const { data: unitsDataMonthly, isLoading: isUnitsLoading } = useQuery({
+        queryKey: ['units-plot-monthly'],
+        queryFn: () => getUnitsPlotMonthly(),
         enabled: true
     });
 
-    useEffect(() => {
-        refetchSalesData();
-        refetchUnitsData();
-    }, [startDate, endDate, refetchSalesData, refetchUnitsData]);
+    const salesDataArray: PlotMonthlyData = salesDataMonthly;
+    const unitsDataArray: PlotMonthlyData = unitsDataMonthly;
 
-    const salesDataDailyArray: PlotMonthlyData = salesDataDaily;
-    const unitsDataDailyArray: PlotMonthlyData = unitsDataDaily;
     let totalDataPlot: Serie[] = [];
 
     if(!isSalesLoading && !isUnitsLoading) {
-        if (!Array.isArray(salesDataDaily.data) || !Array.isArray(unitsDataDaily.data)) {
-            console.error("Expected data to be an array, but got:", salesDataDaily.data || unitsDataDaily.data);
+        if (!Array.isArray(salesDataMonthly.data) || !Array.isArray(unitsDataMonthly.data)) {
+            console.error("Expected data to be an array, but got:", salesDataMonthly.data || unitsDataMonthly.data);
             return <p>Error: Invalid data format</p>;
         }
 
         totalDataPlot = [
             {
                 id: 'Sales Data',
-                data: salesDataDailyArray.data.map((data) => ({
-                    x: data.x === null ? 0 : data.x,
+                data: salesDataArray.data.map((data) => ({
+                    x: MonthsUtil.get(Number(data.x)),
                     y: data.y === null ? 0 : data.y,
                 })),
             },
             {
                 id: 'Units Data',
-                data: unitsDataDailyArray.data.map((data) => ({
-                    x: data.x === null ? 0 : data.x,
+                data: unitsDataArray.data.map((data) => ({
+                    x: MonthsUtil.get(Number(data.x)),
                     y: data.y === null ? 0: data.y,
                 })),
             },
         ];
     }
-
+    
   return (
     <Box m="1.5rem 2.5rem">
         <Header title={'DAILY DATA'} subtitle={'Chart of Daily Sales.'}/>
         <Box height="75vh">
-            <Box display="flex" justifyContent="flex-end" >
-                <Box>
-                    <DatePicker
-                        selected={startDate}
-                        onChange={(date: Date) => setStartDate(date)}
-                        selectsStart
-                        startDate={startDate}
-                        endDate={endDate}
-                    />
-                </Box>
-                <Box>
-                    <DatePicker
-                        selected={endDate}
-                        onChange={(date: Date) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        minDate={startDate}
-                    />
-                </Box>
-            </Box>
             <ResponsiveLine
                 data={ totalDataPlot }
                 theme={{
@@ -194,6 +163,6 @@ const DailyDataPage = (props: Props) => {
         </Box>
     </Box>
   )
-};
+}
 
-export default DailyDataPage;
+export default MonthlyDataPage;

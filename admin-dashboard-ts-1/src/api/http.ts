@@ -89,8 +89,8 @@ export async function getSales() {
     return responseData;
 };
 
-export async function getSalesPlotMonthly() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-monthly`);
+export async function getSalesPlotOverview() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-overview`);
 
     if (!response.ok) {
         const errorMessage = await response.text();
@@ -102,8 +102,8 @@ export async function getSalesPlotMonthly() {
     return responseData;
 };
 
-export async function getUnitsPlotMonthly() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-monthly`);
+export async function getUnitsPlotOverview() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-overview`);
 
     if (!response.ok) {
         const errorMessage = await response.text();
@@ -130,6 +130,32 @@ export async function getSalesPlotDaily(startDate: number, endDate: number) {
 
 export async function getUnitsPlotDaily(startDate: number, endDate: number) {
     const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-daily?startDate=${startDate}&endDate=${endDate}`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
+export async function getSalesPlotMonthly() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-monthly`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
+export async function getUnitsPlotMonthly() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-monthly`);
 
     if (!response.ok) {
         const errorMessage = await response.text();

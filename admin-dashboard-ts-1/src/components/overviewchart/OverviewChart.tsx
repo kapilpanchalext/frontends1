@@ -1,9 +1,9 @@
 import { useTheme } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { getSales, getSalesPlotMonthly, getUnitsPlotMonthly } from '../../api/http';
-import { OverViewData } from '../../model/OverviewData';
+import { getSales, getSalesPlotOverview, getUnitsPlotOverview } from '../../api/http';
 import { PlotMonthlyData } from '../../model/PlotMonthlyData';
 import { ResponsiveLine, Serie } from '@nivo/line';
+import { MonthsUtil } from '../../util/MonthsUtil';
 
 type Props = {
     isDashboard?: boolean
@@ -19,16 +19,15 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
     });
 
     const { data: salesData, isLoading: isSalesLoading } = useQuery({
-      queryKey: ['sales-plot'],
-      queryFn: () => getSalesPlotMonthly(),
+      queryKey: ['sales-plot-overview'],
+      queryFn: () => getSalesPlotOverview(),
     });
 
     const { data: unitsData, isLoading: isUnitsLoading } = useQuery({
-      queryKey: ['units-plot'],
-      queryFn: () => getUnitsPlotMonthly(),
+      queryKey: ['units-plot-overview'],
+      queryFn: () => getUnitsPlotOverview(),
     });
 
-    const dataArray: OverViewData[] = Array.isArray(data) ? data : [];
     const salesDataArray: PlotMonthlyData = salesData;
     const unitsDataArray: PlotMonthlyData = unitsData;
     let salesDataPlot: Serie[] = [];
@@ -42,32 +41,29 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
             {
               id: 'Sales Data',
               data: salesDataArray.data.map((data) => ({
-                x: data.xstring,
-                y: data.y,
+                    x: MonthsUtil.get(Number(data.x)),
+                    y: data.y,
               })),
             },
-          ];
+        ];
       
-          unitsDataPlot = [
+        unitsDataPlot = [
             {
-              id: 'Units Data',
-              data: unitsDataArray.data.map((data) => ({
-                x: data.xstring,
-                y: data.y,
-              })),
+                id: 'Units Data',
+                data: unitsDataArray.data.map((data) => ({
+                    x: MonthsUtil.get(Number(data.x)),
+                    y: data.y,
+                })),
             },
-          ];
+        ];
     }
-    
-
-
 
   return (
       <ResponsiveLine
-        data={view === "sales" ? salesDataPlot : unitsDataPlot }
+        data={ view === "sales" ? salesDataPlot : unitsDataPlot }
         theme={{
           axis: {
-              domain:{
+              domain: {
                   line: {
                       stroke: theme.palette.secondary[200]
                   }
@@ -97,7 +93,7 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
                   color: theme.palette.primary.main
               }
           }
-      }}
+        }}
         margin={{ top: 20, right: 50, bottom: 50, left: 70 }}
         xScale={{ type: 'point' }}
         yScale={{
