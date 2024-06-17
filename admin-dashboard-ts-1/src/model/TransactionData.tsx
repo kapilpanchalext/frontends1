@@ -1,4 +1,4 @@
-export type TransactionData = {
+export interface TransactionData {
     id: string
     userId: string
     cost: number

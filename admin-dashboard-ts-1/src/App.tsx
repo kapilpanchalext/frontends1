@@ -13,6 +13,7 @@ import CustomersPage from './pages/customers/CustomersPage';
 import TransactionsPage from './pages/transactions/TransactionsPage';
 import GeographyPage from './pages/geography/GeographyPage';
 import OverviewPage from './pages/overview/OverviewPage';
+import DailyDataPage from './pages/daily/DailyDataPage';
 
 function App() {
   
@@ -58,6 +59,10 @@ function App() {
         {
           path: '/overview',
           element: <OverviewPage/>
+        },
+        {
+          path: '/daily',
+          element: <DailyDataPage/>
         }
       ]
     },

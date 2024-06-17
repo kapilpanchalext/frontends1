@@ -1,6 +1,6 @@
 import { TransactionData } from "./TransactionData"
 
-export type PaginationData = {
+export interface PaginationData {
     content: TransactionData []
     pageNumber: number
     pageSize: number

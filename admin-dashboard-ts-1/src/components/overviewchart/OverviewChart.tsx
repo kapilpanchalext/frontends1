@@ -1,6 +1,6 @@
-import { Box, useTheme } from '@mui/material';
+import { useTheme } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
-import { getSales, getSalesPlot, getUnitsPlot } from '../../api/http';
+import { getSales, getSalesPlotMonthly, getUnitsPlotMonthly } from '../../api/http';
 import { OverViewData } from '../../model/OverviewData';
 import { PlotMonthlyData } from '../../model/PlotMonthlyData';
 import { ResponsiveLine, Serie } from '@nivo/line';
@@ -20,12 +20,12 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
 
     const { data: salesData, isLoading: isSalesLoading } = useQuery({
       queryKey: ['sales-plot'],
-      queryFn: () => getSalesPlot(),
+      queryFn: () => getSalesPlotMonthly(),
     });
 
     const { data: unitsData, isLoading: isUnitsLoading } = useQuery({
       queryKey: ['units-plot'],
-      queryFn: () => getUnitsPlot(),
+      queryFn: () => getUnitsPlotMonthly(),
     });
 
     const dataArray: OverViewData[] = Array.isArray(data) ? data : [];
@@ -36,17 +36,6 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
         console.error("Expected data to be an array, but got:", data);
         return <p>Error: Invalid data format</p>;
     }
-
-    // let salesDataPlot: { x: number | string; y: number | string }[] = [];
-    // // let salesDataPlot: Serie;
-    // if(!isLoading || !isSalesLoading || !isUnitsLoading) {
-    //   salesDataPlot = salesDataArray.data.map((data) => {
-    //     return { 
-    //       x: data.xstring,
-    //       y: data.y
-    //     };
-    //   });
-    // };
 
     const salesDataPlot: Serie[] = [
       {

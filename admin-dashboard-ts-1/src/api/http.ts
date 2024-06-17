@@ -89,8 +89,8 @@ export async function getSales() {
     return responseData;
 };
 
-export async function getSalesPlot() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot`);
+export async function getSalesPlotMonthly() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-monthly`);
 
     if (!response.ok) {
         const errorMessage = await response.text();
@@ -102,8 +102,34 @@ export async function getSalesPlot() {
     return responseData;
 };
 
-export async function getUnitsPlot() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot`);
+export async function getUnitsPlotMonthly() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-monthly`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
+export async function getSalesPlotDaily() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-daily`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
+export async function getUnitsPlotDaily() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-daily`);
 
     if (!response.ok) {
         const errorMessage = await response.text();

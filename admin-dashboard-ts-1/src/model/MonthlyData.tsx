@@ -1,4 +1,4 @@
-export type MonthlyData = {   
+export interface MonthlyData {   
     id: string,
 	month: string
 	totalSales: number

@@ -1,7 +1,7 @@
 import { DailyData } from "./DailyData";
 import { MonthlyData } from "./MonthlyData";
 
-export type OverViewData = {
+export interface OverViewData {
     id: string
     productId: string
     totalCustomers: number

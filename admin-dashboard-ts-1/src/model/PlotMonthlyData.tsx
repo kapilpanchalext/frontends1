@@ -1,6 +1,6 @@
 import { PlotCoordinates } from "./PlotCoordinates"
 
-export type PlotMonthlyData = {
+export interface PlotMonthlyData {
     id: string
     colour: string
     data: PlotCoordinates[]
