@@ -115,8 +115,8 @@ export async function getUnitsPlotMonthly() {
     return responseData;
 };
 
-export async function getSalesPlotDaily() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-daily`);
+export async function getSalesPlotDaily(startDate: number, endDate: number) {
+    const response = await fetch(`http://localhost:9001/api/v1/get-sales-plot-daily?startDate=${startDate}&endDate=${endDate}`);
 
     if (!response.ok) {
         const errorMessage = await response.text();
@@ -128,8 +128,8 @@ export async function getSalesPlotDaily() {
     return responseData;
 };
 
-export async function getUnitsPlotDaily() {
-    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-daily`);
+export async function getUnitsPlotDaily(startDate: number, endDate: number) {
+    const response = await fetch(`http://localhost:9001/api/v1/get-units-plot-daily?startDate=${startDate}&endDate=${endDate}`);
 
     if (!response.ok) {
         const errorMessage = await response.text();

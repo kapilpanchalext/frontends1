@@ -31,31 +31,36 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
     const dataArray: OverViewData[] = Array.isArray(data) ? data : [];
     const salesDataArray: PlotMonthlyData = salesData;
     const unitsDataArray: PlotMonthlyData = unitsData;
-
-    if (!Array.isArray(data) || !Array.isArray(salesData.data) || !Array.isArray(unitsData.data)) {
-        console.error("Expected data to be an array, but got:", data);
-        return <p>Error: Invalid data format</p>;
+    let salesDataPlot: Serie[] = [];
+    let unitsDataPlot: Serie[] = [];
+    if(!isLoading || !isSalesLoading || !isUnitsLoading) {
+        if (!Array.isArray(data) || !Array.isArray(salesData.data) || !Array.isArray(unitsData.data)) {
+            console.error("Expected data to be an array, but got:", data);
+            return <p>Error: Invalid data format</p>;
+        }
+        salesDataPlot = [
+            {
+              id: 'Sales Data',
+              data: salesDataArray.data.map((data) => ({
+                x: data.xstring,
+                y: data.y,
+              })),
+            },
+          ];
+      
+          unitsDataPlot = [
+            {
+              id: 'Units Data',
+              data: unitsDataArray.data.map((data) => ({
+                x: data.xstring,
+                y: data.y,
+              })),
+            },
+          ];
     }
+    
 
-    const salesDataPlot: Serie[] = [
-      {
-        id: 'Sales Data',
-        data: salesDataArray.data.map((data) => ({
-          x: data.xstring,
-          y: data.y,
-        })),
-      },
-    ];
 
-    const unitsDataPlot: Serie[] = [
-      {
-        id: 'Units Data',
-        data: unitsDataArray.data.map((data) => ({
-          x: data.xstring,
-          y: data.y,
-        })),
-      },
-    ];
 
   return (
       <ResponsiveLine
