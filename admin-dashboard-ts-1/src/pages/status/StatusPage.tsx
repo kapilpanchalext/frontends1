@@ -102,29 +102,29 @@ const StatusPage = (props: Props) => {
         <Box mt="40px" 
             height="75vh" 
             sx={{
-            "& .MuiDataGrid-root": {
-                border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-                borderBottom: "none",
-            },
-            "& .MuiDataGrid-columnHeaders": {
-                backgroundColor: theme.palette.background.alt,
-                color: theme.palette.secondary[100],
-                borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-                backgroundColor: theme.palette.primary[1000],
-            },
-            "& .MuiDataGrid-footerContainer": {
-                backgroundColor: theme.palette.primary[1000],
-                color: theme.palette.secondary[100],
-                borderTop: "none",
-            },
-            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {                    
-                color: `${theme.palette.secondary[100]} !important`,
-                borderTop: "none",
-            },
+                "& .MuiDataGrid-root": {
+                    border: "none",
+                },
+                "& .MuiDataGrid-cell": {
+                    borderBottom: "none",
+                },
+                "& .MuiDataGrid-columnHeaders": {
+                    backgroundColor: theme.palette.background.alt,
+                    color: theme.palette.secondary[100],
+                    borderBottom: "none",
+                },
+                "& .MuiDataGrid-virtualScroller": {
+                    backgroundColor: theme.palette.primary[1000],
+                },
+                "& .MuiDataGrid-footerContainer": {
+                    backgroundColor: theme.palette.primary[1000],
+                    color: theme.palette.secondary[100],
+                    borderTop: "none",
+                },
+                "& .MuiDataGrid-toolbarContainer .MuiButton-text": {                    
+                    color: `${theme.palette.secondary[100]} !important`,
+                    borderTop: "none",
+                },
             }}>
             <DataGrid rows={rows} columns={columns} />
         </Box>
