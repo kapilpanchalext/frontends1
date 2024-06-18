@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material';
+import { Box, Rating, useMediaQuery, useTheme } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getProductsStats } from '../../api/http';
 import { ProductStatData } from '../../model/ProductStatData';
@@ -71,6 +71,13 @@ const StatusPage = (props: Props) => {
           valueGetter: (value, row) => row.monthlyUnits,
         },
         {
+          field: 'rating',
+          headerName: 'Rating',
+          type: 'number',
+          renderCell: (params) => <Rating value={params.row.rating} readOnly/>,
+          width: COLUMN_WIDTH,
+        },
+        {
           field: 'total',
           headerName: 'Total Sales per Month',
           type: 'number',
@@ -85,6 +92,7 @@ const StatusPage = (props: Props) => {
         name: data.id,
         monthlySales: data.monthlyData.map((value)=> value.totalSales),
         monthlyUnits: data.monthlyData.map((value)=> value.totalUnits),
+        rating: Math.floor(Math.random() * 5) + 1,
         id: data.id,
     }));
 
