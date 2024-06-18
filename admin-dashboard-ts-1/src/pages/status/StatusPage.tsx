@@ -1,9 +1,9 @@
-import { Box, Rating, useMediaQuery, useTheme } from '@mui/material';
+import { Box, LinearProgress, Rating, useMediaQuery, useTheme } from '@mui/material';
 import { useQuery } from '@tanstack/react-query';
 import { getProductsStats } from '../../api/http';
 import { ProductStatData } from '../../model/ProductStatData';
 import Header from '../../components/header/Header';
-import { DataGrid, GRID_STRING_COL_DEF, GridColDef, GridColTypeDef, GridRenderCellParams } from '@mui/x-data-grid';
+import { DataGrid, GRID_STRING_COL_DEF, GridColDef, GridColTypeDef, GridRenderCellParams, GridSlots } from '@mui/x-data-grid';
 import { SparkLineChart } from '@mui/x-charts';
 
 type Props = {}
@@ -63,6 +63,14 @@ const StatusPage = (props: Props) => {
           valueGetter: (value, row) => row.monthlySales,
         },
         {
+            field: 'cumulativeSales',
+            ...sparklineColumnType,
+            headerName: 'Cumulative Sales per Month',
+            renderCell: (params) => <GridSparklineCell {...params} plotType="line" />,
+            width: COLUMN_WIDTH,
+            valueGetter: (value, row) => row.cumulativeSales,
+          },
+        {
           field: 'units',
           ...sparklineColumnType,
           headerName: 'Units per Month',
@@ -84,14 +92,18 @@ const StatusPage = (props: Props) => {
           valueGetter: (value, row) =>
             row.monthlySales[row.monthlySales.length - 1] * 
             row.monthlyUnits[row.monthlyUnits.length - 1],
-          width: COLUMN_WIDTH,
+            width: COLUMN_WIDTH,
         },
     ];
-
+    let runningTotal = 0;
     const rows = dataArray.map((data, index) => ({
         name: data.id,
-        monthlySales: data.monthlyData.map((value)=> value.totalSales),
-        monthlyUnits: data.monthlyData.map((value)=> value.totalUnits),
+        monthlySales: data.monthlyData.map((value) => value.totalSales),
+        monthlyUnits: data.monthlyData.map((value) => value.totalUnits),
+        cumulativeSales: data.monthlyData.map((value) => {
+            runningTotal += value.totalSales;
+            return runningTotal;
+        }),
         rating: Math.floor(Math.random() * 5) + 1,
         id: data.id,
     }));
@@ -126,7 +138,9 @@ const StatusPage = (props: Props) => {
                     borderTop: "none",
                 },
             }}>
-            <DataGrid rows={rows} columns={columns} />
+            <DataGrid slots={{
+          loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
+        }} rows={rows} columns={columns} />
         </Box>
     </Box>
   )
