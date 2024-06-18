@@ -16,6 +16,7 @@ import OverviewPage from './pages/overview/OverviewPage';
 import DailyDataPage from './pages/daily/DailyDataPage';
 import MonthlyDataPage from './pages/monthly/MonthlyDataPage';
 import BreakdownPage from './pages/breakdown/BreakdownPage';
+import AdminPage from './pages/admin/AdminPage';
 
 function App() {
   
@@ -73,6 +74,10 @@ function App() {
         {
           path: '/breakdown',
           element: <BreakdownPage/>
+        },
+        {
+          path: '/admin',
+          element: <AdminPage/>
         }
       ]
     },
