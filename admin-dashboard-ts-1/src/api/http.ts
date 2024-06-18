@@ -24,6 +24,19 @@ export async function getProducts() {
     return responseData;
 };
 
+export async function getProductsStats() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-products-stats`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
+
 export async function getUsers() {
     const response = await fetch(`http://localhost:9001/api/v1/get-users`);
 

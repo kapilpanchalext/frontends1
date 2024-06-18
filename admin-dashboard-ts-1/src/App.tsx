@@ -17,6 +17,8 @@ import DailyDataPage from './pages/daily/DailyDataPage';
 import MonthlyDataPage from './pages/monthly/MonthlyDataPage';
 import BreakdownPage from './pages/breakdown/BreakdownPage';
 import AdminPage from './pages/admin/AdminPage';
+import PerformancePage from './pages/performance/PerformancePage';
+import StatusPage from './pages/status/StatusPage';
 
 function App() {
   
@@ -78,6 +80,14 @@ function App() {
         {
           path: '/admin',
           element: <AdminPage/>
+        },
+        {
+          path: '/performance',
+          element: <PerformancePage/>
+        },
+        {
+          path: '/status',
+          element: <StatusPage/>
         }
       ]
     },
