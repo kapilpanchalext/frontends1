@@ -54,7 +54,7 @@ const MonthlyDataPage = (props: Props) => {
     
   return (
     <Box m="1.5rem 2.5rem">
-        <Header title={'DAILY DATA'} subtitle={'Chart of Daily Sales.'}/>
+        <Header title={'MONTHLY DATA'} subtitle={'Chart of Monthly Sales.'}/>
         <Box height="75vh">
             <ResponsiveLine
                 data={ totalDataPlot }
