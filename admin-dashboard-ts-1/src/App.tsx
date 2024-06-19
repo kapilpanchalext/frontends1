@@ -19,6 +19,7 @@ import BreakdownPage from './pages/breakdown/BreakdownPage';
 import AdminPage from './pages/admin/AdminPage';
 import PerformancePage from './pages/performance/PerformancePage';
 import StatusPage from './pages/status/StatusPage';
+import AffiliateSalesPage from './pages/affiliatesales/AffiliateSalesPage';
 
 function App() {
   
@@ -88,6 +89,10 @@ function App() {
         {
           path: '/status',
           element: <StatusPage/>
+        },
+        {
+          path: '/affiliatesales',
+          element: <AffiliateSalesPage/>
         }
       ]
     },

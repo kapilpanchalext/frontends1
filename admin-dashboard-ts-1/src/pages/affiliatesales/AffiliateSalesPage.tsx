@@ -1,74 +1,79 @@
-import { Box, useMediaQuery, useTheme } from '@mui/material';
-import React from 'react';
+import { Box, useTheme } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
+import { getAffiliateSales } from '../../api/http';
 import Header from '../../components/header/Header';
 import { DataGrid } from '@mui/x-data-grid';
-import { getUsers } from '../../api/http';
-import { useQuery } from '@tanstack/react-query';
-import { UserData } from '../../model/UserData';
-import CustomColumnMenu from '../../components/customcolumnmenu/DataGridCustomColumnMenu';
+import { AffiliateSales } from '../../model/AffiliateSalesData';
 
 type Props = {}
 
-const AdminPage = (props: Props) => {
-  const theme = useTheme();
+const AffiliateSalesPage = (props: Props) => {
 
-  const isNonMobile = useMediaQuery("(min-width: 600px)");
+    const theme = useTheme();
     const { data, isLoading } = useQuery({
-        queryKey: ['customers'],
-        queryFn: () => getUsers(),
+        queryKey: ['affiliate-sales'],
+        queryFn: () => getAffiliateSales(),
     });
-    
-    const dataArray: UserData[] = Array.isArray(data) ? data : [];
+
+    let dataArray: AffiliateSales[] = [];
+
+    console.log(JSON.stringify(dataArray));
     
     if (!Array.isArray(data)) {
-        console.error("Expected data to be an array, but got:", data);
+        console.error("Expected data to be an array, but got: ", data);
         return <p>Error: Invalid data format</p>;
+    }
+
+    if(!isLoading){
+        dataArray = Array.isArray(data) ? data : [];
     }
 
     const columns = [
         {
             field: "id",
             headerName: "Id",
-            flex: 1,
+            flex: 0.5,
+        },
+        {
+            field: "userId",
+            headerName: "User Id",
+            flex: 0.5,
+        },
+        {
+            field: "productId",
+            headerName: "ProductId",
+            flex: 0.5,
         },
         {
             field: "name",
-            headerName: "Name",
+            headerName: "Product Name",
             flex: 0.5,
         },
         {
-            field: "email",
-            headerName: "Email",
+            field: "description",
+            headerName: "Description",
             flex: 1,
         },
         {
-            field: "phoneNumber",
-            headerName: "Phone Number",
-            flex: 0.5,
-            renderCell: ((params: any) => {
-                return params.value.replace(/^(\d{3})(\d{3})(\d{4})/, "($1) $2-$3");
-            })
-        },
-        {
-            field: "country",
-            headerName: "Country",
+            field: "category",
+            headerName: "Category",
             flex: 0.4,
         },
         {
-            field: "occupation",
-            headerName: "Occupation",
-            flex: 1,
+            field: "quantity",
+            headerName: "Quantity",
+            flex: 0.4,
         },
         {
-            field: "role",
-            headerName: "Role",
-            flex: 0.5,
+            field: "price",
+            headerName: "Price",
+            flex: 0.4,
         },
     ];
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title={'ADMINS'} subtitle={'Managing admins and list of Admins.'}/>
+      <Header title={'AFFILIATE SALES'} subtitle={'List of users with affiliate sales Products.'}/>
         <Box mt="40px" 
             height="75vh" 
             sx={{
@@ -100,14 +105,11 @@ const AdminPage = (props: Props) => {
               loading={isLoading || !dataArray} 
               rows={dataArray || []} 
               columns={columns}
-              getRowId={(row) => row.id}
-              slots={{
-                columnMenu: CustomColumnMenu
-              }}
+            //   getRowId={(row) => row.userId}
             />
         </Box>
     </Box>
   )
 }
 
-export default AdminPage;
+export default AffiliateSalesPage;

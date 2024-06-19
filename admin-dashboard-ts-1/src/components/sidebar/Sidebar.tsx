@@ -84,6 +84,10 @@ const Sidebar = ({ user, isNonMobile, drawerWidth, isSidebarOpen, setIsSidebarOp
       {
         text: "Status",
         icon: <TrendingUpOutlined />,
+      },
+      {
+        text: "AffiliateSales",
+        icon: <TrendingUpOutlined />,
       }
     ];
 

@@ -69,8 +69,8 @@ export const themeSettings = (mode: PaletteMode): ThemeOptions => {
         ? {
             primary: {
               ...tokensDark.primary,
-              main: tokensDark.primary[400],
-              light: tokensDark.primary[400],
+              main: tokensDark.primary[700],
+              light: tokensDark.primary[700],
             },
             secondary: {
               ...tokensDark.secondary,
@@ -81,7 +81,7 @@ export const themeSettings = (mode: PaletteMode): ThemeOptions => {
               main: tokensDark.grey[500],
             },
             background: {
-              default: tokensDark.primary[600],
+              default: tokensDark.primary[700],
               alt: tokensDark.primary[500],
             },
           }

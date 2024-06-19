@@ -85,7 +85,7 @@ const CustomersPage = (props: Props) => {
                     backgroundColor: theme.palette.primary.light,
                 },
                 "& .MuiDataGrid-footerContainer": {
-                    backgroundColor: theme.palette.background.alt,
+                    backgroundColor: theme.palette.primary[700],
                     color: theme.palette.secondary[100],
                     borderTop: "none",
                 },

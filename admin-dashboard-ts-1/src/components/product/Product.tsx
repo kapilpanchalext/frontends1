@@ -10,7 +10,7 @@ const Product = ({id, name, description, price, rating, category, supply, stat}:
     return (
         <Card sx={{
             backgroundImage: "none",
-            backgroundColor: theme.palette.background.alt,
+            backgroundColor: theme.palette.primary[600],
             borderRadius: "0.55rem",
         }}>
             <CardContent>
@@ -23,7 +23,7 @@ const Product = ({id, name, description, price, rating, category, supply, stat}:
             <CardActions>
                 <Button variant='outlined' size='small' onClick={() => setIsExpanded(!isExpanded)}>See More</Button>
             </CardActions>
-            <Collapse in={isExpanded} timeout="auto" unmountOnExit sx={{ color: theme.palette.neutral[300] }}>
+            <Collapse in={isExpanded} timeout="auto" unmountOnExit sx={{ color: theme.palette.grey[100] }}>
                 <CardContent>
                     <Typography>id: {id}</Typography>
                     <Typography>Supply Left: {supply}</Typography>

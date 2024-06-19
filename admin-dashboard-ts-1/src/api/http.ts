@@ -192,3 +192,16 @@ export async function getSalesByCategory() {
     const responseData = await response.json();
     return responseData;
 };
+
+export async function getAffiliateSales() {
+    const response = await fetch(`http://localhost:9001/api/v1/get-affiliate-sales`);
+
+    if (!response.ok) {
+        const errorMessage = await response.text();
+        console.error('Error fetching data:', errorMessage);
+        throw new Error(errorMessage);
+    }
+
+    const responseData = await response.json();
+    return responseData;
+};
