@@ -11,7 +11,6 @@ type Props = {
 }
 
 const OverviewChart = ({isDashboard = false , view}: Props) => {
-
     const theme = useTheme();
     const { data, isLoading } = useQuery({
         queryKey: ['sales'],
@@ -122,6 +121,7 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
         }}
         axisLeft={{
             tickSize: 5,
+            tickValues: 5,
             tickPadding: 5,
             tickRotation: 0,
             legend: isDashboard? '': `${view === 'sales' ? 'Revenue' : 'Units'} for Year`,
@@ -133,6 +133,7 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
         enableGridY={false}
         lineWidth={1}
         pointSize={5}
+        enableArea={isDashboard}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={1}
         pointBorderColor={{ from: 'serieColor' }}
@@ -165,7 +166,7 @@ const OverviewChart = ({isDashboard = false , view}: Props) => {
                     }
                 ]
             }
-        ] : undefined}
+        ] : undefined }
     />
   )
 };

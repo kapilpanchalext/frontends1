@@ -10,3 +10,7 @@ body,
   padding: 0;
   font-family: 'Inter', sans-serif;
 }
+
+::-webkit-scrollbar{
+  scrollbar-width: thin;
+}

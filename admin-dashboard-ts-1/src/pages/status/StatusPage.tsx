@@ -139,8 +139,10 @@ const StatusPage = (props: Props) => {
                 },
             }}>
             <DataGrid slots={{
-          loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
-        }} rows={rows} columns={columns} />
+                    loadingOverlay: LinearProgress as GridSlots['loadingOverlay'],
+                    }} 
+                    rows={rows} 
+                    columns={columns} />
         </Box>
     </Box>
   )

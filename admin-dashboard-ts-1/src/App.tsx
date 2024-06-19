@@ -3,7 +3,7 @@ import { createTheme } from '@mui/material/styles';
 import { themeSettings } from './theme/theme';
 import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
 import RootPage from './pages/layout/RootPage';
 import ErrorPage from './pages/error/ErrorPage';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -40,8 +40,12 @@ function App() {
     {
       path: '/',
       element: <RootPage/>,
-      errorElement: <ErrorPage />, 
+      errorElement: <ErrorPage />,      
       children: [
+        {
+          path: '/',
+          element: <Navigate to="/dashboard" replace />,
+        },
         {
           path: '/dashboard',
           element: <Dashboard/>

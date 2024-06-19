@@ -73,7 +73,7 @@ const AffiliateSalesPage = (props: Props) => {
 
   return (
     <Box m="1.5rem 2.5rem">
-      <Header title={'AFFILIATE SALES'} subtitle={'List of users with affiliate sales Products.'}/>
+      <Header title={'AFFILIATE SALES'} subtitle={'Track your affiliate sales products here.'}/>
         <Box mt="40px" 
             height="75vh" 
             sx={{
@@ -105,7 +105,6 @@ const AffiliateSalesPage = (props: Props) => {
               loading={isLoading || !dataArray} 
               rows={dataArray || []} 
               columns={columns}
-            //   getRowId={(row) => row.userId}
             />
         </Box>
     </Box>

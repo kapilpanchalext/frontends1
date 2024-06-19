@@ -10,16 +10,20 @@ import CustomColumnMenu from '../../components/customcolumnmenu/DataGridCustomCo
 type Props = {}
 
 const AdminPage = (props: Props) => {
-  const theme = useTheme();
+    const theme = useTheme();
 
-  const isNonMobile = useMediaQuery("(min-width: 600px)");
+    const isNonMobile = useMediaQuery("(min-width: 600px)");
     const { data, isLoading } = useQuery({
         queryKey: ['customers'],
         queryFn: () => getUsers(),
     });
+    let dataArray: UserData[] = [];
+    // const dataArray: UserData[] = Array.isArray(data) ? data : [];
     
-    const dataArray: UserData[] = Array.isArray(data) ? data : [];
-    
+    if(!isLoading){
+        dataArray = Array.isArray(data) ? data : [];
+    }
+
     if (!Array.isArray(data)) {
         console.error("Expected data to be an array, but got:", data);
         return <p>Error: Invalid data format</p>;

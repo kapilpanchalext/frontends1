@@ -28,7 +28,6 @@ const TransactionsPage = (props: Props) => {
         queryFn: () => getTransactionsPagination(paginationModel.page, paginationModel.pageSize),
     });
     
-    
     const dataArray: PaginationData = data;
 
     if (!Array.isArray(data?.content)) {
