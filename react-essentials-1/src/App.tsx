@@ -9,9 +9,7 @@ function App() {
   const[selectedTopic, setSelectedTopic] = useState<ExampleKey>("components");
 
   const handleSelect = (selectedButton: ExampleKey) => {
-    // console.log("Hello World - Selected " + selectedButton);
     setSelectedTopic(selectedButton);
-    console.log(selectedTopic);
   };
 
   return (
