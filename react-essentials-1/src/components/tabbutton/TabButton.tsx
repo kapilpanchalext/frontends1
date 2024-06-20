@@ -1,13 +1,15 @@
 import React from 'react'
 
 type Props = {
-    children: string
+    children: string,
+    onSelect: any
 }
 
-const TabButton = ({children}: Props) => {
+const TabButton = ({children, onSelect}: Props) => {
+
   return (
-    <li><button>{children}</button></li>
+    <li><button onClick={onSelect}>{children}</button></li>
   )
-}
+};
 
 export default TabButton;
