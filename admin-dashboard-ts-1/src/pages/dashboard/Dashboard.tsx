@@ -89,7 +89,7 @@ const Dashboard = ({}: Props) => {
          headerName: 'Rating',
          type: 'number',
          renderCell: (params) => <Rating value={params.row.rating} readOnly/>,
-         width: COLUMN_WIDTH/2,
+         width: COLUMN_WIDTH/1.5,
        },
        {
          field: 'total',
