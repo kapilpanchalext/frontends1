@@ -9,8 +9,9 @@ function App() {
   const[selectedTopic, setSelectedTopic] = useState("Core Concepts");
 
   const handleSelect = (selectedButton: string) => {
-    console.log("Hello World - Selected " + selectedButton);
+    // console.log("Hello World - Selected " + selectedButton);
     setSelectedTopic(selectedButton);
+    console.log(selectedTopic);
   };
 
   return (
