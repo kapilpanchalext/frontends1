@@ -2,13 +2,13 @@ import { useState } from "react";
 import CoreConcept from "./components/coreconcept/CoreConcept";
 import Header from "./components/header/Header";
 import TabButton from "./components/tabbutton/TabButton";
-import { CORE_CONCEPTS } from "./data/Data";
+import { CORE_CONCEPTS, EXAMPLES, ExampleKey } from "./data/Data";
 
 function App() {
 
-  const[selectedTopic, setSelectedTopic] = useState("Core Concepts");
+  const[selectedTopic, setSelectedTopic] = useState<ExampleKey>("components");
 
-  const handleSelect = (selectedButton: string) => {
+  const handleSelect = (selectedButton: ExampleKey) => {
     // console.log("Hello World - Selected " + selectedButton);
     setSelectedTopic(selectedButton);
     console.log(selectedTopic);
@@ -43,7 +43,15 @@ function App() {
               <TabButton onSelect={() => handleSelect("props")}>Props</TabButton>
               <TabButton onSelect={() => handleSelect("state")}>State</TabButton>
             </menu>
-            {selectedTopic}
+            <div id="tab-content">
+              <h3>{EXAMPLES[selectedTopic].title}</h3>
+              <p>{EXAMPLES[selectedTopic].description}</p>
+              <pre>
+                <code>
+                  {EXAMPLES[selectedTopic].code}
+                </code>
+              </pre>
+            </div>
         </section>
       </main>
     </div>
