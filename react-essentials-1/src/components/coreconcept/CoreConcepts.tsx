@@ -19,6 +19,6 @@ const CoreConcepts = (props: Props) => {
         </section>
     </>
   )
-}
+};
 
 export default CoreConcepts;

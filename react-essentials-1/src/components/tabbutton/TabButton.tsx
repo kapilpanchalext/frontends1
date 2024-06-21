@@ -1,15 +1,14 @@
-import React from 'react'
+import React from 'react';
 
 type Props = {
-    children: string,
-    onSelect: any,
+    children?: string,
     isSelected: boolean,
-}
+} & React.HTMLAttributes<HTMLButtonElement>;
 
-const TabButton = ({children, onSelect, isSelected}: Props) => {
+const TabButton = ({children, isSelected, ...props}: Props) => {
 
   return (
-    <li><button className={isSelected ? "active" : undefined} onClick={onSelect}>{children}</button></li>
+    <li><button className={isSelected ? "active" : undefined} {...props}>{children}</button></li>
   )
 };
 
