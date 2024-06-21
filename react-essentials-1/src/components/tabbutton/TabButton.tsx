@@ -2,13 +2,14 @@ import React from 'react'
 
 type Props = {
     children: string,
-    onSelect: any
+    onSelect: any,
+    isSelected: boolean,
 }
 
-const TabButton = ({children, onSelect}: Props) => {
+const TabButton = ({children, onSelect, isSelected}: Props) => {
 
   return (
-    <li><button onClick={onSelect}>{children}</button></li>
+    <li><button className={isSelected ? "active" : undefined} onClick={onSelect}>{children}</button></li>
   )
 };
 
