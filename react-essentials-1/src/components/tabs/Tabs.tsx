@@ -2,11 +2,10 @@
 type Props = {
     children?: React.ReactNode;
     button: React.ReactNode;
-    buttonsContainer: React.ElementType;
+    ButtonsContainer: React.ElementType;
 }
 
-const Tabs = ({children, button, buttonsContainer}: Props) => {
-    const ButtonsContainer = buttonsContainer;
+const Tabs = ({children, button, ButtonsContainer = 'menu'}: Props) => {
   return (
     <>
         <ButtonsContainer>{button}</ButtonsContainer>
