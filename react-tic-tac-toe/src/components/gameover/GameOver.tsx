@@ -1,17 +1,18 @@
 import React from 'react'
 
 type Props = {
-    winner?: string
+    winner?: string;
+    onRestart: any;
 }
 
-const GameOver = ({ winner }: Props) => {
+const GameOver = ({ winner, onRestart }: Props) => {
   return (
     <div id="game-over">
         <h2>Game Over</h2>
         {winner && <p>{winner} won!</p>}
         {!winner && <p>It's a draw!</p>}
         <p>
-            <button >Rematch!</button>
+            <button onClick={onRestart}>Rematch!</button>
         </p>
     </div>
   )
