@@ -4,9 +4,10 @@ type Props = {
     initialName: string,
     symbol: string,
     isActive: boolean,
+    onChangeName: any,
 }
 
-const Player = ({initialName, symbol, isActive}: Props) => {
+const Player = ({ initialName, symbol, isActive, onChangeName }: Props) => {
 
     const[isEditing, setIsEditing] = useState(false);
     const[playerName, setPlayerName] = useState(initialName);
@@ -23,6 +24,9 @@ const Player = ({initialName, symbol, isActive}: Props) => {
 
     const handleEditClick = () => {
         setIsEditing((editing) => !editing);
+        if(isEditing){
+            onChangeName(symbol, playerName);
+        }
     }
 
   return (
