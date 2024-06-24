@@ -3,28 +3,36 @@ import HeaderComponent from "./components/header/HeaderComponent";
 import InputComponent from "./components/input/InputComponent";
 import DisplayComponent from "./components/list/DisplayComponent";
 
-function App() {
-    const[initialInvestment, setInitialInvestment] = useState<number>(0);
-    const[annualInvestment, setAnnualInvestment] = useState<number>(0);
-    const[expectedReturn, setExpectedReturn] = useState<number>(0);
-    const[duration, setDuration] = useState<number>(0);
+export type UserInputType = {
+  initialInvestment: number;
+  annualInvestment: number;
+  expectedReturn: number;
+  duration: number;
+}
 
-    console.log(initialInvestment);
-    console.log(annualInvestment);
-    console.log(expectedReturn);
-    console.log(duration);
+function App() {
+    const[userInput, setUserInput] = useState<UserInputType>({
+      initialInvestment: 10000,
+      annualInvestment: 1200,
+      expectedReturn: 6,
+      duration: 12,
+    });
+
+    const inputIsValid = userInput.duration >= 1;
+
+    const handleChange = (inputIdentifier: string, newValue: number) => {
+      setUserInput((prevValue) => {
+        const newVal = {...prevValue, [inputIdentifier]: +newValue};
+        return newVal;
+      });
+    }
 
   return (
     <>
       <HeaderComponent />
-      <InputComponent onInitialInvestmentChange={setInitialInvestment} 
-                      onAnnualInvestmentChange={setAnnualInvestment} 
-                      onExpectedReturnChange={setExpectedReturn} 
-                      onDurationChange={setDuration}/>
-      <DisplayComponent initialInvestment={initialInvestment} 
-                        annualInvestment={annualInvestment} 
-                        expectedReturn={expectedReturn} 
-                        duration={duration} />
+      <InputComponent initialValues={userInput} onChangeUser={handleChange} />
+      {!inputIsValid && <p className="center">Please enter a duration greater than zero.</p>}
+      {inputIsValid && <DisplayComponent userInputValues={userInput} />}
     </>
   );
 }

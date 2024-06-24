@@ -1,26 +1,18 @@
+import { UserInputType } from '../../App';
 import { calculateInvestmentResults, formatter } from '../../util/investment';
 
 type Props = {
-  initialInvestment: number; 
-  annualInvestment: number; 
-  expectedReturn: number; 
-  duration: number; 
+  userInputValues: UserInputType
 }
 
-const DisplayComponent = ({initialInvestment, 
-                           annualInvestment, 
-                           expectedReturn, 
-                           duration}: Props) => {
-
+const DisplayComponent = ({userInputValues}: Props) => {
   const investmentResults = calculateInvestmentResults({
-    initialInvestment,
-    annualInvestment,
-    expectedReturn,
-    duration
+    initialInvestment: userInputValues.initialInvestment, 
+    annualInvestment: userInputValues.annualInvestment, 
+    expectedReturn: userInputValues.expectedReturn, 
+    duration: userInputValues.duration
   });
 
-  console.log(JSON.stringify(investmentResults));
-                            
   return (
     <div id="investment-results" className="center">
       <table id="result">
@@ -34,19 +26,21 @@ const DisplayComponent = ({initialInvestment,
           </tr>
         </thead>
         <tbody>
-          {investmentResults.map((item, index) => (
-            <tr key={index}>
-              <td>{item.year}</td>
-              <td>{formatter.format(item.valueEndOfYear)}</td>
-              <td>{formatter.format(item.interest)}</td>
-              <td>{formatter.format(item.interest)}</td>
-              <td>{formatter.format(item.annualInvestment)}</td>
-            </tr>
-          ))}
+          {investmentResults.map((item) => {
+            const totalInterest = (item.valueEndOfYear - (item.annualInvestment = item.year)) - userInputValues.initialInvestment;
+            return (
+              <tr key={item.year}>
+                <td>{item.year}</td>
+                <td>{formatter.format(item.valueEndOfYear)}</td>
+                <td>{formatter.format(item.interest)}</td>
+                <td>{formatter.format(totalInterest)}</td>
+                <td>{formatter.format(item.annualInvestment)}</td>
+              </tr>
+          )})}
         </tbody>
       </table>
     </div>
   )
-}
+};
 
 export default DisplayComponent;
