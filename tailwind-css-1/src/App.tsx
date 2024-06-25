@@ -32,38 +32,37 @@ function App() {
         </div>
       </div>
       <div className="flex items-center justify-center min-h-screen">
-      <div className="flex flex-col items-center">
-      <svg className="relative transform translate-x-1/2 -translate-y-1/2 animate-bounce w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <circle cx="12" cy="12" r="10" />
-          <path d="M12 15l-6-6 1.41-1.41L12 12.17l4.59-4.58L18 9z"></path>
-      </svg>
-      <button className="relative z-10 mr-5 ml-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
-        SignIn
-      </button>
-      </div>
-      <button className="mr-5 ml-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
-        Save changes
-      </button>
+        <div className="flex flex-col items-center">
+          <svg className="relative transform translate-x-1/2 -translate-y-1/2 animate-bounce w-6 h-6 text-blue-500" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 15l-6-6 1.41-1.41L12 12.17l4.59-4.58L18 9z"></path>
+          </svg>
+          <button className="blur-md invert drop-shadow-xl md:filter-none relative z-10 mr-5 ml-5 outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
+            SignIn
+          </button>
+        </div>
+        <button className="mr-5 ml-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
+          Save changes
+        </button>
 
-      <button 
-        type="button" 
-        className="flex items-center justify-center ml-5 mr-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500 text-blue-500 h-[50px] w-[200px] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
-        disabled>
-        <svg className="animate-spin h-5 w-5 mr-3 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <circle cx="12" cy="12" r="10" stroke-width="4" className="opacity-25" />
-          <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" className="opacity-75" />
-        </svg>
-        Processing...
-      </button>
-        
-      <button className="relative flex items-center justify-center ml-5 mr-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
-        <span className="absolute top-0 right-0 flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
-        </span>
-        Transactions
-      </button>
-
+        <button 
+          type="button" 
+          className="flex items-center justify-center ml-5 mr-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500 text-blue-500 h-[50px] w-[200px] rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled>
+          <svg className="animate-spin h-5 w-5 mr-3 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <circle cx="12" cy="12" r="10" stroke-width="4" className="opacity-25" />
+            <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" className="opacity-75" />
+          </svg>
+          Processing...
+        </button>
+          
+        <button className="relative flex items-center justify-center ml-5 mr-5 shadow-xl shadow-blue-500/50 hover:shadow-none outline outline-offset-2 outline-1 outline-blue-500/100 text-blue-500 hover:bg-blue-500 hover:text-white h-[50px] w-[200px] rounded-lg">
+          <span className="absolute top-0 right-0 flex h-3 w-3">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-3 w-3 bg-sky-500"></span>
+          </span>
+          Transactions
+        </button>
     </div>
 
     <div className="border border-blue-300 shadow rounded-md p-4 max-w-sm w-full mx-auto">
