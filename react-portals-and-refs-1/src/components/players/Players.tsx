@@ -4,30 +4,24 @@ type Props = {}
 
 const Players = (props: Props) => {
 
-    const playerName = useRef();
-
+    const playerName = useRef<HTMLInputElement>(null);
     const[enteredPlayerName, setEnteredPlayerName] = useState('unknown entity');
-    const[submitted, setSubmitted] = useState(false);
-
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSubmitted(false);
-        setEnteredPlayerName(event.target.value);
-    };
 
     const handleClick = () => {
+      if(playerName.current){
         setEnteredPlayerName(playerName.current.value);
-    }
+      }
+    };
 
   return (
     <section id="player">
-      <h2>Welcome {submitted ? enteredPlayerName : 'unknown entity'}</h2>
+      <h2>Welcome { enteredPlayerName ?? 'unknown entity' }</h2>
       <p>
-        <input type="text" 
-            ref={playerName} 
-            onChange={handleChange} 
-            value={enteredPlayerName}
+        <input
+            type="text" 
+            ref={ playerName } 
             />
-        <button onClick={handleClick}>Set Name</button>
+        <button onClick={ handleClick }>Set Name</button>
       </p>
     </section>
   )
