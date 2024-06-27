@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import ResultModal, { ImperativeRef } from '../resultmodal/ResultModal';
+import { createPortal } from 'react-dom';
 
 type Props = {
     title: string
@@ -44,7 +45,7 @@ const TimerChallenge = ({title, targetTime}: Props) => {
         }
     }, [timeRemaining]);
 
-  return (
+  return createPortal(
     <>
         {timerIsActive && <ResultModal 
                             ref={dialog} 
@@ -65,7 +66,7 @@ const TimerChallenge = ({title, targetTime}: Props) => {
                 {timerIsActive ? 'Time is running...' : 'Timer inactive'}
             </p>
         </section>
-    </>
+    </>, document.getElementById('modal') as HTMLElement
   )
 };
 
