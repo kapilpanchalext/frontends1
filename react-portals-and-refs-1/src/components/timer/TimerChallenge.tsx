@@ -11,6 +11,7 @@ const TimerChallenge = ({title, targetTime}: Props) => {
     const dialog = useRef<ImperativeRef>(null);
     const [timeRemaining, setTimeRemaining] = useState(targetTime * 1000);
     const timerIsActive = timeRemaining > 0 && timeRemaining < targetTime * 1000;
+    const MIN_INTERVAL = 10;
 
     if(timeRemaining <= 0) {
         clearInterval(timer.current);
@@ -18,27 +19,40 @@ const TimerChallenge = ({title, targetTime}: Props) => {
         dialog.current?.open();
     }
 
-    const handleStart = () => {
-        timer.current = setInterval(() => {
-            setTimeRemaining(prevTimeRemaining => prevTimeRemaining - 10);
-            dialog.current?.open();
-        }, 10);
+    const handleReset = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setTimeRemaining(targetTime * 1000);
     }
 
-    const handleStop = () => {
+    const handleStart = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        timer.current = setInterval(() => {
+            setTimeRemaining(prevTimeRemaining => prevTimeRemaining - MIN_INTERVAL);
+        }, MIN_INTERVAL);
+    }
+
+    const handleStop = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
         clearInterval(timer.current);
         dialog.current?.open();
     }
 
-    // useEffect(() => {
-    //     if (timerIsActive) {
-    //       dialog.current?.open();
-    //     }
-    //   }, [timerIsActive, timeRemaining]);
+    useEffect(() => {
+        if (timeRemaining <= MIN_INTERVAL) {
+            clearInterval(timer.current);
+            dialog.current?.open();
+        }
+    }, [timeRemaining]);
 
   return (
     <>
-        {timerIsActive && <ResultModal ref={dialog} result={'lost'} targetTime={targetTime} />}
+        {timerIsActive && <ResultModal 
+                            ref={dialog} 
+                            result={'lost'} 
+                            targetTime={targetTime} 
+                            remainingTime={timeRemaining}
+                            onReset={handleReset}
+                            />}
         <section className='challenge'>
             <h2>{title}</h2>
             <p className='challenge-time'>{targetTime} second{targetTime > 1 ? 's' : ''}</p>
