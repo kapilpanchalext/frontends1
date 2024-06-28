@@ -5,13 +5,14 @@ type Props = {}
 
 const NewProject = (props: Props) => {
 
-  const title = useRef<React.Ref<HTMLInputElement>>();
-  const description = useRef<React.Ref<HTMLTextAreaElement>>();
-  const dueDate = useRef<React.Ref<HTMLInputElement>>();
+  const title = useRef<HTMLInputElement>();
+  const description = useRef<HTMLTextAreaElement>();
+  const dueDate = useRef<HTMLInputElement>();
 
   const handleSave = () => {
-    const enteredTitle = title.current?Input.value;
-    const enteredDescription = description.current?.value
+    const enteredTitle = title.current?.value;
+    const enteredDescription = description.current?.value;
+    const enteredDueDate = dueDate.current?.value;
   }
 
   return (
