@@ -19,16 +19,12 @@ import { Place } from "../model/DataFiles";
     if (!response.ok) {
       throw new Error('Failed to fetch user places');
     }
-
     
     const placesArray: Place[] = resData;
-    console.log(JSON.stringify(placesArray));
     return placesArray;
   }
 
   export async function updateUserPlaces(places: Place[]) {
-    console.log(JSON.stringify(places));
-
     const response = await fetch('http://localhost:9001/api/v1/update-user-places', {
       method: 'PUT',
       body: JSON.stringify(places),
