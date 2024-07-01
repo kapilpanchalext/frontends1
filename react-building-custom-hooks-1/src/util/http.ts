@@ -13,17 +13,17 @@ export async function fetchAvailablePlaces() {
   }
   
   export async function fetchUserPlaces() {
-    // const response = await fetch('http://localhost:3000/user-places');
     const response = await fetch('http://localhost:9001/api/v1/get-user-places');
     const resData = await response.json();
-  
+
     if (!response.ok) {
       throw new Error('Failed to fetch user places');
     }
 
-    console.log(resData);
-  
-    return resData.places;
+    
+    const placesArray: Place[] = resData;
+    console.log(JSON.stringify(placesArray));
+    return placesArray;
   }
   
   export async function updateUserPlaces(places: Place[]) {
