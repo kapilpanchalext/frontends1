@@ -90,7 +90,6 @@ function App() {
   );
 
   function handleError() {
-    console.log("INSIDE HANDLE ERROR");
     setErrorUpdatingPlaces(null);
   }
 
@@ -99,7 +98,7 @@ function App() {
       <Modal open={!!errorUpdatingPlaces} onClose={handleError}>
         {errorUpdatingPlaces && (
           <Error
-            title="An error occurred GETTING FILES!"
+            title="An error occurred!"
             message={errorUpdatingPlaces.message}
             onConfirm={handleError}
           />

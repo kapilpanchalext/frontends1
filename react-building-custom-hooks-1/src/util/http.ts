@@ -1,6 +1,6 @@
 import { Place } from "../model/DataFiles";
 
-export async function fetchAvailablePlaces() {
+  export async function fetchAvailablePlaces() {
     const response = await fetch('http://localhost:9001/api/v1/places');
     const resData = await response.json();
 
@@ -11,7 +11,7 @@ export async function fetchAvailablePlaces() {
     const placesArray: Place[] = resData;
     return placesArray;
   }
-  
+
   export async function fetchUserPlaces() {
     const response = await fetch('http://localhost:9001/api/v1/get-user-places');
     const resData = await response.json();
@@ -25,29 +25,23 @@ export async function fetchAvailablePlaces() {
     console.log(JSON.stringify(placesArray));
     return placesArray;
   }
-  
+
   export async function updateUserPlaces(places: Place[]) {
-    // const response = await fetch('http://localhost:3000/user-places', {
-    //   method: 'PUT',
-    //   body: JSON.stringify({ places }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    // });
+    console.log(JSON.stringify(places));
 
     const response = await fetch('http://localhost:9001/api/v1/update-user-places', {
       method: 'PUT',
-      body: JSON.stringify({ places }),
+      body: JSON.stringify(places),
       headers: {
         'Content-Type': 'application/json',
       },
     });
-  
+
     const resData = await response.json();
-  
+
     if (!response.ok) {
       throw new Error('Failed to update user data.');
     }
-  
+
     return resData.message;
   }
