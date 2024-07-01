@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { fetchUserPlaces, updateUserPlaces } from "./util/http";
 import Places from "./components/places/Places";
 import Modal from "./components/modal/Modal";
@@ -7,6 +7,7 @@ import AvailablePlaces from "./components/availableplaces/AvailablePlaces";
 import Error from "./components/error/Error";
 import logoImg from "../src/assets/logo.png";
 import { Place } from "./model/DataFiles";
+import useFetch from "./hooks/useFetch";
 
 type ErrorState = {
   message: string;
@@ -15,25 +16,24 @@ type ErrorState = {
 function App() {
   const selectedPlace = useRef<Place>();
   const [userPlaces, setUserPlaces] = useState<Place[]>([]);
-  const [isFetching, setIsFetching] = useState<boolean>(false);
-  const [error, setError] = useState<any>();
   const [errorUpdatingPlaces, setErrorUpdatingPlaces] = useState<ErrorState | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
-  useEffect(() => {
-    async function fetchPlaces() {
-      setIsFetching(true);
-      try {
-        const places = await fetchUserPlaces();
-        setUserPlaces(places);
-      } catch (error: any) {
-        setError({ message: error.message || 'Failed to fetch user places.' });
-      }
-      setIsFetching(false);
-    }
+  // useEffect(() => {
+  //   async function fetchPlaces() {
+  //     setIsFetching(true);
+  //     try {
+  //       const places = await fetchUserPlaces();
+  //       setUserPlaces(places);
+  //     } catch (error: any) {
+  //       setError({ message: error.message || 'Failed to fetch user places.' });
+  //     }
+  //     setIsFetching(false);
+  //   }
+  //   fetchPlaces();
+  // }, []);
 
-    fetchPlaces();
-  }, []);
+  const { isFetching, error, fetchData } = useFetch({ fetchFn: fetchUserPlaces });
 
   function handleStartRemovePlace(place: Place) {
     setModalIsOpen(true);
@@ -128,7 +128,7 @@ function App() {
             fallbackText="Select the places you would like to visit below."
             isLoading={isFetching}
             loadingText="Fetching your places..."
-            places={userPlaces}
+            places={fetchData}
             onSelectPlace={handleStartRemovePlace}
           />
         )}

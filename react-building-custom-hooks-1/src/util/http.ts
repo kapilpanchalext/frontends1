@@ -21,6 +21,7 @@ import { Place } from "../model/DataFiles";
     }
     
     const placesArray: Place[] = resData;
+    console.log(placesArray)
     return placesArray;
   }
 
