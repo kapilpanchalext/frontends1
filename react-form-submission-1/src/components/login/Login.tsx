@@ -4,6 +4,8 @@ type Props = {}
 
 const Login = (props: Props) => {
 
+  const [emailIsInvalid, setEmailIsInvalid] = useState(false);
+
     const email = useRef<HTMLInputElement>(null);
     const password = useRef<HTMLInputElement>(null);
 
@@ -13,6 +15,14 @@ const Login = (props: Props) => {
         const enteredEmail = email.current?.value;
         const enteredPassword = password.current?.value;
         console.log(enteredEmail, enteredPassword);
+        const emailIsValid = enteredEmail?.includes('@');
+
+        if(!emailIsValid){
+          setEmailIsInvalid(true);
+          return;
+        }
+        setEmailIsInvalid(false);
+        console.log("Sending HTTP request...");
     }
 
   return (
@@ -28,6 +38,7 @@ const Login = (props: Props) => {
             name="email"
             ref={email}
            />
+           <div className='control-error'>{emailIsInvalid && <p>Please enter a valid email address.</p>}</div>
         </div>
 
         <div className="control no-margin">

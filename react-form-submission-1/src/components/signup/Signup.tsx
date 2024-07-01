@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 type Props = {}
 
 const Signup = (props: Props) => {
+
+  const[passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
@@ -11,6 +13,12 @@ const Signup = (props: Props) => {
         console.log(fd);
         const acquisitionChannel = fd.getAll('acquisition');
         const data = Object.fromEntries(fd.entries());
+
+        if(data.password !== data['confirm-password']){
+          setPasswordsAreNotEqual(true);
+          return;
+        }
+
         const finalData = { ...data, acquisition: acquisitionChannel };
         console.log(finalData);
         form.reset();
@@ -23,13 +31,13 @@ const Signup = (props: Props) => {
 
     <div className="control">
       <label htmlFor="email">Email</label>
-      <input id="email" type="email" name="email" />
+      <input id="email" type="email" name="email" required/>
     </div>
 
     <div className="control-row">
       <div className="control">
         <label htmlFor="password">Password</label>
-        <input id="password" type="password" name="password" />
+        <input id="password" type="password" name="password" required minLength={6}/>
       </div>
 
       <div className="control">
@@ -38,8 +46,10 @@ const Signup = (props: Props) => {
           id="confirm-password"
           type="password"
           name="confirm-password"
+          required
         />
       </div>
+      <div className='control-error'>{passwordsAreNotEqual && <p>Passwords do not match.</p>}</div>
     </div>
 
     <hr />
@@ -47,18 +57,18 @@ const Signup = (props: Props) => {
     <div className="control-row">
       <div className="control">
         <label htmlFor="first-name">First Name</label>
-        <input type="text" id="first-name" name="first-name" />
+        <input type="text" id="first-name" name="first-name" required/>
       </div>
 
       <div className="control">
         <label htmlFor="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last-name" />
+        <input type="text" id="last-name" name="last-name" required/>
       </div>
     </div>
 
     <div className="control">
       <label htmlFor="phone">What best describes your role?</label>
-      <select id="role" name="role">
+      <select id="role" name="role" required>
         <option value="student">Student</option>
         <option value="teacher">Teacher</option>
         <option value="employee">Employee</option>
@@ -97,7 +107,7 @@ const Signup = (props: Props) => {
 
     <div className="control">
       <label htmlFor="terms-and-conditions">
-        <input type="checkbox" id="terms-and-conditions" name="terms" />I
+        <input type="checkbox" id="terms-and-conditions" name="terms" required/>I
         agree to the terms and conditions
       </label>
     </div>

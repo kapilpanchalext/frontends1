@@ -1,61 +1,101 @@
-import React, { useState } from 'react'
+import React from 'react'
+import Input from '../input/Input';
+import useInput from '../../hooks/useInput';
+import { hasMinLength, isEmail, isNotEmpty } from '../../util/Validations';
 
 type Props = {}
 
-type FormType = {
-  email: string | boolean,
-  password: string | boolean,
-}
-
 const StateLogin = (props: Props) => {
 
-    const [enteredValues, setEnteredValues] = useState<FormType>({
-        email: '',
-        password: '',
+    // const [enteredValues, setEnteredValues] = useState<FormType>({
+    //     email: '',
+    //     password: '',
+    // });
+
+    // const [didEdit, setDidEdit] = useState<FormType>({
+    //   email: false,
+    //   password: false,
+    // });
+
+    const validateEmail = (value: string) => {
+      return isEmail(value) && isNotEmpty(value);
+    };
+
+    //Use of Custom Hook
+
+    const {value: emailValue, 
+            handleInputChange: handleEmailChange, 
+            handleInputBlur: handleEmailBlur,
+            hasError: emailHasError} = 
+            useInput({
+              defaultValue:'Email', 
+              validationFunction: (value)=>isEmail(value) && isNotEmpty(value)
+    }); //, (value: string) =>validateEmail(value)
+
+    const {value: passwordValue, 
+            handleInputChange: handlePasswordChange, 
+            handleInputBlur: handlePasswordBlur,
+            hasError: passwordHasError} = 
+            useInput({
+              defaultValue:'Password', 
+              validationFunction: (value)=>hasMinLength(value, 6),
     });
 
-    const [didEdit, setDidEdit] = useState<FormType>({
-      email: false,
-      password: false,
-    });
+    // let emailIsInvalid;
+    // let passwordIsInvalid;
 
-    let emailIsInvalid;
+    // if (typeof enteredValues.email === 'string') {
+    //   emailIsInvalid = (didEdit.email && !isEmail(enteredValues.email) && !isNotEmpty(enteredValues.email)) ;// && !enteredValues.email.includes('@'));
+    // }
 
-    if (typeof enteredValues.email === 'string') {
-      emailIsInvalid = (didEdit.email && !enteredValues.email.includes('@'));
-    }
+    // if (typeof enteredValues.password === 'string') {
+    //   passwordIsInvalid = (didEdit.password && !hasMinLength(enteredValues.password, 6)); //&& !(enteredValues.password.length < 6));
+    // }
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        console.log(enteredValues)
+        if(emailHasError || passwordHasError) {
+          return;
+        }
+        console.log(emailValue, passwordValue);
     }
 
-    const handleInputChange = (identifier: string, value: string) => {
-      setEnteredValues(prevValues => ({
-          ...prevValues,
-          [identifier]: value
-      }))
+    // const handleInputChange = (identifier: string, value: string) => {
+    //   setEnteredValues(prevValues => ({
+    //       ...prevValues,
+    //       [identifier]: value
+    //   }))
 
-      setDidEdit(prevEdit => ({
-        ...prevEdit,
-        [identifier]: false
-      }));
-    }
+    //   setDidEdit(prevEdit => ({
+    //     ...prevEdit,
+    //     [identifier]: false
+    //   }));
+    // }
 
-    const handleInputBlur = (identifier: string) => {
-        console.log("Email is blurred")
-        setDidEdit(prevEdit => ({
-          ...prevEdit,
-          [identifier]: true
-        }));
-    }
+    // const handleInputBlur = (identifier: string) => {
+    //     console.log("Email is blurred")
+    //     setDidEdit(prevEdit => ({
+    //       ...prevEdit,
+    //       [identifier]: true
+    //     }));
+    // }
 
   return (
     <form onSubmit={handleSubmit}>
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
+        <Input label={'Email'} 
+                id={"email"} 
+                type='email' 
+                name='email' 
+                error={emailHasError ? 'Please enter a valid email':""} 
+                onBlur={handleEmailBlur}
+                onChange={handleEmailChange}
+                value={emailValue}
+        />
+        
+        {/* <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input 
             id="email" 
@@ -66,9 +106,19 @@ const StateLogin = (props: Props) => {
             value={typeof enteredValues.email === 'string' ? enteredValues.email : ""}
            />
            <div className='control-error'>{emailIsInvalid && <p>Please enter a valid email</p>}</div>
-        </div>
+        </div> */}
 
-        <div className="control no-margin">
+        <Input label={'Password'} 
+                id={"password"} 
+                type='password' 
+                name='password' 
+                error={passwordHasError ? 'Please enter a valid password':""} 
+                onBlur={handlePasswordBlur}
+                onChange={handlePasswordChange}
+                value={passwordValue}
+        />
+
+        {/* <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input 
             id="password" 
@@ -77,7 +127,7 @@ const StateLogin = (props: Props) => {
             onChange={(event) => handleInputChange("password", event.target.value)}
             value={typeof enteredValues.password === 'string' ? enteredValues.password : ""}
             />
-        </div>
+        </div> */}
       </div>
 
       <p className="form-actions">
