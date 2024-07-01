@@ -1,12 +1,12 @@
 import Header from "./components/header/Header";
-import StateLogin from "./components/login/StateLogin";
+import Login from "./components/login/Login";
 
 function App() {
   return (
     <>
       <Header />
       <main>
-        <StateLogin />
+        <Login/>
       </main>
     </>
   );
