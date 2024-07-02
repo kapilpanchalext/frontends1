@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Vanilla JS Draggable - Default functionality</title>
+        <style>
+            #draggable {
+                width: 500px;
+                height: 100px;
+                padding: 0.5em;
+                border: 1px solid #ccc;
+                position: absolute;
+                cursor: move;
+            }
+        </style>
+    </head>
+    <body>
+        <div>
+            <div id="draggable" class="ui-widget-content">
+                <p>Drag me around</p>
+                <button>Drag Button</button>
+                <form method="dialog">
+                    <button type="button" id="closeButton">Close</button>
+                </form>
+            </div>
+            <div>
+                <textarea></textarea>
+            </div>
+        </div>
+
+        <script>
+            function makeDraggable(element) {
+                let isDragging = false;
+                let offsetX, offsetY;
+
+                element.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    offsetX = e.clientX - element.getBoundingClientRect().left;
+                    offsetY = e.clientY - element.getBoundingClientRect().top;
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                });
+
+                function onMouseMove(e) {
+                    if (!isDragging) return;
+                    element.style.left = `${e.clientX - offsetX}px`;
+                    element.style.top = `${e.clientY - offsetY}px`;
+                }
+
+                function onMouseUp() {
+                    isDragging = false;
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.removeEventListener('mouseup', onMouseUp);
+                }
+            }
+
+            // Initialize the draggable functionality
+            const draggableElement = document.getElementById('draggable');
+            makeDraggable(draggableElement);
+
+            // Add event listener to close button
+            const closeButton = document.getElementById('closeButton');
+            closeButton.addEventListener('click', function() {
+                draggableElement.style.display = 'none';
+            });
+        </script>
+    </body>
+</html>
+
+<!-- <!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>jQuery UI Draggable - Default functionality</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <style>
+        #draggable { width: 500px; height: 100px; padding: 0.5em; }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+        $( function() {
+            $( "#draggable" ).draggable();
+        });
+    </script>
+  </head>
+  <body>
+   
+    <div>
+  <div id="draggable" class="ui-widget-content">
+    <p>Drag me around</p>
+    <button>Drag Button</button>
+  </div>
+  <div>
+    <textarea ></textarea>
+  </div>
+</div>
+   
+  </body></html> -->
