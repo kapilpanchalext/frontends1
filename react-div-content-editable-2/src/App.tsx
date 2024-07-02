@@ -9,7 +9,6 @@ function App() {
     const updateTextContent = () => {
       const newTextContent = editableTextContentRef.current?.textContent || null;
       setTextContent(newTextContent);
-      console.log(newTextContent); 
     }
 
     const div = editableTextContentRef.current;
@@ -24,22 +23,16 @@ function App() {
     };
   }, []);
 
-  // setTextContent(editableTextContentRef.current?.textContent || null);
 
   return (
     <>
       <div>
         <h1 className="text-3xl font-bold underline">
-          Hello world!
+          Text Editable!
         </h1>
-        <div contentEditable className="w-full h-full" ref={editableTextContentRef}>
+        <div contentEditable className="w-full h-full" style={{backgroundColor: 'gray'}} ref={editableTextContentRef}></div>
 
-        </div>
-
-        <div><h1>Hello World</h1></div>
-        <h1>
-          Hello world!
-        </h1>
+        <div dangerouslySetInnerHTML={{ __html: textContent || '' }}></div>
       </div>
     </>
   )
