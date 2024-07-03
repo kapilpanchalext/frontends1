@@ -1,11 +1,13 @@
 import { useRef } from "react";
 import useCreateBoldText from "./hooks/useCreateBoldText";
 import useCreateItalicText from "./hooks/useCreateItalicText";
+import useCreateParagraphText from "./hooks/useCreateParagraphText";
 
 function App() {
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const { applyBold } = useCreateBoldText({contentEditableRef});
   const { applyItalic } = useCreateItalicText({contentEditableRef});
+  const { applyParagraph } = useCreateParagraphText({contentEditableRef});
 
   return (
     <>
@@ -18,6 +20,7 @@ function App() {
              contentEditable ref={contentEditableRef}></div>
         <button onClick={applyBold}>Heading</button>
         <button onClick={applyItalic}>Italic</button>
+        <button onClick={applyParagraph}>Paragraph</button>
       </div>
     </>
   )
