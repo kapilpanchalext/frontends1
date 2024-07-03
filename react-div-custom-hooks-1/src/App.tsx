@@ -6,8 +6,8 @@ import { FontTypes } from "./hooks/util/HooksUtil";
 function App() {
   const [content, setContent] = useState('');
   const contentEditableRef = useRef<HTMLDivElement>(null);
-  const { applyParagraph } = useCreateParagraphText({contentEditableRef, content, setContent});
-  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, content, setContent});
+  const { applyParagraph } = useCreateParagraphText({contentEditableRef, setContent});
+  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, setContent});
 
   // console.log(content);
 
