@@ -5,7 +5,7 @@ type Props = {
     elementName: string
 }
 
-const useCustomFontType = ({contentEditableRef, setContent}: PropTypes) => {
+const useCustomFontType = ({contentEditableRef, content, setContent}: PropTypes) => {
     const applyCustomFontStyle = useCallback(({elementName}: Props) => {
         const div = contentEditableRef.current;
         if (!div) {
@@ -18,6 +18,14 @@ const useCustomFontType = ({contentEditableRef, setContent}: PropTypes) => {
         }
 
         const range = selection.getRangeAt(0);
+        console.log("Start Offset: ", range.startOffset);
+        console.log("End Offset: ", range.endOffset);
+        // console.log(content);
+
+        console.log("CONTENT EDITABLE REF: " + contentEditableRef.current.innerHTML);
+
+        // console.log("StartOffsetTag: " +  content.substring(range.startOffset, (range.startOffset + 4)));
+        // console.log("EndOffsetTag: " +  content.substring(range.endOffset, (range.endOffset + 5)));
         const selectedText = range.toString();
 
         if (selectedText.length > 0) {
@@ -28,7 +36,7 @@ const useCustomFontType = ({contentEditableRef, setContent}: PropTypes) => {
           range.insertNode(newNode);
         }
         setContent(div.innerHTML);
-      }, [contentEditableRef, setContent]);
+      }, [content, contentEditableRef, setContent]);
 
       return { applyCustomFontStyle };
 }

@@ -6,10 +6,10 @@ import { FontTypes } from "./hooks/util/HooksUtil";
 function App() {
   const [content, setContent] = useState('');
   const contentEditableRef = useRef<HTMLDivElement>(null);
-  const { applyParagraph } = useCreateParagraphText({contentEditableRef, setContent});
-  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, setContent});
+  const { applyParagraph } = useCreateParagraphText({contentEditableRef, content, setContent});
+  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, content, setContent});
 
-  console.log(content);
+  // console.log(content);
 
   return (
     <>
@@ -24,9 +24,12 @@ function App() {
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H4 })}>Heading H4</button>
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H5 })}>Heading H5</button>
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H6 })}>Heading H6</button>
+        <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.BOLD })}>Bold</button>
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.ITALICS})}>Italics</button>
+        <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.UNDERLINE})}>Underline</button>
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.STRIKETHRU })}>Strikethru</button>
-        <button onClick={applyParagraph}>Paragraph</button>
+        <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.PARAGRAPH })}>Paragraph</button>
+        <button onClick={applyParagraph}>Clear All</button>
         
         <div style={{backgroundColor:"white", margin:"50px", width: "90vw", height: "calc(100vh - 200px)", overflowY: "auto"}} 
              contentEditable ref={contentEditableRef}></div>
