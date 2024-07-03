@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useRef } from "react";
+import useCreateBoldText from "./hooks/useCreateBoldText";
+import useCreateItalicText from "./hooks/useCreateItalicText";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const contentEditableRef = useRef<HTMLDivElement>(null);
+  const { applyBold } = useCreateBoldText({contentEditableRef});
+  const { applyItalic } = useCreateItalicText({contentEditableRef});
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div style={{backgroundColor:"#e3e3e3", margin: "0", height: "100vh", overflow: "hidden"}}>
+        <h1 className="text-3xl font-bold underline">
+          Custom Hooks!
+        </h1>
+        
+        <div style={{backgroundColor:"white", margin:"50px", width: "90vw", height: "calc(100vh - 200px)", overflowY: "auto"}} 
+             contentEditable ref={contentEditableRef}></div>
+        <button onClick={applyBold}>Heading</button>
+        <button onClick={applyItalic}>Italic</button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
   )
 }
 
-export default App
+export default App;
