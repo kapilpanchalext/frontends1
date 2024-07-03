@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 import { PropTypes } from './interface/DataTypes'
 
-const useCreateParagraphText = ({contentEditableRef}: PropTypes) => {
+const useCreateParagraphText = ({contentEditableRef, setContent}: PropTypes) => {
     const applyParagraph = useCallback(() => {
         const div = contentEditableRef.current;
         if (!div) {
@@ -15,21 +15,18 @@ const useCreateParagraphText = ({contentEditableRef}: PropTypes) => {
     selection?.addRange(range);
 
     const selectedText = range.toString();
-  
-    if (selectedText.length > 0) {
-        const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = selectedText;
-        const plainText = tempDiv.textContent || tempDiv.innerText || '';
 
-        // Create a single text node with the plain text
-        const textNode = document.createTextNode(plainText);
-
-        range.deleteContents();
-        range.insertNode(textNode);
-        console.log(textNode);
+      if (selectedText.length > 0) {
+          const tempDiv = document.createElement('div');
+          tempDiv.innerHTML = selectedText;
+          const plainText = tempDiv.textContent || tempDiv.innerText || '';
+          const textNode = document.createTextNode(plainText);
+          range.deleteContents();
+          range.insertNode(textNode);
         }
-    }, [contentEditableRef]);
-    
+        setContent(div.innerHTML);
+    }, [contentEditableRef, setContent]);
+
       return { applyParagraph };
 }
 

@@ -1,12 +1,15 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import useCreateParagraphText from "./hooks/useCreateParagraphText";
 import useCustomFontType from "./hooks/optimized/useCustomFontType";
 import { FontTypes } from "./hooks/util/HooksUtil";
 
 function App() {
+  const [content, setContent] = useState('');
   const contentEditableRef = useRef<HTMLDivElement>(null);
-  const { applyParagraph } = useCreateParagraphText({contentEditableRef});
-  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef});
+  const { applyParagraph } = useCreateParagraphText({contentEditableRef, setContent});
+  const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, setContent});
+
+  console.log(content);
 
   return (
     <>
@@ -27,7 +30,6 @@ function App() {
         
         <div style={{backgroundColor:"white", margin:"50px", width: "90vw", height: "calc(100vh - 200px)", overflowY: "auto"}} 
              contentEditable ref={contentEditableRef}></div>
-        
       </div>
     </>
   )

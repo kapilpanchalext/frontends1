@@ -5,7 +5,7 @@ type Props = {
     elementName: string
 }
 
-const useCustomFontType = ({contentEditableRef}: PropTypes) => {
+const useCustomFontType = ({contentEditableRef, setContent}: PropTypes) => {
     const applyCustomFontStyle = useCallback(({elementName}: Props) => {
         const div = contentEditableRef.current;
         if (!div) {
@@ -27,7 +27,8 @@ const useCustomFontType = ({contentEditableRef}: PropTypes) => {
           range.deleteContents();
           range.insertNode(newNode);
         }
-      }, [contentEditableRef]);
+        setContent(div.innerHTML);
+      }, [contentEditableRef, setContent]);
 
       return { applyCustomFontStyle };
 }
