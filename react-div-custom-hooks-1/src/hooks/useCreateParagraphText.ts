@@ -13,7 +13,7 @@ const useCreateParagraphText = ({contentEditableRef}: PropTypes) => {
     const selection = window.getSelection();
     selection?.removeAllRanges();
     selection?.addRange(range);
-  
+
     const selectedText = range.toString();
   
     if (selectedText.length > 0) {
