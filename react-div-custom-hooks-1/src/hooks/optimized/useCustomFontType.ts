@@ -5,69 +5,113 @@ type Props = {
     elementName: string
 }
 
- // Helper function to calculate the cumulative length of text nodes
- const calculateOffset = (div: Node, node: Node, offset: number) => {
-    let totalOffset = 0;
-    const walker = document.createTreeWalker(div, NodeFilter.SHOW_TEXT, null);
-    let currentNode = walker.nextNode();
-    
-    while (currentNode) {
-      if (currentNode === node) {
-        totalOffset += offset;
-        break;
-      } else {
-        if (currentNode.textContent) {
-          totalOffset += currentNode.textContent.length;
-        }
-      }
-      currentNode = walker.nextNode();
-    }
-    return totalOffset;
-  };
-
 const useCustomFontType = ({contentEditableRef, setContent}: PropTypes) => {
     const applyCustomFontStyle = useCallback(({ elementName }: Props) => {
         const div = contentEditableRef.current;
         if (!div) {
           return;
         }
-
+        
         const selection = window.getSelection();
         if (!selection || selection.rangeCount === 0) {
           return;
         }
 
         const range = selection.getRangeAt(0);
-        const startRange = calculateOffset(div, range.startContainer, range.startOffset);
-        const endRange = calculateOffset(div, range.endContainer, range.endOffset);
         const selectedText = range.toString();
+        const anchorNode = selection.anchorNode;
+        const parentElement = selection.anchorNode?.parentElement;
+        // console.log(selection.anchorNode);
+        console.log("PARENT: " , parentElement);
+        parentElement?.remove();
+        console.log("ANCHOR NODE: " , anchorNode);
+        const newNode = document.createElement(elementName);
+        newNode.textContent = anchorNode!.textContent!;
+        range.deleteContents();
+        range.insertNode(newNode);
+        // const children = Array.from(selection.anchorNode!.parentElement!.children);
+        // console.log("CHILD: " , children[0]);
 
-        console.log("Cumulative Start Offset: ", startRange);
-        console.log("Cumulative End Offset: ", endRange);
-        console.log("SELECTED TEXT: " + selectedText);
+        // selection.deleteFromDocument();
+        // const parentElement = selection.anchorNode?.parentElement;
+        // if (parentElement) {
+        //   const children = Array.from(parentElement.children);
+        //   for (let i = 0; i < children.length; i++) {
+        //     const child = children[i];
+        //     const textContent = child.textContent;
 
-        const startSubstring = contentEditableRef.current.innerHTML.substring(startRange, (startRange + 2 + elementName.length));
-        const endSubstring = contentEditableRef.current.innerHTML.substring(endRange, (endRange + (2 + elementName.length) + (3 + elementName.length)));
+        //     // Remove the child element from the parent
+        //     child.remove();
 
-        console.log("START SUBSTRING: " + startSubstring);
-        console.log("END SUBSTRING: " + endSubstring);
+        //     const newElement = document.createElement(elementName);
+        //     newElement.textContent = textContent;
+        //     // console.log(textContent);
+        //     parentElement.appendChild(newElement);
+        //   }
+        // }
 
-        if(startSubstring !== '<' + elementName + '>' && endSubstring !== '</' + elementName + '>') {
-            if (selectedText.length > 0) {
-                const newNode = document.createElement(elementName);
-                newNode.textContent = selectedText;
-                range.deleteContents();
-                range.insertNode(newNode);
-                setContent(div.innerHTML);
-            }
-        }
+        // if (selectedText.length > 0) {
+        //     const newNode = document.createElement(elementName);
+        //     newNode.textContent = selectedText;
+        //     range.deleteContents();
+        //     range.insertNode(newNode);
+        //     setContent(div.innerHTML);
+        // }
 
-        console.log("CONTENT EDITABLE REF: " + contentEditableRef.current.innerHTML);
-        console.log("StartOffsetTag: " + contentEditableRef.current.innerHTML.substring(startRange, startRange + 2 + elementName.length));
-        console.log("EndOffsetTag: " + contentEditableRef.current.innerHTML.substring(endRange + 2 + elementName.length, endRange + 7 + elementName.length));
       }, [contentEditableRef, setContent]);
 
       return { applyCustomFontStyle };
+
+  //   const applyCustomFontStyle = useCallback(({ elementName }: Props) => {
+  //     const div = contentEditableRef.current;
+  //     if (!div) {
+  //         return;
+  //     }
+
+  //     const selection = window.getSelection();
+  //     if (!selection || selection.rangeCount === 0) {
+  //         return;
+  //     }
+
+  //     const range = selection.getRangeAt(0);
+  //     const selectedText = range.toString();
+
+  //     if (selectedText.length > 0) {
+  //         const newNode = document.createElement(elementName);
+
+  //         if (newNode.nodeName.toLowerCase() === 'div') {
+  //             newNode.style.display = 'inline';
+  //         }
+
+  //         newNode.appendChild(range.extractContents());
+  //         range.insertNode(newNode);
+
+  //         // Set the cursor after the newly inserted node
+  //         range.setStartAfter(newNode);
+  //         range.collapse(true);
+  //         selection.removeAllRanges();
+  //         selection.addRange(range);
+
+  //         // // console.log(selection);
+  //         // // console.log(selection.anchorNode?.parentElement?.firstElementChild);
+  //         // console.log(selection.anchorNode?.parentElement?.children[0]);
+  //         // console.log(selection.anchorNode?.parentElement?.children[1]);
+  //         // console.log(selection.anchorNode?.parentElement?.children[2]);
+          
+  //         const parentElement = selection.anchorNode?.parentElement;
+
+  //         if (parentElement) {
+  //           const children = parentElement.children;
+  //           for (let i = 0; i < children.length; i++) {
+  //             console.log(children[i]);
+  //           }
+  //         }
+
+  //         setContent(div.innerHTML);
+  //     }
+  // }, [contentEditableRef, setContent]);
+
+  // return { applyCustomFontStyle };
 }
 
 export default useCustomFontType;
