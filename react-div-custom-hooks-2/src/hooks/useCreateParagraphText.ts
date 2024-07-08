@@ -3,10 +3,10 @@ import { PropTypes } from './interface/DataTypes'
 
 const useCreateParagraphText = ({contentEditableRef, setContent}: PropTypes) => {
     const applyParagraph = useCallback(() => {
-        const div = contentEditableRef.current;
-        if (!div) {
-          return;
-        }
+      const div = contentEditableRef.current;
+      if (!div) {
+        return;
+      }
     
     const range = document.createRange();
     range.selectNodeContents(div);
@@ -15,7 +15,6 @@ const useCreateParagraphText = ({contentEditableRef, setContent}: PropTypes) => 
     selection?.addRange(range);
 
     const selectedText = range.toString();
-
       if (selectedText.length > 0) {
           const tempDiv = document.createElement('div');
           tempDiv.innerHTML = selectedText;
@@ -27,7 +26,7 @@ const useCreateParagraphText = ({contentEditableRef, setContent}: PropTypes) => 
         setContent(div.innerHTML);
     }, [contentEditableRef, setContent]);
 
-      return { applyParagraph };
+    return { applyParagraph };
 }
 
 export default useCreateParagraphText;

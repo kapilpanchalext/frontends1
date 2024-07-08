@@ -2,13 +2,19 @@ import { useState, useRef } from "react";
 // import { FontTypes } from "./hooks/util/HooksUtil";
 // import useCustomFontType from "./hooks/optimized/useCustomFontType";
 // import useCreateParagraphText from "./hooks/useCreateParagraphText";
-import { CMD_MAP } from "./utils/Commands";
+import { CMD, CMD_MAP } from "./utils/Commands";
+import "./App.css";
+import useFloatingToolbar from "./hooks/floatingtoolbar/useFloatingToolbar";
 
 function App() {
   
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [content, setContent] = useState('');
+  // const [content, setContent] = useState('');
   const contentEditableRef = useRef<HTMLDivElement>(null);
+  const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const draggableRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  useFloatingToolbar({ draggableRef, closeButtonRef });
+  // const colorPickerRef = useRef<HTMLInputElement>(null);
   // const { applyParagraph } = useCreateParagraphText({contentEditableRef, setContent});
   // const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, setContent});
 
@@ -25,10 +31,17 @@ function App() {
   // }
 
   // const applyBackColour = () => {
-  //   document.execCommand('backColor', false, '#e3e3e3');
+  //   document.execCommand('backColor', false, 'white');
   // }
 
+  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    document.execCommand(CMD.BACKCOLOR, false, event.target.value);
+    setShowColorPicker(false);
+  };
+
   const applyExecCommandHandler = (command: string, showUI: boolean = false, value: string | number) => {
+    // alert("Command: " + command + " ShowUI: " + showUI + " Value: " + value);
+    setShowColorPicker(true);
     document.execCommand(command, showUI, String(value));
   }
 
@@ -37,7 +50,7 @@ function App() {
       <div style={{backgroundColor:"#e3e3e3", margin: "0", height: "100vh", overflow: "hidden"}}>
         <h1 className="text-3xl font-bold underline">
           Custom Hooks!
-        </h1>
+        </h1>       
 
         {/* <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H1 })}>Heading H1</button>
         <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H2 })}>Heading H2</button>
@@ -62,13 +75,24 @@ function App() {
         })} */}
 
         {Array.from(CMD_MAP.values()).map((cmd) => (
-          <button key={cmd.name} onClick={() => document.execCommand(cmd.name, false, (cmd.value === undefined? cmd.value : ''  ))}>
+          <button key={cmd.name} onClick={() => applyExecCommandHandler(cmd.name, false, (cmd.value || ''))}>
             {cmd.name}
           </button>
         ))}
 
-        {/* <button onClick={() => applyBackColour()}>{CMD_MAP.get(CMD.BACKCOLOR)?.name}</button> */}
-        
+        {showColorPicker && (
+          <div ref={draggableRef} style={{ width: '100px', height: '100px', position: 'absolute' }}>
+          <input
+              type="color"
+              defaultValue='#fcfc03'
+              onChange={handleColorChange}
+              className="color-input swatch-wrapper swatch"
+              style={{ margin: '50px',  backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: showColorPicker ? 1 : 0 , pointerEvents: showColorPicker ? 'auto' : 'none' }} />
+
+            <button ref={closeButtonRef}>Close</button>
+          </div>
+        )}
+
         <div style={{backgroundColor:"white", margin:"50px", width: "90vw", height: "calc(100vh - 200px)", overflowY: "auto"}} 
              contentEditable ref={contentEditableRef}>
         </div>
