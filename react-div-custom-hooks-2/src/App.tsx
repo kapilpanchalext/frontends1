@@ -81,12 +81,11 @@ function App() {
         ))}
 
         {showColorPicker && (
-          <div ref={draggableRef} style={{ width: '100px', height: '100px', position: 'absolute' }}>
+          <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', justifyContent: 'center', alignItems: 'center' }}>
           <input
               type="color"
               defaultValue='#fcfc03'
               onChange={handleColorChange}
-              className="color-input swatch-wrapper swatch"
               style={{ margin: '50px',  backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: showColorPicker ? 1 : 0 , pointerEvents: showColorPicker ? 'auto' : 'none' }} />
 
             <button ref={closeButtonRef}>Close</button>
