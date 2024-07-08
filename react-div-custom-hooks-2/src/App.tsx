@@ -43,16 +43,14 @@ function App() {
     document.execCommand(command, showUI, value);
   }
 
-  const applyExecCommandHandler = (command: string) => {
-    alert("Command: " + command);
+  const applyExecCommandHandler = (command: string, value: string = "") => {
     if(command === CMD.BACKCOLOR) {
       setShowColorPicker(true);
-      
-      
+      return;
     }
     
     // document.execCommand(command, showUI, String(value));
-    documentExecCommand(command);
+    documentExecCommand(command, value);
   }
 
   return (
@@ -84,11 +82,12 @@ function App() {
            <button onClick={() => document.execCommand(value.name, false, value?.value)}>{value.name}</button>
         })} */}
 
-        {Array.from(CMD_MAP.entries()).map(([key, cmd]) => (
-          <button key={key} onClick={() => applyExecCommandHandler(key)}>
-            {cmd.name}
-          </button>
-        ))}
+        {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
+          return (
+            <button key={key} onClick={() => applyExecCommandHandler(key)}>
+              {cmd.name}
+            </button>
+        )})}
 
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
@@ -98,7 +97,27 @@ function App() {
               onChange={handleColorChange}
               style={{ margin: '0px', width: '100px', height: '100px', backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: 1, pointerEvents: 'auto', borderWidth: '0px' }} />
           
-          <button style={{ zIndex: 1, marginTop: '100px', marginLeft: '25px', width: '100px' }} onClick={() => setShowColorPicker(false)}>Close</button>
+          <button
+            style={{
+              position: 'absolute',
+              top: '10px',
+              right: '10px',
+              margin: '4px',
+              width: '24px',
+              height: '24px',
+              background: 'black',
+              color: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+              border: '2px solid black',
+              borderColor: 'black',
+              borderRadius: '50%',
+              cursor: 'pointer',
+            }}
+            onClick={() => setShowColorPicker(false)}
+          >
+            X
+          </button>
           </div>
         )}
 

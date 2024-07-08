@@ -6,7 +6,6 @@ export enum CMD {
     CREATE_LINK= "createLink",
     CUT = "cut",
     COPY = "copy",
-    PASTE = "paste",
     PARA_SEPARATOR = "defaultParagraphSeparator",
     DELETE = "delete",
     FONTNAME = "fontName",
@@ -35,12 +34,11 @@ export enum CMD {
     SUBSCRIPT = "subscript",
     SUPERSCRIPT = "superscript",
     UNLINK = "unlink",
-    USE_CSS = "useCSS",
 }
 
 export const CMD_MAP = new Map<string, CommandParameter>([
     [CMD.BACKCOLOR, {
-        name: "BackColor",
+        name: "Highlight Text",
         icon: "h1",
         description: "Heading H1",
         value: ""
@@ -65,12 +63,6 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.COPY, {
         name: "Copy",
-        icon: "h1",
-        description: "Heading H1",
-        value: ""
-    }],
-    [CMD.PASTE, {
-        name: "Paste",
         icon: "h1",
         description: "Heading H1",
         value: ""
@@ -243,12 +235,6 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Heading H1",
         value: ""
     }],
-    [CMD.USE_CSS, {
-        name: "Use CSS",
-        icon: "h1",
-        description: "Heading H1",
-        value: ""
-    }],   
 ]);
 
 // export const FONT_TYPES_MAP = new Map<string, string>([
