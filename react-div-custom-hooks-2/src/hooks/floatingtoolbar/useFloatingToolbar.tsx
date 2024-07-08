@@ -3,9 +3,10 @@ import { RefObject, useCallback, useEffect } from 'react';
 type Props = {
     draggableRef: RefObject<HTMLDivElement>
     closeButtonRef: RefObject<HTMLButtonElement>
+    showColorPicker: boolean
 }
 
-const useFloatingToolbar = ({draggableRef, closeButtonRef}: Props) => {
+const useFloatingToolbar = ({draggableRef, closeButtonRef, showColorPicker}: Props) => {
     const makeDraggable = useCallback((element: HTMLElement) => {
         let offsetX: number, offsetY: number;
         let isDragging = false;
@@ -43,7 +44,7 @@ const useFloatingToolbar = ({draggableRef, closeButtonRef}: Props) => {
             }
           });
         }
-      }, [closeButtonRef, draggableRef, makeDraggable]);
+      }, [closeButtonRef, draggableRef, makeDraggable, showColorPicker]);
 }
 
 export default useFloatingToolbar;

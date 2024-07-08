@@ -13,7 +13,6 @@ function App() {
           <input
               type="color"
               defaultValue='#fcfc03'
-              className="color-input swatch-wrapper swatch"
               style={{ margin: '0px', width: '100px', height: '100px', backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: 1, pointerEvents: 'auto', borderWidth: '0px' }} />
         </div>
         

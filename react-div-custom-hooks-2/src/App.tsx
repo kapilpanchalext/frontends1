@@ -13,7 +13,7 @@ function App() {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  useFloatingToolbar({ draggableRef, closeButtonRef });
+  useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
   // const colorPickerRef = useRef<HTMLInputElement>(null);
   // const { applyParagraph } = useCreateParagraphText({contentEditableRef, setContent});
   // const { applyCustomFontStyle } = useCustomFontType({contentEditableRef, setContent});
@@ -35,21 +35,31 @@ function App() {
   // }
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    document.execCommand(CMD.BACKCOLOR, false, event.target.value);
-    setShowColorPicker(false);
+    // document.execCommand(CMD.BACKCOLOR, false, event.target.value);
+    documentExecCommand(CMD.BACKCOLOR, false, event.target.value);
   };
 
-  const applyExecCommandHandler = (command: string, showUI: boolean = false, value: string | number) => {
-    // alert("Command: " + command + " ShowUI: " + showUI + " Value: " + value);
-    setShowColorPicker(true);
-    document.execCommand(command, showUI, String(value));
+  const documentExecCommand = (command: string, showUI: boolean = false, value: string = "") => {
+    document.execCommand(command, showUI, value);
+  }
+
+  const applyExecCommandHandler = (command: string) => {
+    alert("Command: " + command);
+    if(command === CMD.BACKCOLOR) {
+      setShowColorPicker(true);
+      
+      
+    }
+    
+    // document.execCommand(command, showUI, String(value));
+    documentExecCommand(command);
   }
 
   return (
     <>
       <div style={{backgroundColor:"#e3e3e3", margin: "0", height: "100vh", overflow: "hidden"}}>
-        <h1 className="text-3xl font-bold underline">
-          Custom Hooks!
+        <h1>
+          Custom Hooks 2!
         </h1>       
 
         {/* <button onClick={() => applyCustomFontStyle({ elementName: FontTypes.HEADING_H1 })}>Heading H1</button>
@@ -74,21 +84,21 @@ function App() {
            <button onClick={() => document.execCommand(value.name, false, value?.value)}>{value.name}</button>
         })} */}
 
-        {Array.from(CMD_MAP.values()).map((cmd) => (
-          <button key={cmd.name} onClick={() => applyExecCommandHandler(cmd.name, false, (cmd.value || ''))}>
+        {Array.from(CMD_MAP.entries()).map(([key, cmd]) => (
+          <button key={key} onClick={() => applyExecCommandHandler(key)}>
             {cmd.name}
           </button>
         ))}
 
         {showColorPicker && (
-          <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', justifyContent: 'center', alignItems: 'center' }}>
+          <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
           <input
               type="color"
               defaultValue='#fcfc03'
               onChange={handleColorChange}
-              style={{ margin: '50px',  backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: showColorPicker ? 1 : 0 , pointerEvents: showColorPicker ? 'auto' : 'none' }} />
-
-            <button ref={closeButtonRef}>Close</button>
+              style={{ margin: '0px', width: '100px', height: '100px', backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: 1, pointerEvents: 'auto', borderWidth: '0px' }} />
+          
+          <button style={{ zIndex: 1, marginTop: '100px', marginLeft: '25px', width: '100px' }} onClick={() => setShowColorPicker(false)}>Close</button>
           </div>
         )}
 
