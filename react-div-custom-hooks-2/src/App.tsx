@@ -83,11 +83,15 @@ function App() {
         })} */}
 
         {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
-          return (
-            <button key={key} onClick={() => applyExecCommandHandler(key)}>
-              {cmd.name}
-            </button>
-        )})}
+           let inputTypes;
+          if(key === CMD.FONTNAME) {
+            inputTypes = <input type="select" key={key} onClick={() => applyExecCommandHandler(key)}>{cmd.name}</input>
+          } else {
+            inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key)}>{cmd.name}</button>
+          }
+
+          return (inputTypes)
+        })}
 
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
