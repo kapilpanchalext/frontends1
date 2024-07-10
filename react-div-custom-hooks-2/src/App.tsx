@@ -5,6 +5,7 @@ import { useState, useRef } from "react";
 import { CMD, CMD_MAP } from "./utils/Commands";
 import "./App.css";
 import useFloatingToolbar from "./hooks/floatingtoolbar/useFloatingToolbar";
+import { FontNames, FontSize } from "./utils/FontNames";
 
 function App() {
   
@@ -48,9 +49,8 @@ function App() {
       setShowColorPicker(true);
       return;
     }
-    
     // document.execCommand(command, showUI, String(value));
-    documentExecCommand(command, value);
+    documentExecCommand(command, false, value);
   }
 
   return (
@@ -85,9 +85,11 @@ function App() {
         {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
            let inputTypes;
           if(key === CMD.FONTNAME) {
-            inputTypes = <input type="select" key={key} onClick={() => applyExecCommandHandler(key)}>{cmd.name}</input>
+            inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+          } else if(key === CMD.FONTSIZE){
+            inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
           } else {
-            inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key)}>{cmd.name}</button>
+            inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}>{cmd.name}</button>
           }
 
           return (inputTypes)
