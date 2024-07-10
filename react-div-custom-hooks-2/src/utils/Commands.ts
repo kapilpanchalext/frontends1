@@ -28,6 +28,7 @@ export enum CMD {
     OUTDENT = "outdent",
     UNDO = "undo",
     REDO = "redo",
+    REMOVE_FORMAT = "removeFormat",
     SELECT_ALL = "selectAll",
     STRIKE_THRU = "strikethrough",
     STYLE_WITH_CSS = "styleWithCss",
@@ -197,6 +198,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         name: "Redo",
         icon: "h1",
         description: "Heading H1",
+        value: ""
+    }],
+    [CMD.REMOVE_FORMAT, {
+        name: "Remove Format",
+        icon: "h1",
+        description: "Remove Format",
         value: ""
     }],
     [CMD.SELECT_ALL, {

@@ -35,6 +35,11 @@ function App() {
   //   document.execCommand('backColor', false, 'white');
   // }
 
+  const colorPickerCloseHandler = () => {
+    documentExecCommand(CMD.BACKCOLOR, false, '#fcfc03');
+    setShowColorPicker(false);
+  }
+
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // document.execCommand(CMD.BACKCOLOR, false, event.target.value);
     documentExecCommand(CMD.BACKCOLOR, false, event.target.value);
@@ -120,7 +125,7 @@ function App() {
               borderRadius: '50%',
               cursor: 'pointer',
             }}
-            onClick={() => setShowColorPicker(false)}
+            onClick={colorPickerCloseHandler}
           >
             X
           </button>
