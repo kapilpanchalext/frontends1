@@ -21,6 +21,7 @@ export enum CMD {
     INSERT_PARAGRAPH = "insertParagraph",
     INSERT_TEXT = "insertText",
     INSERT_UNORDERED_LIST = "insertUnorderedList",
+    INDENT = "indent",
     JUSTIFY_CENTER = "justifyCenter",
     JUSTIFY_FULL = "justifyFull",
     JUSTIFY_LEFT = "justifyLeft",
@@ -112,6 +113,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.INSERT_HORIZONTAL_RULE, {
         name: "Insert Horizontal Rule",
+        icon: "h1",
+        description: "Heading H1",
+        value: ""
+    }],
+    [CMD.INDENT, {
+        name: "Indent",
         icon: "h1",
         description: "Heading H1",
         value: ""
