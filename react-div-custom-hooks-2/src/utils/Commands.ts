@@ -232,12 +232,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Heading H1",
         value: ""
     }],
-    [CMD.STYLE_WITH_CSS, {
-        name: "Style With CSS",
-        icon: "h1",
-        description: "Heading H1",
-        value: ""
-    }],
+    // [CMD.STYLE_WITH_CSS, {
+    //     name: "Style With CSS",
+    //     icon: "h1",
+    //     description: "Heading H1",
+    //     value: ""
+    // }],
     [CMD.SUBSCRIPT, {
         name: "Subscript",
         icon: "h1",

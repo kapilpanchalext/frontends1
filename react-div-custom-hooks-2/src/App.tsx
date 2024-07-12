@@ -18,7 +18,6 @@ function App() {
     } else {
       documentExecCommand(CMD.BACKCOLOR, false, '#fcfc03');
     }
-    
     setShowColorPicker(false);
   }
 
@@ -36,6 +35,7 @@ function App() {
 
   const applyExecCommandHandler = (command: string, value: string = "") => {
     if(command === CMD.BACKCOLOR) {
+      setFontColor(false);
       setShowColorPicker(true);
       return;
     }
@@ -102,7 +102,7 @@ function App() {
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
           <input
               type="color"
-              defaultValue='#fcfc03'
+              defaultValue={fontColor ? '#0000ff' : '#fcfc03'}
               onChange={handleColorChange}
               style={{ margin: '0px', width: '100px', height: '100px', backgroundColor: 'transparent', border:'none', position: 'absolute', opacity: 1, pointerEvents: 'auto', borderWidth: '0px' }} />
           
