@@ -132,7 +132,13 @@ function App() {
           </div>
         )}
 
-        <div style={{ marginLeft:"50px", marginRight:"50px", marginTop:"50px", marginBottom:"50px", height: "40rem" }}>
+        <div style={{ 
+            marginLeft:"50px", 
+            marginRight:"50px", 
+            marginTop:"50px", 
+            marginBottom:"50px", 
+            height: "40rem" 
+        }}>
           <ContentEditable />
         </div>   
       </div>
