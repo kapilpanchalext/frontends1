@@ -86,21 +86,19 @@ function App() {
           Custom Hooks 2!
         </h1>
 
-        <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
-        {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
-           let inputTypes;
-          if(key === CMD.FONTNAME) {
-            inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
-          } else if(key === CMD.FONTSIZE){
-            inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
-          } else {
-            inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}>{cmd.name}</button>
-          }
-          return (inputTypes)
-        })}
-          </div>
-
-        
+        {/* <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}> */}
+          {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
+            let inputTypes;
+            if(key === CMD.FONTNAME) {
+              inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+            } else if(key === CMD.FONTSIZE){
+              inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
+            } else {
+              inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}>{cmd.name}</button>
+            }
+            return (inputTypes)
+          })}
+        {/* </div> */}
 
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
