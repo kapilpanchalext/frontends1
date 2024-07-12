@@ -1,4 +1,5 @@
 import { CommandParameter } from "../hooks/util/DataFiles";
+import { faFortAwesome } from "@fortawesome/free-brands-svg-icons";
 
 export enum CMD {
     BACKCOLOR = "backColor",
@@ -22,6 +23,7 @@ export enum CMD {
     INSERT_TEXT = "insertText",
     INSERT_UNORDERED_LIST = "insertUnorderedList",
     INDENT = "indent",
+    ITALICS = "italic",
     JUSTIFY_CENTER = "justifyCenter",
     JUSTIFY_FULL = "justifyFull",
     JUSTIFY_LEFT = "justifyLeft",
@@ -43,49 +45,55 @@ export enum CMD {
 export const CMD_MAP = new Map<string, CommandParameter>([
     [CMD.BACKCOLOR, {
         name: "Highlight Text",
-        icon: "h1",
+        icon: "faHighlighter",
         description: "Heading H1",
         value: ""
     }],
     [CMD.BOLD, {
         name: "Bold",
-        icon: "h1",
+        icon: "faBold",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNDERLINE, {
         name: "Underline",
-        icon: "h1",
+        icon: "faUnderline",
+        description: "Heading H1",
+        value: ""
+    }],
+    [CMD.ITALICS, {
+        name: "Italic",
+        icon: "faItalic",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CREATE_LINK, {
         name: "Create Link",
-        icon: "h1",
+        icon: "faLink",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CUT, {
         name: "Cut",
-        icon: "h1",
+        icon: "faCut",
         description: "Heading H1",
         value: ""
     }],
     [CMD.COPY, {
         name: "Copy",
-        icon: "h1",
+        icon: "faCopy",
         description: "Heading H1",
         value: ""
     }],
     [CMD.PARA_SEPARATOR, {
         name: "Paragraph Separator",
-        icon: "h1",
+        icon: "faParagraph",
         description: "Heading H1",
         value: ""
     }],
     [CMD.DELETE, {
         name: "Delete",
-        icon: "h1",
+        icon: "faDeleteLeft",
         description: "Heading H1",
         value: ""
     }],
@@ -103,19 +111,19 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.FORECOLOR, {
         name: "FontColor",
-        icon: "h1",
+        icon: "faHighlighter",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FORMATBLOCK, {
         name: "Clear All",
-        icon: "h1",
+        icon: "faCut",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FORWARD_DELETE, {
         name: "Forward Delete",
-        icon: "h1",
+        icon: "faDeleteLeft",
         description: "Heading H1",
         value: ""
     }],
@@ -127,31 +135,25 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.INDENT, {
         name: "Indent",
-        icon: "h1",
+        icon: "faIndent",
         description: "Heading H1",
         value: ""
     }],
-    // [CMD.INSERT_HTML, {
-    //     name: "Insert HTML",
-    //     icon: "h1",
-    //     description: "Heading H1",
-    //     value: ""
-    // }],
     [CMD.INSERT_IMAGE, {
         name: "Insert Image",
-        icon: "h1",
+        icon: "faImage",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_LINE_BREAK, {
         name: "Insert Line Break",
-        icon: "h1",
+        icon: "faCut",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_ORDERED_LIST, {
         name: "Insert Ordered List",
-        icon: "h1",
+        icon: "faList",
         description: "Heading H1",
         value: ""
     }],
@@ -169,112 +171,92 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.INSERT_UNORDERED_LIST, {
         name: "Unordered List",
-        icon: "h1",
+        icon: "faList",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_CENTER, {
         name: "Justify Center",
-        icon: "h1",
+        icon: "faAlignCenter",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_FULL, {
         name: "Justify Full",
-        icon: "h1",
+        icon: "faAlignJustify",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_LEFT, {
         name: "Justify Left",
-        icon: "h1",
+        icon: "faAlignLeft",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_RIGHT, {
         name: "Justify Right",
-        icon: "h1",
+        icon: "faAlignRight",
         description: "Heading H1",
         value: ""
     }],
     [CMD.OUTDENT, {
         name: "Outdent",
-        icon: "h1",
+        icon: "faOutdent",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNDO, {
         name: "Undo",
-        icon: "h1",
+        icon: "faUndo",
         description: "Heading H1",
         value: ""
     }],
     [CMD.REDO, {
         name: "Redo",
-        icon: "h1",
+        icon: "faRedo",
         description: "Heading H1",
         value: ""
     }],
     [CMD.REMOVE_FORMAT, {
         name: "Remove Format",
-        icon: "h1",
+        icon: "faFortAwesome",
         description: "Remove Format",
         value: ""
     }],
     [CMD.SELECT_ALL, {
         name: "Select All",
-        icon: "h1",
+        icon: "faSearch",
         description: "Heading H1",
         value: ""
     }],
     [CMD.STRIKE_THRU, {
         name: "Strike Thru",
-        icon: "h1",
+        icon: "faStrikethrough",
         description: "Heading H1",
         value: ""
     }],
-    // [CMD.STYLE_WITH_CSS, {
-    //     name: "Style With CSS",
-    //     icon: "h1",
-    //     description: "Heading H1",
-    //     value: ""
-    // }],
     [CMD.SUBSCRIPT, {
         name: "Subscript",
-        icon: "h1",
+        icon: "faSubscript",
         description: "Heading H1",
         value: ""
     }],
     [CMD.SUPERSCRIPT, {
         name: "Superscript",
-        icon: "h1",
+        icon: "faSuperscript",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNLINK, {
         name: "Unlink",
-        icon: "h1",
+        icon: "faUnlink",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CLOSE, {
         name: "close",
-        icon: "h1",
+        icon: "faClose",
         description: "Heading H1",
         value: ""
     }],
 ]);
-
-// export const FONT_TYPES_MAP = new Map<string, string>([
-//     [FontTypes.HEADING_H1, 'h1'],
-//     [FontTypes.HEADING_H2, 'h2'],
-//     [FontTypes.HEADING_H3, 'h3'],
-//     [FontTypes.HEADING_H4, 'h4'],
-//     [FontTypes.HEADING_H5, 'h5'],
-//     [FontTypes.HEADING_H6, 'h6'],
-//     [FontTypes.PARAGRAPH, 'p'],
-//     [FontTypes.ITALICS, 'i'],
-//     [FontTypes.BOLD, 'strong'],
-//     [FontTypes.UNDERLINE, 'u'],
-//     [FontTypes.STRIKETHRU, 's'],
-// ]);

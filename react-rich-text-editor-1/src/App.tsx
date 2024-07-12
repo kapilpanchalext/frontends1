@@ -85,7 +85,7 @@ function App() {
         <h1>
           Custom Hooks 2!
         </h1>
-
+        <div style={{ marginLeft:"50px", marginRight:"50px", marginTop:"50px", marginBottom:"50px" }}>
         {/* <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}> */}
           {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
             let inputTypes;
@@ -99,7 +99,7 @@ function App() {
             return (inputTypes)
           })}
         {/* </div> */}
-
+        </div>
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
           <input
