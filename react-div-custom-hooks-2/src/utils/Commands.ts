@@ -101,7 +101,7 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         value: ""
     }],
     [CMD.FORECOLOR, {
-        name: "ForeColor",
+        name: "FontColor",
         icon: "h1",
         description: "Heading H1",
         value: ""

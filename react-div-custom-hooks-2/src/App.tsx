@@ -7,17 +7,27 @@ import ContentEditable from "./components/contenteditable/ContentEditable";
 
 function App() {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
+  const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
 
   const colorPickerCloseHandler = () => {
-    documentExecCommand(CMD.BACKCOLOR, false, '#fcfc03');
+    if(fontColor){
+      documentExecCommand(CMD.FORECOLOR, false, '#0000ff');
+    } else {
+      documentExecCommand(CMD.BACKCOLOR, false, '#fcfc03');
+    }
+    
     setShowColorPicker(false);
   }
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    documentExecCommand(CMD.BACKCOLOR, false, event.target.value);
+    if(fontColor){
+      documentExecCommand(CMD.FORECOLOR, false, event.target.value);
+    } else {
+      documentExecCommand(CMD.BACKCOLOR, false, event.target.value);
+    }
   };
 
   const documentExecCommand = (command: string, showUI: boolean = false, value: string = "") => {    
@@ -28,7 +38,13 @@ function App() {
     if(command === CMD.BACKCOLOR) {
       setShowColorPicker(true);
       return;
-    } else if(command === CMD.CREATE_LINK) {
+    }
+    else if(command === CMD.FORECOLOR) {
+      setFontColor(true);
+      setShowColorPicker(true);
+      return;
+    }
+    else if(command === CMD.CREATE_LINK) {
       const url = prompt("Enter a valid URL");
       if (url) {
         documentExecCommand(command, false, url);
@@ -43,7 +59,6 @@ function App() {
         const widthAttr = width ? ` width="${width}"` : '';
         const heightAttr = height ? ` height="${height}"` : '';
         const imageHTML = `<img src="${url}"${widthAttr}${heightAttr} />`;
-        // document.execCommand('insertHTML', false, imageHTML);
         documentExecCommand(CMD.INSERT_HTML, false, imageHTML);
       }
       return;
