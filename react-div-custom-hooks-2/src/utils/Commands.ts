@@ -37,6 +37,7 @@ export enum CMD {
     SUPERSCRIPT = "superscript",
     UNLINK = "unlink",
     UNDERLINE = "underline",
+    CLOSE = "close"
 }
 
 export const CMD_MAP = new Map<string, CommandParameter>([
@@ -252,6 +253,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.UNLINK, {
         name: "Unlink",
+        icon: "h1",
+        description: "Heading H1",
+        value: ""
+    }],
+    [CMD.CLOSE, {
+        name: "close",
         icon: "h1",
         description: "Heading H1",
         value: ""

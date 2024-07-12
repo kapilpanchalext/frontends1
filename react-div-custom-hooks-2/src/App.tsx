@@ -84,8 +84,9 @@ function App() {
       <div style={{backgroundColor:"#e3e3e3", margin: "0", height: "100vh", overflow: "hidden"}}>
         <h1>
           Custom Hooks 2!
-        </h1>       
+        </h1>
 
+        <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
         {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
            let inputTypes;
           if(key === CMD.FONTNAME) {
@@ -97,6 +98,9 @@ function App() {
           }
           return (inputTypes)
         })}
+          </div>
+
+        
 
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
