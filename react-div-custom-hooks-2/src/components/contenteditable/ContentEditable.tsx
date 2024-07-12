@@ -1,9 +1,8 @@
 import { useRef } from 'react'
 
-
 const ContentEditable = () => {
     const editableDivRef = useRef<HTMLDivElement>(null);
-  
+
     return (
       <div
         ref={editableDivRef}
@@ -19,6 +18,6 @@ const ContentEditable = () => {
       >
       </div>
     );
-}
+};
 
 export default ContentEditable;

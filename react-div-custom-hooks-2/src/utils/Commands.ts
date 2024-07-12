@@ -130,12 +130,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Heading H1",
         value: ""
     }],
-    [CMD.INSERT_HTML, {
-        name: "Insert HTML",
-        icon: "h1",
-        description: "Heading H1",
-        value: ""
-    }],
+    // [CMD.INSERT_HTML, {
+    //     name: "Insert HTML",
+    //     icon: "h1",
+    //     description: "Heading H1",
+    //     value: ""
+    // }],
     [CMD.INSERT_IMAGE, {
         name: "Insert Image",
         icon: "h1",

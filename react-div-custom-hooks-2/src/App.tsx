@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { CMD, CMD_MAP } from "./utils/Commands";
 import "./App.css";
 import useFloatingToolbar from "./hooks/floatingtoolbar/useFloatingToolbar";
-import { FontNames, FontSize } from "./utils/FontNames";
+import { FONT_SIZE_MAP, FontNames, FontSize } from "./utils/FontNames";
 import ContentEditable from "./components/contenteditable/ContentEditable";
 
 function App() {
@@ -20,7 +20,7 @@ function App() {
     documentExecCommand(CMD.BACKCOLOR, false, event.target.value);
   };
 
-  const documentExecCommand = (command: string, showUI: boolean = false, value: string = "") => {
+  const documentExecCommand = (command: string, showUI: boolean = false, value: string = "") => {    
     document.execCommand(command, showUI, value);
   }
 
@@ -43,7 +43,21 @@ function App() {
         const widthAttr = width ? ` width="${width}"` : '';
         const heightAttr = height ? ` height="${height}"` : '';
         const imageHTML = `<img src="${url}"${widthAttr}${heightAttr} />`;
-        document.execCommand('insertHTML', false, imageHTML);
+        // document.execCommand('insertHTML', false, imageHTML);
+        documentExecCommand(CMD.INSERT_HTML, false, imageHTML);
+      }
+      return;
+    }
+    else if (command === CMD.FONTSIZE) {
+      const mappedValue = FONT_SIZE_MAP.get(Number(value));
+      documentExecCommand(command, false, mappedValue?.toString());
+      return;
+    }
+    else if (command === CMD.INSERT_TEXT) {
+      const defaultText = " [" + new Date().toLocaleString() + "]";
+      const insertText = prompt("Enter text...", defaultText);
+      if (insertText) {
+        documentExecCommand(CMD.INSERT_TEXT, false, insertText);
       }
       return;
     }
