@@ -76,6 +76,14 @@ function App() {
       }
       return;
     }
+    else if(command === CMD.FORMATBLOCK){
+      const defaultText = "<blockquote>";
+      const insertText = prompt("Add an HTML Block <h1..h6, blockquote>: ", defaultText);
+      if (insertText) {
+        documentExecCommand(CMD.FORMATBLOCK, false, insertText);
+      }
+      return;
+    }
     documentExecCommand(command, false, value);
   }
 
@@ -85,21 +93,27 @@ function App() {
         <h1>
           Custom Hooks 2!
         </h1>
-        <div style={{ marginLeft:"50px", marginRight:"50px", marginTop:"50px", marginBottom:"50px" }}>
-        {/* <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}> */}
-          {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
-            let inputTypes;
-            if(key === CMD.FONTNAME) {
-              inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
-            } else if(key === CMD.FONTSIZE){
-              inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
-            } else {
-              inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
-            }
-            return (inputTypes)
-          })}
-        {/* </div> */}
-        </div>
+          <div style={{ marginLeft:"50px",  marginRight:"50px", marginTop:"10px", marginBottom:"10px", justifyContent: 'left', alignItems: 'center', display: 'flex', flexDirection: 'row', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
+          
+          {/* <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}> */}
+            {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
+              let inputTypes;
+              if(key === CMD.FONTNAME) {
+                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+              } 
+              else if(key === CMD.FONTSIZE){
+                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
+              } 
+              else if(key.startsWith(CMD.EMPTY)) {
+                inputTypes = <div key={key} style={{ width: '10px' }}></div>
+              }
+              else {
+                inputTypes = <button key={key} title={cmd.description} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
+              }
+              return (inputTypes)
+            })}
+          {/* </div> */}
+          </div>
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
           <input
