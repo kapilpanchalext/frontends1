@@ -94,7 +94,7 @@ function App() {
             } else if(key === CMD.FONTSIZE){
               inputTypes = <select key={key} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
             } else {
-              inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>format_align_left</span></button>
+              inputTypes = <button key={key} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
             }
             return (inputTypes)
           })}

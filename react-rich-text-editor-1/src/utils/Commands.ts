@@ -43,217 +43,217 @@ export enum CMD {
 export const CMD_MAP = new Map<string, CommandParameter>([
     [CMD.BACKCOLOR, {
         name: "Highlight Text",
-        icon: "AccessAlarm",
+        icon: "highlight",
         description: "Heading H1",
         value: ""
     }],
     [CMD.BOLD, {
         name: "Bold",
-        icon: "AccessAlarm",
+        icon: "format_bold",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNDERLINE, {
         name: "Underline",
-        icon: "AccessAlarm",
+        icon: "format_underlined",
         description: "Heading H1",
         value: ""
     }],
     [CMD.ITALICS, {
         name: "Italic",
-        icon: "AccessAlarm",
+        icon: "format_italic",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CREATE_LINK, {
         name: "Create Link",
-        icon: "AccessAlarm",
+        icon: "link",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CUT, {
         name: "Cut",
-        icon: "AccessAlarm",
+        icon: "content_cut",
         description: "Heading H1",
         value: ""
     }],
     [CMD.COPY, {
         name: "Copy",
-        icon: "AccessAlarm",
+        icon: "content_copy",
         description: "Heading H1",
         value: ""
     }],
     [CMD.PARA_SEPARATOR, {
         name: "Paragraph Separator",
-        icon: "AccessAlarm",
+        icon: "safety_divider",
         description: "Heading H1",
         value: ""
     }],
     [CMD.DELETE, {
         name: "Delete",
-        icon: "AccessAlarm",
+        icon: "delete",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FONTNAME, {
         name: "Font Name",
-        icon: "h1",
+        icon: "",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FONTSIZE, {
         name: "Font Size",
-        icon: "h1",
+        icon: "",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FORECOLOR, {
         name: "FontColor",
-        icon: "AccessAlarm",
+        icon: "format_color_text",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FORMATBLOCK, {
         name: "Clear All",
-        icon: "AccessAlarm",
+        icon: "clear_all",
         description: "Heading H1",
         value: ""
     }],
     [CMD.FORWARD_DELETE, {
         name: "Forward Delete",
-        icon: "AccessAlarm",
+        icon: "backspace",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_HORIZONTAL_RULE, {
         name: "Insert Horizontal Rule",
-        icon: "AccessAlarm",
+        icon: "horizontal_rule",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INDENT, {
         name: "Indent",
-        icon: "AccessAlarm",
+        icon: "format_indent_increase",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_IMAGE, {
         name: "Insert Image",
-        icon: "AccessAlarm",
+        icon: "image",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_LINE_BREAK, {
         name: "Insert Line Break",
-        icon: "AccessAlarm",
+        icon: "subject",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_ORDERED_LIST, {
         name: "Insert Ordered List",
-        icon: "AccessAlarm",
+        icon: "format_list_numbered",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_PARAGRAPH, {
         name: "Insert Paragraph",
-        icon: "AccessAlarm",
+        icon: "assignment",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_TEXT, {
         name: "Insert Text",
-        icon: "AccessAlarm",
+        icon: "note_alt",
         description: "Heading H1",
         value: ""
     }],
     [CMD.INSERT_UNORDERED_LIST, {
         name: "Unordered List",
-        icon: "AccessAlarm",
+        icon: "format_list_bulleted",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_CENTER, {
         name: "Justify Center",
-        icon: "AccessAlarm",
+        icon: "format_align_center",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_FULL, {
         name: "Justify Full",
-        icon: "AccessAlarm",
+        icon: "format_align_justify",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_LEFT, {
         name: "Justify Left",
-        icon: "AccessAlarm",
+        icon: "format_align_left",
         description: "Heading H1",
         value: ""
     }],
     [CMD.JUSTIFY_RIGHT, {
         name: "Justify Right",
-        icon: "AccessAlarm",
+        icon: "format_align_right",
         description: "Heading H1",
         value: ""
     }],
     [CMD.OUTDENT, {
         name: "Outdent",
-        icon: "AccessAlarm",
+        icon: "format_indent_decrease",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNDO, {
         name: "Undo",
-        icon: "AccessAlarm",
+        icon: "undo",
         description: "Heading H1",
         value: ""
     }],
     [CMD.REDO, {
         name: "Redo",
-        icon: "AccessAlarm",
+        icon: "redo",
         description: "Heading H1",
         value: ""
     }],
     [CMD.REMOVE_FORMAT, {
         name: "Remove Format",
-        icon: "AccessAlarm",
+        icon: "clear_all",
         description: "Remove Format",
         value: ""
     }],
     [CMD.SELECT_ALL, {
         name: "Select All",
-        icon: "AccessAlarm",
+        icon: "select_all",
         description: "Heading H1",
         value: ""
     }],
     [CMD.STRIKE_THRU, {
         name: "Strike Thru",
-        icon: "AccessAlarm",
+        icon: "strikethrough_s",
         description: "Heading H1",
         value: ""
     }],
     [CMD.SUBSCRIPT, {
         name: "Subscript",
-        icon: "AccessAlarm",
+        icon: "subscript",
         description: "Heading H1",
         value: ""
     }],
     [CMD.SUPERSCRIPT, {
         name: "Superscript",
-        icon: "AccessAlarm",
+        icon: "superscript",
         description: "Heading H1",
         value: ""
     }],
     [CMD.UNLINK, {
         name: "Unlink",
-        icon: "AccessAlarm",
+        icon: "link_off",
         description: "Heading H1",
         value: ""
     }],
     [CMD.CLOSE, {
         name: "close",
-        icon: "AccessAlarm",
+        icon: "close",
         description: "Heading H1",
         value: ""
     }],
