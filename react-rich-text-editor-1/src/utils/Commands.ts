@@ -151,6 +151,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Changes a font color.",
         value: ""
     }],
+    [CMD.EMPTY + "_9", {
+        name: "Empty",
+        icon: "",
+        description: "Empty Separator.",
+        value: ""
+    }],
     [CMD.FORMATBLOCK, {
         name: "Format Block",
         icon: "integration_instructions",
@@ -199,7 +205,6 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Inserts the given plain text.",
         value: ""
     }],
-    
     [CMD.EMPTY + "_5", {
         name: "Empty",
         icon: "",
