@@ -99,7 +99,7 @@ function App() {
           Custom Hooks 2!
         </h1>
           <div style={{ marginLeft:"50px",  marginRight:"50px", marginTop:"10px", marginBottom:"10px", justifyContent: 'left', alignItems: 'center', display: 'flex', flexDirection: 'row', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
-          
+          <input type="search" />
           {/* <div ref={draggableRef} style={{ backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}> */}
             {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
               let inputTypes;
