@@ -10,6 +10,7 @@ function App() {
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [savePdf, setSavePdf] = useState<boolean>(false);
   useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
 
   const colorPickerCloseHandler = () => {
@@ -87,6 +88,10 @@ function App() {
     documentExecCommand(command, false, value);
   }
 
+  const pdfDownloadFileHandler = () => {
+    setSavePdf(true);
+  }
+
   return (
     <>
       <div style={{backgroundColor:"#e3e3e3", margin: "0", height: "100vh", overflow: "hidden"}}>
@@ -106,6 +111,9 @@ function App() {
               } 
               else if(key.startsWith(CMD.EMPTY)) {
                 inputTypes = <div key={key} style={{ width: '10px' }}></div>
+              }
+              else if(key === CMD.PDF_DOWNLOAD) {
+                inputTypes = <button key={key} title={cmd.description} onClick={pdfDownloadFileHandler}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
               }
               else {
                 inputTypes = <button key={key} title={cmd.description} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
@@ -153,7 +161,7 @@ function App() {
             marginBottom:"50px", 
             height: "40rem" 
         }}>
-          <ContentEditable />
+          <ContentEditable savePdf={savePdf} />
         </div>   
       </div>
     </>

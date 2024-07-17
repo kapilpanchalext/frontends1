@@ -40,6 +40,7 @@ export enum CMD {
     UNDERLINE = "underline",
     CLOSE = "close",
     EMPTY = "empty",
+    PDF_DOWNLOAD = "pdf",
 }
 
 export const CMD_MAP = new Map<string, CommandParameter>([
@@ -305,6 +306,18 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         name: "Delete",
         icon: "delete",
         description: "Deletes the current selection.",
+        value: ""
+    }],
+    [CMD.EMPTY + "_8", {
+        name: "Empty",
+        icon: "",
+        description: "Empty Separator.",
+        value: ""
+    }],
+    [CMD.PDF_DOWNLOAD, {
+        name: "Delete",
+        icon: "download",
+        description: "Downloads PDF file.",
         value: ""
     }],
 ]);
