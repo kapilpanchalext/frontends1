@@ -40,7 +40,9 @@ const ContentEditable = ({savePdf}:Props) => {
             body: JSON.stringify(data)
         })
         .then(response => response.text())
-        .then(data => console.log(data))
+        .then(data => {console.log(data);
+            alert("PDF Downloaded Message: " + data);
+        })
         .catch((error) => {
             console.error('Error:', error);
         });
