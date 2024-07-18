@@ -73,10 +73,6 @@ function App() {
 
   const highlightText = useCallback(() => {
     const lengthOfOffset = "<mark></mark>".length;
-    
-    // if (!htmlElement || !results.length) {      
-    //   return;
-    // }
 
     if (!htmlElement || !results.length) {
       return;
