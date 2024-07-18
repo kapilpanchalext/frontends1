@@ -4,81 +4,109 @@ import DFA from "./algorithm/DFA";
 
 function App() {
   const [keywords, setKeywords] = useState<string[]>([]);
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string>();
+  const [htmlElement, setHtmlElement] = useState<Element>();
   const [results, setResults] = useState<Match[]>([]);
-  // const keywordInputRef = useRef<HTMLInputElement>(null);
   const contentEditableRef = useRef<HTMLDivElement>(null);
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const originalHTML = useRef<Element>();
+  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
   const dfa = DFA();
 
   const searchText = useCallback(() => {
     dfa.patternMatchingMachine(keywords);
     dfa.buildFailureLinks();
-    const searchResults = dfa.search(text);
+    const searchResults = dfa.search(htmlElement?.innerHTML || '');
     setResults(searchResults);
-  }, [dfa, keywords, text]);
+  }, [dfa, htmlElement, keywords]);
 
-  // useEffect(() => {
-  //   console.log("SEARCH INPUT REF: " , searchInputRef.current?.value);
-  //   setKeywords([searchInputRef.current?.value || '']);
-  // }, [searchInputRef.current?.value]);
-  // const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files?.[0];
-  //   if (file) {
-  //     const reader = new FileReader();
-  //     reader.onloadend = () => {
-  //       const content = reader.result as string;
-  //       setText(content);
-  //     };
-  //     reader.readAsText(file);
-  //   }
-  // };
+  const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const content = reader.result as string;
+        setText(content);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   const inputKeywordsHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const inputValue = (event.target as HTMLInputElement).value;
-      const keywordsArray = inputValue.split(',').map(keyword => keyword.trim());
+      const keywordsArray = inputValue ? inputValue.split(',').map(keyword => keyword.trim()) : [];
       setKeywords(keywordsArray);
+      if(keywordsArray.length <= 0) {
+        setIsFirstLoad(false);
+      }
     } 
   };
 
-  // console.log(keywords);
-  // console.log(keywordInputRef.current!.value);
+  useEffect(() => {
+    if (isFirstLoad === false && results.length === 0) {
+      setKeywords(["<mark>", "</mark>"]);
+      setIsFirstLoad(false);
+      
+      let innerHTML = htmlElement?.innerHTML;
+      let offset = 0;
+
+      results.forEach((result) => {
+        const { keyword } = result;
+        const startIndex = innerHTML?.indexOf(keyword, offset) || -1;
+        
+        if (startIndex !== -1) {
+          const beforeKeyword = innerHTML?.slice(0, startIndex);
+          const afterKeyword = innerHTML?.slice(startIndex + keyword.length);
+          // innerHTML = `${beforeKeyword}<mark>${keyword}</mark>${afterKeyword}`;
+          innerHTML = `${beforeKeyword}${afterKeyword}`;
+          offset = startIndex;
+        }
+      });
+      console.log(innerHTML);
+
+      if(htmlElement){
+        htmlElement.innerHTML = innerHTML || "";
+      }
+    }
+  }, [isFirstLoad, results]);
 
   const highlightText = useCallback(() => {
-    if (!results.length) return text;
+    const lengthOfOffset = "<mark></mark>".length;
+    
+    // if (!htmlElement || !results.length) {      
+    //   return;
+    // }
 
-    const segments: JSX.Element[] = [];
-    let lastIndex = 0;
-
-    results.forEach((result, index) => {
-      const { keyword, index: endIndex } = result;
-      const startIndex = endIndex - keyword.length + 1;
-
-      if (startIndex > lastIndex) {
-        segments.push(
-          <span key={`text-${index}`}>{text.slice(lastIndex, startIndex)}</span>
-        );
-      }
-
-      segments.push(
-        <span key={`highlight-${index}`} style={{ backgroundColor: 'yellow' }}>
-          {text.slice(startIndex, endIndex + 1)}
-        </span>
-      );
-
-      lastIndex = endIndex + 1;
-    });
-
-    if (lastIndex < text.length) {
-      segments.push(
-        <span key="text-end">{text.slice(lastIndex)}</span>
-      );
+    if (!htmlElement || !results.length) {
+      return;
     }
 
-    return segments;
-  }, [results, text]);
+    let innerHTML = htmlElement.innerHTML;
+    let offset = 0;
+
+    results.forEach((result) => {
+      const { keyword } = result;
+      const startIndex = innerHTML.indexOf(keyword, offset);
+      
+      if (startIndex !== -1) {
+        const beforeKeyword = innerHTML.slice(0, startIndex);
+        const afterKeyword = innerHTML.slice(startIndex + keyword.length);
+        innerHTML = `${beforeKeyword}<mark>${keyword}</mark>${afterKeyword}`;
+        offset = startIndex + keyword.length + lengthOfOffset;
+      }
+    });
+
+    htmlElement.innerHTML = innerHTML;
+  }, [htmlElement, results]);
+
+  highlightText();
+
+  useEffect(() => {
+    if (contentEditableRef.current) {
+      originalHTML.current = htmlElement;
+    }
+  }, [contentEditableRef, htmlElement]);
 
   useEffect(() => {
     searchText();
@@ -86,21 +114,17 @@ function App() {
 
   useEffect(() => {
     const editableDiv = contentEditableRef.current;
-    // const handleInput = () => {
-    //   if (editableDiv) {
-    //     console.log(editableDiv.innerText);
-    //   }
-    // };
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter' && editableDiv) {
         event.preventDefault();
-        // console.log(editableDiv.innerText);
-        setText(editableDiv.innerText);
+        setHtmlElement(editableDiv);
       }
     };
+
     if (editableDiv) {
       editableDiv.addEventListener('keydown', handleKeyDown);
     }
+
     return () => {
       if (editableDiv) {
         editableDiv.removeEventListener('keydown', handleKeyDown);
@@ -108,10 +132,13 @@ function App() {
     };
   }, []);
 
+  // console.log("Keywords: ", keywords);
+  // console.log("Keywords Length: ", keywords.length);
+
   return (
     <>
       <h1>Text Search Implementation</h1>
-      <input type="file" onChange={() => {console.log("File Upload Handler");}} />
+      <input type="file" onChange={fileReadHandler} />
       <p>File content:</p>
       <input
         placeholder="Search..."
@@ -128,9 +155,9 @@ function App() {
           overflowY: 'auto',
           border: '1px solid #ccc',
           padding: '10px',
-          background: '#f5f5f5'
-      }}>
-        {highlightText()}
+          background: '#f5f5f5',
+          position: 'relative',
+        }}>
       </div>
     </>
   )
