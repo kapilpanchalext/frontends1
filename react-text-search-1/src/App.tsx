@@ -3,133 +3,144 @@ import { Match } from "./model/Data_Model";
 import DFA from "./algorithm/DFA";
 
 function App() {
-  const [keywords, setKeywords] = useState<string[]>([]);
-  const [text, setText] = useState<string>();
-  const [htmlElement, setHtmlElement] = useState<Element>();
+  const [keywords, setKeywords] = useState<string[]>(['']);
   const [results, setResults] = useState<Match[]>([]);
+  const [text, setText] = useState<string>();
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const originalHTML = useRef<Element>();
-  const [isFirstLoad, setIsFirstLoad] = useState<boolean>(true);
 
   const dfa = DFA();
 
   const searchText = useCallback(() => {
     dfa.patternMatchingMachine(keywords);
     dfa.buildFailureLinks();
-    const searchResults = dfa.search(htmlElement?.innerHTML || '');
+    const searchResults = dfa.search(originalHTML.current?.innerHTML || '');
     setResults(searchResults);
-  }, [dfa, htmlElement, keywords]);
+  }, [dfa, keywords]);
 
   const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const content = reader.result as string;
-        setText(content);
-      };
-      reader.readAsText(file);
-    }
-  };
+      const file = event.target.files?.[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          const content = reader.result as string;
+          setText(content);
+        };
+        reader.readAsText(file);
+      }
+    };
 
   const inputKeywordsHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const inputValue = (event.target as HTMLInputElement).value;
       const keywordsArray = inputValue ? inputValue.split(',').map(keyword => keyword.trim()) : [];
       setKeywords(keywordsArray);
-      if(keywordsArray.length <= 0) {
-        setIsFirstLoad(false);
-      }
-    } 
+    }
   };
 
-  useEffect(() => {
-    if (isFirstLoad === false && results.length === 0) {
-      setKeywords(["<mark>", "</mark>"]);
-      setIsFirstLoad(false);
-      
-      let innerHTML = htmlElement?.innerHTML;
-      let offset = 0;
-
-      results.forEach((result) => {
-        const { keyword } = result;
-        const startIndex = innerHTML?.indexOf(keyword, offset) || -1;
-        
-        if (startIndex !== -1) {
-          const beforeKeyword = innerHTML?.slice(0, startIndex);
-          const afterKeyword = innerHTML?.slice(startIndex + keyword.length);
-          // innerHTML = `${beforeKeyword}<mark>${keyword}</mark>${afterKeyword}`;
-          innerHTML = `${beforeKeyword}${afterKeyword}`;
-          offset = startIndex;
-        }
-      });
-      console.log(innerHTML);
-
-      if(htmlElement){
-        htmlElement.innerHTML = innerHTML || "";
+  const removeMarkTags = () => {
+    const marks = document.querySelectorAll('mark');
+    marks.forEach(mark => {
+      const parent = mark.parentNode;
+      while (mark.firstChild) {
+        parent?.insertBefore(mark.firstChild, mark);
       }
-    }
-  }, [isFirstLoad, results]);
+      parent?.removeChild(mark);
+    });
+  };
+
+  if(results.length <= 0 && keywords.length <= 0){
+    removeMarkTags();
+  }
 
   const highlightText = useCallback(() => {
-    const lengthOfOffset = "<mark></mark>".length;
+    const LENGTH_OF_OFFSET = "<mark></mark>".length;
 
-    if (!htmlElement || !results.length) {
+    if (!originalHTML.current || !results.length) {
       return;
     }
 
-    let innerHTML = htmlElement.innerHTML;
+    let innerHTML = originalHTML.current?.innerHTML;
     let offset = 0;
 
     results.forEach((result) => {
       const { keyword } = result;
       const startIndex = innerHTML.indexOf(keyword, offset);
-      
+
       if (startIndex !== -1) {
         const beforeKeyword = innerHTML.slice(0, startIndex);
         const afterKeyword = innerHTML.slice(startIndex + keyword.length);
         innerHTML = `${beforeKeyword}<mark>${keyword}</mark>${afterKeyword}`;
-        offset = startIndex + keyword.length + lengthOfOffset;
+        offset = startIndex + keyword.length + LENGTH_OF_OFFSET;
       }
     });
-
-    htmlElement.innerHTML = innerHTML;
-  }, [htmlElement, results]);
+    originalHTML.current.innerHTML = innerHTML;
+  }, [originalHTML.current, results]);
 
   highlightText();
 
   useEffect(() => {
-    if (contentEditableRef.current) {
-      originalHTML.current = htmlElement;
-    }
-  }, [contentEditableRef, htmlElement]);
-
-  useEffect(() => {
     searchText();
-  }, [keywords]);
+  }, [keywords, originalHTML.current]);
 
   useEffect(() => {
+
+    if(text && originalHTML.current){
+      originalHTML.current.innerHTML = `<div>${text}</div>`;
+      return;
+    }
+
     const editableDiv = contentEditableRef.current;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter' && editableDiv) {
         event.preventDefault();
-        setHtmlElement(editableDiv);
+        originalHTML.current = editableDiv;
+      }
+    };
+
+    const handlePaste = (event: ClipboardEvent) => {
+      if (editableDiv) {
+        event.preventDefault();
+        const html = event.clipboardData?.getData('text/html') || '';
+        const text = event.clipboardData?.getData('text/plain') || '';
+
+        // Fallback to plain text if HTML is not available
+        const content = html || text;
+
+        // Insert the content at the current cursor position
+        const selection = window.getSelection();
+        if (!selection?.rangeCount) { 
+          return;
+        }
+
+        const range = selection.getRangeAt(0);
+        range.deleteContents();
+
+        const fragment = range.createContextualFragment(content);
+        range.insertNode(fragment);
+
+        // Move the cursor to the end of the inserted content
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+
+        // Update the originalHTML reference with the new content
+        originalHTML.current = editableDiv;
       }
     };
 
     if (editableDiv) {
       editableDiv.addEventListener('keydown', handleKeyDown);
+      editableDiv.addEventListener('paste', handlePaste);
     }
 
     return () => {
       if (editableDiv) {
         editableDiv.removeEventListener('keydown', handleKeyDown);
+        editableDiv.removeEventListener('paste', handlePaste);
       }
     };
-  }, []);
-
-  // console.log("Keywords: ", keywords);
-  // console.log("Keywords Length: ", keywords.length);
+  }, [text]);
 
   return (
     <>
