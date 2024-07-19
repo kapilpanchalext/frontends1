@@ -84,13 +84,13 @@ function App() {
   }, [keywords, originalHTML.current]);
 
   useEffect(() => {
+    const editableDiv = contentEditableRef.current;
 
-    if(text && originalHTML.current){
-      originalHTML.current.innerHTML = `<div>${text}</div>`;
+    if(text && editableDiv) {
+      contentEditableRef.current.innerHTML = `<div>${text}</div>`;
       return;
     }
 
-    const editableDiv = contentEditableRef.current;
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter' && editableDiv) {
         event.preventDefault();
@@ -109,7 +109,7 @@ function App() {
 
         // Insert the content at the current cursor position
         const selection = window.getSelection();
-        if (!selection?.rangeCount) { 
+        if (!selection?.rangeCount) {
           return;
         }
 
