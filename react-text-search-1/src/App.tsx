@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Match } from "./model/Data_Model";
-// import DFA from "./algorithm/DFA";
 import useSearchText from "./hooks/useSearchText";
-import DFA from "./algorithm/DFA";
 
 function App() {
   const [keywords, setKeywords] = useState<string[]>([]);
@@ -10,18 +8,6 @@ function App() {
   const [text, setText] = useState<string>("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const originalHTML = useRef<Element>();
-
-  // const dfa = DFA();
-  // const searchText = useCallback(() => {
-  //   dfa.patternMatchingMachine(keywords);
-  //   dfa.buildFailureLinks();
-  //   const searchResults = dfa.search(originalHTML.current?.innerHTML || '');
-  //   setResults(searchResults);
-  // }, [dfa, keywords]);
-
-  // useEffect(() => {
-  //   searchText();
-  // }, [keywords, text]);
 
   const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -150,11 +136,7 @@ function App() {
     }
   }, [keywords]);
 
-
-  // const dfa = DFA();
   const searchResults = useSearchText({keywords, text: originalHTML.current?.innerHTML || '', onUpdateResults: setResults });
-
-  console.log(searchResults.current);
 
   useEffect(() => {
     setResults(searchResults.current!);
