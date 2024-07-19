@@ -1,34 +1,35 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { Match } from "./model/Data_Model";
-import DFA from "./algorithm/DFA";
+// import DFA from "./algorithm/DFA";
+import useSearchText from "./hooks/useSearchText";
 
 function App() {
   const [keywords, setKeywords] = useState<string[]>(['']);
   const [results, setResults] = useState<Match[]>([]);
-  const [text, setText] = useState<string>();
+  const [text, setText] = useState<string>("");
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const originalHTML = useRef<Element>();
 
-  const dfa = DFA();
+  // const dfa = DFA();
 
-  const searchText = useCallback(() => {
-    dfa.patternMatchingMachine(keywords);
-    dfa.buildFailureLinks();
-    const searchResults = dfa.search(originalHTML.current?.innerHTML || '');
-    setResults(searchResults);
-  }, [dfa, keywords]);
+  // const searchText = useCallback(() => {
+  //   dfa.patternMatchingMachine(keywords);
+  //   dfa.buildFailureLinks();
+  //   const searchResults = dfa.search(originalHTML.current?.innerHTML || '');
+  //   setResults(searchResults);
+  // }, [dfa, keywords]);
 
   const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const file = event.target.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const content = reader.result as string;
-          setText(content);
-        };
-        reader.readAsText(file);
-      }
-    };
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const content = reader.result as string;
+        setText(content);
+      };
+      reader.readAsText(file);
+    }
+  };
 
   const inputKeywordsHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
@@ -49,7 +50,7 @@ function App() {
     });
   };
 
-  if(results.length <= 0 && keywords.length <= 0){
+  if(results &&results.length <= 0 && keywords.length <= 0){
     removeMarkTags();
   }
 
@@ -78,10 +79,6 @@ function App() {
   }, [originalHTML.current, results]);
 
   highlightText();
-
-  useEffect(() => {
-    searchText();
-  }, [keywords, originalHTML.current]);
 
   useEffect(() => {
     const editableDiv = contentEditableRef.current;
@@ -141,6 +138,18 @@ function App() {
       }
     };
   }, [text]);
+
+  useEffect(() => {
+    if (contentEditableRef.current) {
+      originalHTML.current = contentEditableRef.current;
+      setText(contentEditableRef.current.innerHTML);
+    }
+  }, [keywords]);
+
+  // console.log("Original HTML: ", originalHTML.current?.innerHTML);
+  useSearchText({keywords, text: originalHTML.current?.innerHTML || '', onUpdateResults: setResults});
+  
+
 
   return (
     <>
