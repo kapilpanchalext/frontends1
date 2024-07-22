@@ -20,6 +20,7 @@ const RichTextEditor = () => {
     <>
       <div style={{
             margin: "20px",
+            marginTop: "0px",
             height: "50rem",
             display: 'flex',
             flexDirection: 'column',

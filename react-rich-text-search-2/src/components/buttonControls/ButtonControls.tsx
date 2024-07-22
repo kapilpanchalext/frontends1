@@ -95,8 +95,8 @@ const ButtonControls = (props: Props) => {
 
   return (
     <>
-      <div style={{backgroundColor:"transparent", margin: "5px", height: "38px", overflow: "hidden", display:"flex" }}>
-          <div style={{ justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
+      <div style={{ backgroundColor:"transparent" }}>
+          <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
           <input type="search" style={{ minHeight: '33px' }} placeholder="Search..." />
             {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
               let inputTypes;
@@ -107,7 +107,7 @@ const ButtonControls = (props: Props) => {
                 inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
               } 
               else if(key.startsWith(CMD.EMPTY)) {
-                inputTypes = <div key={key} style={{ width: '10px' }}></div>
+                inputTypes = <div key={key} style={{ width: '8px' }}></div>
               }
               else if(key === CMD.PDF_DOWNLOAD) {
                 inputTypes = <button key={key} title={cmd.description} onClick={pdfDownloadFileHandler}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
