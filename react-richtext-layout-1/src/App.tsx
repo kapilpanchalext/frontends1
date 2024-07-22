@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import './App.css';
 
 function App() {
@@ -12,10 +12,9 @@ function App() {
   return (
     <div className="App">
       <h1>Hello World</h1>
-      <div className="colored-div">
-        <h6 className="moving-line" style={{ top: `${percentage}%` }} >A4</h6>
-        <hr className="moving-line" style={{ top: `${percentage}%` }} />
-        <div className="color-fill" style={{ height: `${percentage}%` }}></div>
+      <div className="moving-container" style={{ top: `${percentage}%` }}>
+          <h6 className="moving-line"> A4 </h6>
+          <hr className="moving-line" />
       </div>
       <input
         type="number"
