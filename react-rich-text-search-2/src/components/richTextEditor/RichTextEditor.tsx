@@ -10,9 +10,10 @@ const RichTextEditor = () => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
     }
+    setIsContentEditableEvent(false);
   }, [richTextData, isContentEditableEvent]);
 
-  // console.log(data);
+  console.log(data);
 
   return (
     <>

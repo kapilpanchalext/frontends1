@@ -24,14 +24,14 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
         if (editableDiv) {
-          console.log(editableDiv.innerHTML);
+          // console.log(editableDiv.innerHTML);
           onPaste(true);
         }
       }
     };
 
     const handleInput = () => {
-      console.log(editableDiv?.innerHTML);
+      // console.log(editableDiv?.innerHTML);
       onPaste(true);
     };
 
@@ -61,7 +61,7 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
         selection.removeAllRanges();
         selection.addRange(range);
         // onPaste(true);
-        console.log(editableDiv.innerHTML);
+        // console.log(editableDiv.innerHTML);
         // console.log(contentEditableRef.current?.innerHTML);
       }
     };
