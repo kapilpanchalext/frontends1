@@ -1,16 +1,18 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import ContentEditable, { ForwardRichTextData } from '../contentEditable/ContentEditable';
 
 const RichTextEditor = () => {
   const [data, setData] = useState<string>('');
   const richTextData = useRef<ForwardRichTextData>(null);
+  const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
 
-  if(richTextData.current){
-    setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
-  }
+  useEffect(() => {
+    if (richTextData.current) {
+      setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
+    }
+  }, [richTextData, isContentEditableEvent]);
 
-  // console.log("FORWARD REF: ", richTextData.current?.getRichTextRefData());
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
@@ -21,7 +23,7 @@ const RichTextEditor = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-        <ContentEditable ref={richTextData}/>
+        <ContentEditable ref={richTextData} onPaste={setIsContentEditableEvent}/>
       </div>
     </>
   )
