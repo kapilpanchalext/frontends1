@@ -5,13 +5,13 @@ const RichTextEditor = () => {
   const [data, setData] = useState<string>('');
   const richTextData = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
-
+  
   useEffect(() => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
+      setIsContentEditableEvent(false);
     }
-    setIsContentEditableEvent(false);
-  }, [richTextData, isContentEditableEvent]);
+  }, [isContentEditableEvent]);
 
   console.log(data);
 

@@ -60,7 +60,7 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
         range.collapse(false);
         selection.removeAllRanges();
         selection.addRange(range);
-        // onPaste(true);
+        onPaste(true);
         // console.log(editableDiv.innerHTML);
         // console.log(contentEditableRef.current?.innerHTML);
       }
