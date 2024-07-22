@@ -41,6 +41,7 @@ export enum CMD {
     CLOSE = "close",
     EMPTY = "empty",
     PDF_DOWNLOAD = "pdf",
+    UPLOAD_FILE = "uploadFile",
 }
 
 export const CMD_MAP = new Map<string, CommandParameter>([
@@ -312,6 +313,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         name: "Empty",
         icon: "",
         description: "Empty Separator.",
+        value: ""
+    }],
+    [CMD.UPLOAD_FILE, {
+        name: "Upload File",
+        icon: "upload",
+        description: "Downloads PDF file.",
         value: ""
     }],
     [CMD.PDF_DOWNLOAD, {

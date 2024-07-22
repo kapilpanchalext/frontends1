@@ -3,9 +3,7 @@ import { CMD, CMD_MAP } from '../../utils/Commands';
 import { FONT_SIZE_MAP, FontNames, FontSize } from '../../utils/FontNames';
 import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
 
-type Props = {}
-
-const ButtonControls = (props: Props) => {
+const ButtonControls = () => {
 
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);
@@ -96,7 +94,7 @@ const ButtonControls = (props: Props) => {
   return (
     <>
       <div style={{ backgroundColor:"transparent" }}>
-          <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
+          <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
           <input type="search" style={{ minHeight: '33px' }} placeholder="Search..." />
             {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
               let inputTypes;
