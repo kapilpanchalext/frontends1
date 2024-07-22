@@ -13,9 +13,9 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({
-    getRichTextRefData() {
-      return contentEditableRef.current;
-    },
+      getRichTextRefData() {
+        return contentEditableRef.current;
+      },
   }),[]);
 
   useEffect(() => {
