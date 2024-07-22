@@ -11,10 +11,12 @@ const RichTextEditor = () => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
       setIsContentEditableEvent(false);
+      console.log(richTextData.current.getScrollHeight());
     }
   }, [isContentEditableEvent]);
 
   console.log(data);
+  
 
   return (
     <>
