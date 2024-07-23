@@ -140,16 +140,16 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (contentEditableRef1.current) {
-      const totalHeight = contentEditableRef1.current.scrollHeight;
-      const heights = [];
-      for (let i = 0; i < totalHeight; i += a4HeightPx) {
-        heights.push(i);
-      }
-      // setA4Heights(heights);
-    }
-  }, [a4HeightPx, contentEditableRef1.current?.scrollHeight]);
+  // useEffect(() => {
+  //   if (contentEditableRef1.current) {
+  //     const totalHeight = contentEditableRef1.current.scrollHeight;
+  //     const heights = [];
+  //     for (let i = 0; i < totalHeight; i += a4HeightPx) {
+  //       heights.push(i);
+  //     }
+  //     // setA4Heights(heights);
+  //   }
+  // }, [a4HeightPx, contentEditableRef1.current?.scrollHeight]);
 
   return (
     <div className="App">
