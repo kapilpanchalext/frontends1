@@ -117,14 +117,19 @@
 
 
 
-import React, { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
   const contentEditableRef1 = useRef(null);
   const contentEditableRef2 = useRef(null);
-  const a4Heights = Array.from({ length: 10 }, (_, index) => index * 500); // Example heights
-
+  // const [a4Heights, setA4Heights] = useState([]);
+  const a4HeightPx = (297 / 25.4) * 96;
+  const MAX_NUMBER_OF_PAGES = 1000;
+  const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
+  
+  console.log(JSON.stringify(a4Heights));
+  
   const handleScroll = () => {
     const element1 = contentEditableRef1.current;
     const element2 = contentEditableRef2.current;
@@ -134,6 +139,17 @@ function App() {
       element2.scrollTop = winScroll;
     }
   };
+
+  useEffect(() => {
+    if (contentEditableRef1.current) {
+      const totalHeight = contentEditableRef1.current.scrollHeight;
+      const heights = [];
+      for (let i = 0; i < totalHeight; i += a4HeightPx) {
+        heights.push(i);
+      }
+      // setA4Heights(heights);
+    }
+  }, [a4HeightPx, contentEditableRef1.current?.scrollHeight]);
 
   return (
     <div className="App">
@@ -168,16 +184,15 @@ function App() {
           style={{
             border: '1px solid black',
             height: '500px',
-            overflowY: 'auto',
+            overflowY: 'hidden',
             position: 'relative',
-            width: '50mm',
+            width: '10mm',
             flex: '0 0 auto'
-          }}
-        >
+          }}>
           {a4Heights.map((height, index) => (
-            <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%' }}>
-              <h6 className="moving-line">A4</h6>
-              <hr className="moving-line" />
+            <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
+              <hr className="moving-line" style={{ width: '100%' }}/>
+              <h6 className="moving-line" style={{ marginTop: '1px', }}>A4</h6>
             </div>
           ))}
         </div>

@@ -1,39 +1,39 @@
 .App {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin-top: 50px;
-  }
-  
-  .colored-div {
-    width: 50px;
-    height: 300px;
-    border: 1px solid #000;
-    position: relative;
-    margin: 0 auto;
-  }
-  
-  .color-fill {
-    width: 100%;
-    background-color: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 50px;
+}
 
-  .moving-line {
-    position: absolute;
-    width: 100%;
-    left: 0;
-    border: none;
-    border-top: 5px solid gray;
-    margin: 0;
-  }
-  
-  input[type='number'] {
-    width: 60px;
-  }
+.colored-div {
+  width: 50px;
+  height: 300px;
+  border: 1px solid #000;
+  position: relative;
+  margin: 0 auto;
+}
 
-  .moving-container {
+.color-fill {
+  width: 100%;
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.moving-line {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  border: none;
+  border-top: 0px solid gray;
+  margin: 0;
+}
+
+input[type='number'] {
+  width: 10px;
+}
+
+.moving-container {
   position: absolute;
   width: 50px;
   right: 0;
@@ -42,16 +42,8 @@
   align-items: center;
 }
 
-.moving-line {
-  margin: 0;
-}
-
 hr.moving-line {
   width: 100%;
   border: none;
   border-top: 1px solid gray;
-}
-
-input[type='number'] {
-  width: 60px;
 }
