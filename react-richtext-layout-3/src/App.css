@@ -47,3 +47,39 @@ hr.moving-line {
   border: none;
   border-top: 1px solid gray;
 }
+
+/* Layout CSS */
+
+.flex-container-row {
+  display: flex;
+  align-items: stretch;
+  background-color: #f1f1f1;
+  flex-direction: row;
+}
+
+.flex-container-column {
+  display: flex;
+  align-items: stretch;
+  background-color: #f1f1f1;
+  flex-direction: column;
+}
+
+.flex-item {
+  background-color: transparent;
+  margin: 10px;
+  text-align: center;
+  line-height: 75px;
+  font-size: 30px;
+}
+
+.flex-item-1 {
+  flex-grow: 1;
+}
+
+.flex-item-2 {
+  flex-grow: 2;
+}
+
+.flex-item-3 {
+  flex-grow: 8;
+}

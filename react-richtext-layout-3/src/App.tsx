@@ -1,5 +1,5 @@
-// import { useState, useEffect, useRef } from 'react';
-// import './App.css';
+import { useState,  useRef } from 'react';
+import './App.css';
 
 // function App() {
 //   const [scrollProgress, setScrollProgress] = useState(0);
@@ -115,9 +115,6 @@
 
 // export default App;
 
-
-import { useState, useRef } from 'react';
-
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -149,50 +146,66 @@ function App() {
         <div className="col" style={{ display: "flex", height: "100%", flexDirection: "row" }}>
           <div style={{ margin: "10px", flexGrow: 1, flexShrink: 0, backgroundColor: "transparent", display: "flex", flexDirection: "column", border: "1px solid black", borderRadius: "10px" }}></div>
           
-          <div className="col" style={{ width: "calc(85% - 20px)", backgroundColor: "transparent", display: "flex", flexDirection: "column", height: "100%" }}>
+          <div className="col" style={{ width: "calc(85% - 20px)", backgroundColor: "transparent", display: "flex", flexDirection: "column", height: "100%" }}> 
           
-          <div className="row" style={{ margin: "10px", flexShrink: 0, backgroundColor: "transparent", height: "20%", display: "flex", flexDirection: "row", border: "1px solid black", borderRadius: "10px" }}></div>
-
-          <div style={{display: "flex", flexDirection: "column" }}>
-            <div style={{display: "flex", flexDirection: "row", height: '2px', background: '#ccc', marginLeft: '10px', marginRight: '10px' }}>
-              <div style={{ height: '2px', background: '#04AA6D', width: `${scrollProgress}%` }}></div>
-            </div>
-          
-            <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: "10px" }}>
-              <div contentEditable ref={contentEditableRef} onScroll={handleScroll}
-                style={{ border: '1px solid black', height: '500px', overflowY: 'auto', position: 'relative', flexGrow: 1, borderRadius: "10px", margin: "10px" }}
-              >
-                {/* Content for the first div */}
-              </div>
-              </div>
-              </div>
-              </div>
-              <div
-                ref={contentEditableRef2}
-                onScroll={handleScroll}
-                style={{
-                  border: '1px solid black',
-                  height: '500px',
-                  overflowY: 'hidden',
-                  position: 'relative',
-                  width: '10mm',
-                  flex: '0 0 auto',
-                  margin: "10px",
-                  borderRadius: "10px",
-                }}>
-                {a4Heights.map((height, index) => (
-                  <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
-                    <hr className="moving-line" style={{ width: '100%' }}/>
-                    <h6 className="moving-line" style={{ marginTop: '1px', }}>A4</h6>
-                  </div>
-                ))}
+            <div className="row" style={{ margin: "10px", flexShrink: 0, backgroundColor: "transparent", height: "20%", display: "flex", flexDirection: "row", border: "1px solid black", borderRadius: "10px" }}>Button Div</div>
+    
+            <div style={{display: "flex", flexDirection: "column" }}>
+              <div style={{display: "flex", flexDirection: "row", height: '2px', background: '#ccc', marginLeft: '10px', marginRight: '10px' }}>
+                <div style={{ height: '2px', background: '#04AA6D', width: `${scrollProgress}%` }}></div>
               </div>
             
+              <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", gap: "10px" }}>
+                <div contentEditable ref={contentEditableRef} onScroll={handleScroll}
+                  style={{ border: '1px solid black', height: '500px', overflowY: 'auto', position: 'relative', flexGrow: 1, borderRadius: "10px", margin: "10px" }}
+                >
+                </div>
 
-          
+                <div
+                  ref={contentEditableRef2}
+                  onScroll={handleScroll}
+                  style={{
+                    border: '1px solid black',
+                    height: '500px',
+                    overflowY: 'hidden',
+                    position: 'relative',
+                    width: '10mm',
+                    flex: '0 0 auto',
+                    margin: "10px",
+                    borderRadius: "10px",
+                  }}>
+                  {a4Heights.map((height, index) => (
+                    <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
+                      <hr className="moving-line" style={{ width: '100%' }}/>
+                      <h6 className="moving-line" style={{ marginTop: '1px', }}>A4</h6>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <p>Scroll Position: {scrollPosition}px</p>
+
+    {/* <div className="flex-container-column" style={{ border: "1px solid black", borderRadius: "10px" }}>
+        <div className="flex-container-row" style={{ border: "1px solid black", borderRadius: "10px" }}>
+          <div className="flex-item flex-item-1" style={{ border: "1px solid black", borderRadius: "10px" }}>1</div>
+          <div className="flex-item flex-item-2" style={{ border: "1px solid black", borderRadius: "10px" }}>2</div>
+          <div className="flex-item" style={{ border: "1px solid black", borderRadius: "10px" }}>3</div>
+          <div className="flex-item flex-item-1" style={{ border: "1px solid black", borderRadius: "10px" }}>4</div>        
+        </div>
+        <div className="flex-container-column" style={{ border: "1px solid black", borderRadius: "10px" }}>
+          <div className="flex-container-row" style={{ border: "1px solid black", borderRadius: "10px" }}>
+            <div className="flex-item flex-item-1" style={{ border: "1px solid black", borderRadius: "10px" }}>7</div>
+            <div className="flex-item flex-item-2" style={{ border: "1px solid black", borderRadius: "10px" }}>8</div>
+            <div className="flex-item flex-item-3" style={{ border: "1px solid black", borderRadius: "10px" }}>9</div>        
+          </div>
+          <div className="flex-item flex-item-1" style={{ border: "1px solid black", borderRadius: "10px" }}>4</div>
+          <div className="flex-item flex-item-2" style={{ border: "1px solid black", borderRadius: "10px" }}>5</div>
+          <div className="flex-item flex-item-3" style={{ border: "1px solid black", borderRadius: "10px" }}>6</div>
+        </div>
+      </div> */}
     </>
   );
 }
