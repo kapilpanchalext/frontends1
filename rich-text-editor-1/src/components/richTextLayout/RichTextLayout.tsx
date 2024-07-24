@@ -14,28 +14,27 @@ const RichTextLayout = ({layoutHeight}: Props) => {
   
   const [scrollProgress, setScrollProgress] = useState(0);
   const [scrollPosition, setScrollPosition] = useState(0);
-  const contentEditableRef = useRef(null);
+//   const contentEditableRef = useRef(null);
   const contentEditableRef2 = useRef(null);
   const a4HeightPx = (297 / 25.4) * 96;
   const MAX_NUMBER_OF_PAGES = 1000;
   const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
   
-  console.log(JSON.stringify(a4Heights));
-  
   const handleScroll = () => {
-    const element1 = contentEditableRef.current;
+    const element1 = richTextData.current;
     const element2 = contentEditableRef2.current;
-    const winScroll = element1?.scrollTop;
-    const height = element1?.scrollHeight - element1?.clientHeight;
+    const winScroll = element1!.getScrollTop();
+    const height = element1!.getScrollHeight() - element1!.getClientHeight();
     const scrolled = (winScroll / height) * 100;
+
     if (element1 && element2) {
-      const winScroll = element1.scrollTop;
+      const winScroll = element1!.getScrollTop;
       setScrollPosition(winScroll);
       setScrollProgress(scrolled);
       element2.scrollTop = winScroll;
     }
+    console.log(element1?.getClientHeight());
   };
-
 
   const onPasteHandler = (isEditable: boolean) => {
     setIsContentEditableEvent(isEditable);
@@ -45,11 +44,10 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
       setIsContentEditableEvent(false);
-      console.log(richTextData.current.getScrollHeight());
     }
   }, [isContentEditableEvent]);
 
-  console.log(data);
+//   console.log(richTextData.current?.getRichTextRefData());
 
   return (
     <>

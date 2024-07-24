@@ -8,6 +8,8 @@ type Props = {
 export interface ForwardRichTextData {
   getRichTextRefData: () => HTMLDivElement | null;
   getScrollHeight: () => number;
+  getScrollTop: () => number;
+  getClientHeight: () => number;
 }
 
 const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...props}: Props, ref) => {
@@ -20,6 +22,12 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...pro
       getScrollHeight() {
         return contentEditableRef.current?.scrollHeight || 0;
       },
+      getScrollTop(){
+        return contentEditableRef.current?.scrollTop || 0;
+      },
+      getClientHeight(){
+        return contentEditableRef.current?.clientHeight || 0;
+      }
   }),[]);
 
   useEffect(() => {
