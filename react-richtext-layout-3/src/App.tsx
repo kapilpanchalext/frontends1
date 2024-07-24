@@ -165,14 +165,14 @@ function App() {
                   ref={contentEditableRef2}
                   onScroll={handleScroll}
                   style={{
-                    border: '1px solid black',
-                    height: '500px',
-                    overflowY: 'hidden',
-                    position: 'relative',
-                    width: '10mm',
-                    flex: '0 0 auto',
-                    margin: "10px",
-                    borderRadius: "10px",
+                    // border: '1px solid black',
+                    // height: '500px',
+                    // overflowY: 'hidden',
+                    // position: 'relative',
+                    // width: '10mm',
+                    // flex: '0 0 auto',
+                    // margin: "10px",
+                    // borderRadius: "10px",
                   }}>
                   {a4Heights.map((height, index) => (
                     <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>

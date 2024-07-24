@@ -4,14 +4,43 @@ import ContentEditable, { ForwardRichTextData } from "../contentEditable/Content
 import "./RichTextModule.css";
 
 type Props = {
-
+    layoutHeight: number;
 }
 
-const RichTextLayout = (props: Props) => {
-    const [data, setData] = useState<string>(''); //Data to be sent to backend
+const RichTextLayout = ({layoutHeight}: Props) => {
+  const [data, setData] = useState<string>(''); //Data to be sent to backend
   const richTextData = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
   
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const contentEditableRef = useRef(null);
+  const contentEditableRef2 = useRef(null);
+  const a4HeightPx = (297 / 25.4) * 96;
+  const MAX_NUMBER_OF_PAGES = 1000;
+  const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
+  
+  console.log(JSON.stringify(a4Heights));
+  
+  const handleScroll = () => {
+    const element1 = contentEditableRef.current;
+    const element2 = contentEditableRef2.current;
+    const winScroll = element1?.scrollTop;
+    const height = element1?.scrollHeight - element1?.clientHeight;
+    const scrolled = (winScroll / height) * 100;
+    if (element1 && element2) {
+      const winScroll = element1.scrollTop;
+      setScrollPosition(winScroll);
+      setScrollProgress(scrolled);
+      element2.scrollTop = winScroll;
+    }
+  };
+
+
+  const onPasteHandler = (isEditable: boolean) => {
+    setIsContentEditableEvent(isEditable);
+  };
+
   useEffect(() => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
@@ -21,9 +50,10 @@ const RichTextLayout = (props: Props) => {
   }, [isContentEditableEvent]);
 
   console.log(data);
+
   return (
     <>
-      <div className="flex-container-row editor-content border-visible" style={{ height: '800px' }} >
+      <div className="flex-container-row editor-content border-visible" style={{ height: `${layoutHeight}px` }} >
         <div className="flex-container-column editor-content border-visible  flex-item-1" style={{ minWidth: '10%', marginRight: '10px', marginBottom: '10px' }}>
         </div>
 
@@ -33,17 +63,22 @@ const RichTextLayout = (props: Props) => {
           </div>
           
           <div style={{ display: "flex", flexDirection: "row", height: '2px', background: '#ccc', marginLeft: '10px', marginRight: '10px' }}>
-            <div style={{ height: '2px', background: '#04AA6D', width: `${50}%` }}></div>
+            <div style={{ height: '2px', background: '#04AA6D', width: `${scrollProgress}%` }}></div>
           </div>
 
           <div className="flex-container-row editor-content border-visible" style={{ marginLeft: '5px', height: '100%' }}>
-            {/* <div className="editor-content border-visible flex-item-8" style={{ marginLeft: '5px' }}> */}
-                <ContentEditable ref={richTextData} onPaste={setIsContentEditableEvent}/>
-            {/* </div> */}
-            <div className="editor-content border-visible" style={{ marginLeft: '5px', width: '20px' }}></div>
-          </div>
+                <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)}/>
+                    <div ref={contentEditableRef2} onScroll={handleScroll} className="editor-content border-visible" style={{ marginLeft: '5px', width: '20px' }}>
+                            {a4Heights.map((height, index) => (
+                            <div key={index} style={{ position: 'absolute', top: `${height}px`, width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', overflow: 'hidden' }}>
+                            <hr className="moving-line" style={{ width: '100%' }}/>
+                            <h6 className="moving-line" style={{ marginTop: '1px', }}>A4</h6>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </>
   )
 }

@@ -3,14 +3,14 @@ import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 type Props = {
   // savePdf: boolean
   onPaste: (isEditable: boolean) => void;
-}
+} & React.HTMLAttributes<HTMLDivElement>;
 
 export interface ForwardRichTextData {
   getRichTextRefData: () => HTMLDivElement | null;
   getScrollHeight: () => number;
 }
 
-const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props, ref) => {
+const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...props}: Props, ref) => {
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -66,7 +66,6 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
         selection.addRange(range);
         onPaste(true);
         // console.log(editableDiv.innerHTML);
-        // console.log(contentEditableRef.current?.innerHTML);
       }
     };
 
@@ -87,6 +86,7 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
 
   return (
     <div
+      {...props}
       ref={contentEditableRef}
       contentEditable
       style={{ 
