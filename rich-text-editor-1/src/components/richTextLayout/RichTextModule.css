@@ -1,0 +1,57 @@
+.editor-content {
+    /* display: flex;
+    border-radius: 10px;
+    min-height: 100px;
+    padding: 5px; */
+  }
+  
+  .file-explorer {
+    /* min-width: 10%; */
+    /* margin-bottom: 500px; */
+    /* height: "80%"; */
+  }
+  
+  .border-visible{
+    border: 1px solid black;
+  }
+  
+  .flex-item {
+    /* background-color: transparent;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px; */
+  }
+  
+  .flex-container-row {
+    /* display: flex;
+    align-items: stretch;
+    background-color: #f1f1f1;
+    flex-direction: row; */
+  }
+  
+  .flex-container-column {
+    /* display: flex;
+    align-items: stretch;
+    background-color: #f1f1f1;
+    flex-direction: column; */
+  }
+  
+  .flex-item {
+    /* background-color: transparent;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px; */
+  }
+  
+  .flex-item-1 {
+    /* flex-grow: 1; */
+  }
+  
+  .flex-item-2 {
+    /* flex-grow: 2; */
+  }
+  
+  .flex-item-8 {
+    /* flex-grow: 8; */
+  }

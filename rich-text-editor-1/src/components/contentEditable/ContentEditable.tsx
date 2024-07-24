@@ -93,8 +93,9 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste}: Props
                 border: '1px solid black', 
                 backgroundColor:"white", 
                 padding: '10px', 
-                width: '100%', 
-                height: '100%', 
+                width: '100%',
+                borderRadius: '10px', 
+                // height: '100%', 
                 overflowY: "auto" 
             }}>
     </div>

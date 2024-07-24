@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import ContentEditable, { ForwardRichTextData } from '../contentEditable/ContentEditable';
 import ButtonControls from '../buttonControls/ButtonControls';
+import RichTextLayout from '../richTextLayout/RichTextLayout';
 
 const RichTextEditor = () => {
   const [data, setData] = useState<string>(''); //Data to be sent to backend
@@ -16,11 +17,11 @@ const RichTextEditor = () => {
   }, [isContentEditableEvent]);
 
   console.log(data);
-  
 
   return (
     <>
-      <div style={{
+    <RichTextLayout />
+      {/* <div style={{
             margin: "20px",
             marginTop: "0px",
             height: "50rem",
@@ -28,10 +29,11 @@ const RichTextEditor = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-          }}>
-            <ButtonControls />
-            <ContentEditable ref={richTextData} onPaste={setIsContentEditableEvent}/>
-      </div>
+          }}> */}
+            
+            {/* <ButtonControls />
+            <ContentEditable ref={richTextData} onPaste={setIsContentEditableEvent}/> */}
+      {/* </div> */}
     </>
   )
 }
