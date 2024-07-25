@@ -16,18 +16,18 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...pro
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({
-      getRichTextRefData() {
-        return contentEditableRef.current;
-      },
-      getScrollHeight() {
-        return contentEditableRef.current?.scrollHeight || 0;
-      },
-      getScrollTop(){
-        return contentEditableRef.current?.scrollTop || 0;
-      },
-      getClientHeight(){
-        return contentEditableRef.current?.clientHeight || 0;
-      }
+    getRichTextRefData() {
+      return contentEditableRef.current;
+    },
+    getScrollHeight() {
+      return contentEditableRef.current?.scrollHeight || 0;
+    },
+    getScrollTop(){
+      return contentEditableRef.current?.scrollTop || 0;
+    },
+    getClientHeight(){
+      return contentEditableRef.current?.clientHeight || 0;
+    }
   }),[]);
 
   useEffect(() => {
