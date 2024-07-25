@@ -91,14 +91,16 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
     };
   }, [onPaste]);
 
+  console.log(isReadonly);
+
   return (
     <div
       {...props}
       ref={contentEditableRef}
       contentEditable={isReadonly}
       style={{
-              border: `1px solid ${isReadonly} ? '#ccc' : black`, 
-              backgroundColor:"white", 
+              border: `1px solid #525252`, 
+              backgroundColor: 'white', 
               padding: '10px', 
               width: '100%',
               borderRadius: '10px', 
