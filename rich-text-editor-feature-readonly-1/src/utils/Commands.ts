@@ -42,6 +42,7 @@ export enum CMD {
     EMPTY = "empty",
     PDF_DOWNLOAD = "pdf",
     UPLOAD_FILE = "uploadFile",
+    READONLY = "readonly",
 }
 
 export const CMD_MAP = new Map<string, CommandParameter>([
@@ -203,7 +204,7 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     }],
     [CMD.INSERT_TEXT, {
         name: "Insert Text",
-        icon: "text_snippet",
+        icon: "insert_text",
         description: "Inserts the given plain text.",
         value: ""
     }],
@@ -318,13 +319,25 @@ export const CMD_MAP = new Map<string, CommandParameter>([
     [CMD.UPLOAD_FILE, {
         name: "Upload File",
         icon: "upload",
-        description: "Downloads PDF file.",
+        description: "Open A File.",
         value: ""
     }],
     [CMD.PDF_DOWNLOAD, {
-        name: "Delete",
+        name: "Download PDF",
         icon: "download",
         description: "Downloads PDF file.",
+        value: ""
+    }],
+    [CMD.EMPTY + "_18", {
+        name: "Empty",
+        icon: "",
+        description: "Empty Separator.",
+        value: ""
+    }],
+    [CMD.READONLY, {
+        name: "Readonly",
+        icon: "edit_document",
+        description: "Makes the Content as Readonly.",
         value: ""
     }],
 ]);

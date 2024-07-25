@@ -1,14 +1,20 @@
-import React, { useRef, useState } from 'react'
+import React, { Dispatch, useRef, useState } from 'react'
 import { CMD, CMD_MAP } from '../../utils/Commands';
 import { FONT_SIZE_MAP, FontNames, FontSize } from '../../utils/FontNames';
 import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
 
-const ButtonControls = () => {
+type Props = {
+  isReadonly: boolean;
+  setIsReadonly: Dispatch<React.SetStateAction<boolean>>;
+}
+
+const ButtonControls = ({ isReadonly, setIsReadonly }: Props) => {
 
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+
   useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
 
   const colorPickerCloseHandler = () => {
@@ -108,6 +114,9 @@ const ButtonControls = () => {
               }
               else if(key === CMD.PDF_DOWNLOAD) {
                 inputTypes = <button key={key} title={cmd.description} onClick={pdfDownloadFileHandler}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
+              }
+              else if(key === CMD.READONLY) {
+                inputTypes = <button key={key} title={cmd.description} onClick={() => setIsReadonly(!isReadonly)}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{isReadonly ? cmd.icon : "done_all"}</span></button>
               }
               else {
                 inputTypes = <button key={key} title={cmd.description} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>

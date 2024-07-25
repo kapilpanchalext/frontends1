@@ -9,6 +9,7 @@ type Props = {
 
 const RichTextLayout = ({layoutHeight}: Props) => {
   const [data, setData] = useState<string>(''); //Data to be sent to backend
+  const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const richTextData = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
@@ -51,7 +52,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
           <div className="flex-container-row editor-content border-visible" style={{ marginLeft: "5px" }}>
-            <ButtonControls />
+            <ButtonControls isReadonly={isReadonly} setIsReadonly={setIsReadonly}/>
           </div>
 
           <div style={{ display: "flex", flexDirection: "row", height: "2px", background: "#ccc", marginLeft: "15px", marginRight: "15px" }}>
@@ -59,7 +60,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
           </div>
 
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px", height: "100%" }}>
-            <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} />
+            <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} isReadonly={isReadonly} />
             <div
               ref={pageMarkerRef}
               className="flex-container-column editor-content border-visible"
