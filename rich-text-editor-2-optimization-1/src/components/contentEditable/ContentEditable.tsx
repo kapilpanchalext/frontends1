@@ -1,7 +1,6 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 
 type Props = {
-  // savePdf: boolean
   onPaste: (isEditable: boolean) => void;
 } & React.HTMLAttributes<HTMLDivElement>;
 
@@ -36,14 +35,12 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...pro
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Enter') {
         if (editableDiv) {
-          // console.log(editableDiv.innerHTML);
           onPaste(true);
         }
       }
     };
 
     const handleInput = () => {
-      // console.log(editableDiv?.innerHTML);
       onPaste(true);
     };
 
@@ -73,7 +70,6 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...pro
         selection.removeAllRanges();
         selection.addRange(range);
         onPaste(true);
-        // console.log(editableDiv.innerHTML);
       }
     };
 
@@ -103,7 +99,6 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...pro
                 padding: '10px', 
                 width: '100%',
                 borderRadius: '10px', 
-                // height: '100%', 
                 overflowY: "auto" 
             }}>
     </div>
