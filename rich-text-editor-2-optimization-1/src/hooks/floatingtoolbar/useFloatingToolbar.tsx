@@ -12,7 +12,9 @@ const useFloatingToolbar = ({draggableRef, closeButtonRef, showColorPicker}: Pro
         let isDragging = false;
     
         const onMouseMove = (event: MouseEvent) => {
-          if (!isDragging) return;
+          if (!isDragging) { 
+            return;
+          }
           element.style.left = `${event.clientX - offsetX}px`;
           element.style.top = `${event.clientY - offsetY}px`;
         };

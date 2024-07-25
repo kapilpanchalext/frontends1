@@ -9,7 +9,6 @@ const ButtonControls = () => {
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  // const [savePdf, setSavePdf] = useState<boolean>(false);
   useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
 
   const colorPickerCloseHandler = () => {
@@ -116,6 +115,7 @@ const ButtonControls = () => {
               return (inputTypes)
             })}
           </div>
+          
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
           <input

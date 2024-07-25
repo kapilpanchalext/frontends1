@@ -1,10 +1,14 @@
 import RichTextLayout from '../richTextLayout/RichTextLayout';
 
-const RichTextEditor = () => {
+type Props = {
+  layoutHeight: number;
+}
+
+const RichTextEditor = ({layoutHeight}: Props) => {
 
   return (
     <>
-      <RichTextLayout layoutHeight={800} />
+      <RichTextLayout layoutHeight={layoutHeight} />
     </>
   )
 }

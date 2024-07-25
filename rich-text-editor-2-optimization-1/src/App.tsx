@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <RichTextEditor />
+      <RichTextEditor layoutHeight={800} />
     </>
   )
 }
