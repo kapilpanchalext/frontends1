@@ -120,7 +120,7 @@
 import { useState, useRef, useEffect } from 'react';
 
 function App() {
-  const [scrollPosition, setScrollPosition] = useState(0);
+  // const [scrollPosition, setScrollPosition] = useState(0);
   const contentEditableRef1 = useRef(null);
   const contentEditableRef2 = useRef(null);
   // const [a4Heights, setA4Heights] = useState([]);
@@ -135,7 +135,7 @@ function App() {
     const element2 = contentEditableRef2.current;
     if (element1 && element2) {
       const winScroll = element1.scrollTop;
-      setScrollPosition(winScroll);
+      // setScrollPosition(winScroll);
       element2.scrollTop = winScroll;
     }
   };
@@ -197,7 +197,7 @@ function App() {
           ))}
         </div>
       </div>
-      <p>Scroll Position: {scrollPosition}px</p>
+      {/* <p>Scroll Position: {scrollPosition}px</p> */}
     </div>
   );
 }
