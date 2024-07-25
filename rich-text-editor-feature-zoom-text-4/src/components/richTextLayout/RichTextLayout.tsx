@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import ButtonControls from "../buttonControls/ButtonControls";
 import ContentEditable, { ForwardRichTextData } from "../contentEditable/ContentEditable";
 import "./RichTextModule.css";
+import ZoomControls from "../zoomControls/ZoomControls";
 
 type Props = {
     layoutHeight: number;
@@ -14,6 +15,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const pageMarkerRef = useRef<HTMLDivElement>(null);
+  const [zoomValue, setZoomValue] = useState<number>(100);
 
   const MAX_NUMBER_OF_PAGES = 1000;
   const a4HeightPx = useMemo(() => (297 / 25.4) * 96, []);
@@ -36,6 +38,10 @@ const RichTextLayout = ({layoutHeight}: Props) => {
   const onPasteHandler = (isEditable: boolean) => {
     setIsContentEditableEvent(isEditable);
   };
+
+  const onZoomValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setZoomValue(Number(event.target.value));
+  }
 
   useEffect(() => {
     if (richTextData.current) {
@@ -60,7 +66,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
           </div>
 
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px", height: "100%" }}>
-            <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} isReadonly={isReadonly} />
+            <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} isReadonly={isReadonly} zoomValue={zoomValue}/>
             <div
               ref={pageMarkerRef}
               className="flex-container-column editor-content border-visible"
@@ -77,6 +83,11 @@ const RichTextLayout = ({layoutHeight}: Props) => {
                   <h6 className="moving-line" style={{ marginTop: "1px" }}>A4</h6>
                 </div>
               ))}
+            </div>
+          </div>
+          <div className="flex-container-row editor-content border-visible" style={{ border: '1px solid #ccc', marginLeft: "10px", marginRight: "5px", minHeight: "30px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+            <div className="flex-container-column editor-content" style={{ minHeight: "30px", maxWidth: "10%", backgroundColor: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <ZoomControls zoomValue={zoomValue} setZoomValue={onZoomValueChange}/>
             </div>
           </div>
         </div>

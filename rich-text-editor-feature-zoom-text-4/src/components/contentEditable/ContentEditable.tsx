@@ -4,6 +4,7 @@ import "./ContentEditable.module.css";
 type Props = {
   isReadonly: boolean;
   onPaste: (isEditable: boolean) => void;
+  zoomValue: number;
 } & React.HTMLAttributes<HTMLDivElement>;
 
 export interface ForwardRichTextData {
@@ -13,7 +14,7 @@ export interface ForwardRichTextData {
   getClientHeight: () => number;
 }
 
-const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isReadonly, ...props}: Props, ref) => {
+const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isReadonly, zoomValue, ...props}: Props, ref) => {
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -96,13 +97,13 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
       ref={contentEditableRef}
       contentEditable={isReadonly}
       style={{
-                border: '1px solid black', 
-                backgroundColor:"white", 
-                padding: '10px', 
-                width: '100%',
-                borderRadius: '10px', 
-                overflow: "auto",
-                zoom: 1,
+              border: `1px solid ${isReadonly} ? '#ccc' : black`, 
+              backgroundColor:"white", 
+              padding: '10px', 
+              width: '100%',
+              borderRadius: '10px', 
+              overflow: "auto",
+              zoom: zoomValue + '%',
             }}
             >
     </div>
