@@ -100,7 +100,8 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
                 padding: '10px', 
                 width: '100%',
                 borderRadius: '10px', 
-                overflow: "auto" 
+                overflow: "auto",
+                zoom: 1,
             }}
             >
     </div>
