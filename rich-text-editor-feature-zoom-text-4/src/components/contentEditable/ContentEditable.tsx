@@ -91,8 +91,6 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
     };
   }, [onPaste]);
 
-  console.log(isReadonly);
-
   return (
     <div
       {...props}
