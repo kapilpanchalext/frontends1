@@ -12,12 +12,12 @@ function App() {
   return (
     <>
       <h1>Custom Range Slider</h1>
-        <div style={{ margin: "10px", padding: "10px", width: "150px", height: "50px", display: "flex", flexDirection: "row", border: "1px solid black", alignItems: "center", justifyContent: "center" }}>
-          <p>-</p>
-          <input type="range" min="50" value={zoomValue} max="200" onChange={onZoomValueChange} className="slider" id="myRange"></input>
-          <p>+</p>
-        </div>
-      <div>Zoom Value: {zoomValue}</div>
+      <div style={{ margin: "10px", padding: "10px", gap: "10px",  width: "150px", height: "50px", display: "flex", flexDirection: "row", border: "1px solid black", alignItems: "center", justifyContent: "center" }}>
+      <div>{zoomValue}</div>
+        <p>-</p>
+        <input type="range" min="50" value={zoomValue} max="200" onChange={onZoomValueChange} className="slider" id="myRange"></input>
+        <p>+</p>
+      </div>
     </>
   )
 }
