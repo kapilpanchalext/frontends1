@@ -1,33 +1,31 @@
 import { Fragment, ReactNode, createElement } from 'react';
 import { useState, useRef, useEffect } from 'react';
 
-const A4_HEIGHT_PX = (297 / 25.4) * 96 * 2;
+// const chunkElements = (elements: ReactNode[], maxChars: number): ReactNode[][] => {
+//   const chunks: ReactNode[][] = [];
+//   let currentChunk: ReactNode[] = [];
+//   let currentLength = 0;
 
-const chunkElements = (elements: ReactNode[], maxChars: number): ReactNode[][] => {
-  const chunks: ReactNode[][] = [];
-  let currentChunk: ReactNode[] = [];
-  let currentLength = 0;
+//   elements.forEach(element => {
+//       const elementString = typeof element === 'string' ? element : element?.toString();
+//       const elementLength = elementString?.length;
 
-  elements.forEach(element => {
-      const elementString = typeof element === 'string' ? element : element?.toString();
-      const elementLength = elementString?.length;
+//       if (currentLength + elementLength! > maxChars) {
+//           chunks.push(currentChunk);
+//           currentChunk = [];
+//           currentLength = 0;
+//       }
 
-      if (currentLength + elementLength! > maxChars) {
-          chunks.push(currentChunk);
-          currentChunk = [];
-          currentLength = 0;
-      }
+//       currentChunk.push(element);
+//       currentLength += elementLength!;
+//   });
 
-      currentChunk.push(element);
-      currentLength += elementLength!;
-  });
+//   if (currentChunk.length > 0) {
+//       chunks.push(currentChunk);
+//   }
 
-  if (currentChunk.length > 0) {
-      chunks.push(currentChunk);
-  }
-
-  return chunks;
-};
+//   return chunks;
+// };
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -38,7 +36,7 @@ function App() {
   const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
   const [wordCount, setWordCount] = useState<number>(0);
   const [parsedHtml, setParsedHtml] = useState<ReactNode[]>();
-  const [chunks, setChunks] = useState<ReactNode[][]>([]);
+  // const [chunks, setChunks] = useState<ReactNode[][]>([]);
 
   const handleScroll = () => {
     const element1 = contentEditableRef1.current;
@@ -96,13 +94,12 @@ function App() {
             }
         }
     });
-    const chunkedElements = chunkElements(elements, 2100);
-    setChunks(chunkedElements);
+    // const chunkedElements = chunkElements(elements, 2100);
+    // setChunks(chunkedElements);
     return elements;
 };
 
   console.log(parsedHtml?.length);
-  console.log(chunks);
 
   return (
     <div className="App">
@@ -132,17 +129,16 @@ function App() {
 
             <div>
               {parsedHtml && parsedHtml.map((chunk, index) => (
-                  <fieldset
-                      key={index}
-                      style={{ zoom: 0.5, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}
-                  >
-                      <legend>Content {index + 1}</legend>
-                      <div>
-                        <Fragment key={index}>{chunk}</Fragment>
-                      </div>
-                  </fieldset>
+                <fieldset
+                    key={index}
+                    style={{ zoom: 0.5, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}>
+                    <legend>Content {index + 1}</legend>
+                    <div>
+                      <Fragment key={index}>{chunk}</Fragment>
+                    </div>
+                </fieldset>
               ))}
-          </div>
+            </div>
             
           {/* Content for the first div */}
         </div>
