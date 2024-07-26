@@ -8,7 +8,7 @@ function App() {
   const a4HeightPx = (297 / 25.4) * 96;
   const MAX_NUMBER_OF_PAGES = 1000;
   const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
-  const [wordCount, setWordCount] = useState<number>(0);
+  const [characterCount, setCharacterCount] = useState<number>(0);
   const [parsedHtml, setParsedHtml] = useState<ReactNode[]>();
 
   const handleScroll = () => {
@@ -22,7 +22,7 @@ function App() {
     }
     if (contentEditableRef1.current) {
       const elements = Array.from(contentEditableRef1.current.innerText);
-      setWordCount(elements.length);
+      setCharacterCount(elements.length);
     }
   };
 
@@ -136,6 +136,7 @@ function App() {
           ))}
         </div>
       </div>
+      <p>Character count: {characterCount}</p>
       <p>Scroll Position: {scrollPosition}px</p>
     </div>
   );
