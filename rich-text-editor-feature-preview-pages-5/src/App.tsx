@@ -1,7 +1,7 @@
 import { ReactNode, cloneElement, createElement } from 'react';
 import { useState, useRef, useEffect } from 'react';
 
-// const A4_HEIGHT_PX = (297 / 25.4) * 96;
+const A4_HEIGHT_PX = (297 / 25.4) * 96 * 2;
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
