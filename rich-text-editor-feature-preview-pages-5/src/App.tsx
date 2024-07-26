@@ -1,7 +1,33 @@
-import { ReactNode, cloneElement, createElement } from 'react';
+import { Fragment, ReactNode, cloneElement, createElement } from 'react';
 import { useState, useRef, useEffect } from 'react';
 
 const A4_HEIGHT_PX = (297 / 25.4) * 96 * 2;
+
+const chunkElements = (elements: ReactNode[], maxChars: number): ReactNode[][] => {
+  const chunks: ReactNode[][] = [];
+  let currentChunk: ReactNode[] = [];
+  let currentLength = 0;
+
+  elements.forEach(element => {
+      const elementString = typeof element === 'string' ? element : element?.toString();
+      const elementLength = elementString?.length;
+
+      if (currentLength + elementLength! > maxChars) {
+          chunks.push(currentChunk);
+          currentChunk = [];
+          currentLength = 0;
+      }
+
+      currentChunk.push(element);
+      currentLength += elementLength!;
+  });
+
+  if (currentChunk.length > 0) {
+      chunks.push(currentChunk);
+  }
+
+  return chunks;
+};
 
 function App() {
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -10,76 +36,10 @@ function App() {
   const a4HeightPx = (297 / 25.4) * 96;
   const MAX_NUMBER_OF_PAGES = 1000;
   const a4Heights = Array.from({ length: MAX_NUMBER_OF_PAGES }, (_, index) => index * a4HeightPx);
-  const [parsedHtmlCharacterLength, setParsedHtmlCharacterLength] = useState<number>(0);
+  const [wordCount, setWordCount] = useState<number>(0);
   const [parsedHtml, setParsedHtml] = useState<ReactNode[]>();
+  const [chunks, setChunks] = useState<ReactNode[][]>([]);
 
-  // useEffect(() => {
-  //   if (contentEditableRef1.current) {
-  //     const htmlString = contentEditableRef1.current.innerHTML;
-
-  //     // Create a temporary container to parse the HTML string
-  //     const tempContainer = document.createElement('div');
-  //     tempContainer.innerHTML = htmlString;
-
-  //     // const elements: string[] = Array.from(tempContainer.childNodes);
-  //     // setParsedHtml(elements);
-  //   }
-  // }, [contentEditableRef1.current?.innerHTML]);
-
-  // useEffect(() => {
-  //   if (contentEditableRef1.current) {
-  //     // Convert the child nodes to an array of outerHTML strings
-  //     const elements = Array.from(contentEditableRef1.current.innerText);
-  //     // setParsedHtml(elements);
-  //     setParsedHtmlCharacterLength(elements.length);
-  //     console.log(elements.length);
-  //   }
-  // }, [contentEditableRef1.current?.innerHTML]);
-
-  // useEffect(() => {
-  //   if (contentEditableRef1.current) {
-  //     const htmlString = contentEditableRef1.current.innerHTML;
-
-  //     // Create a temporary container to parse the HTML string
-  //     const tempContainer = document.createElement('div');
-  //     tempContainer.innerHTML = htmlString;
-
-  //     // Convert elements to their outer HTML string representation
-  //     const elements = Array.from(tempContainer.childNodes).map((node: ChildNode) =>
-  //       (node as HTMLElement).outerHTML
-  //     );
-
-  //     setParsedHtml(elements);
-  //     console.log(elements);
-  //   }
-  // }, [contentEditableRef1.current?.innerHTML]);
-
-  // useEffect(() => {
-  //   if (contentEditableRef1.current) {
-  //     const htmlString = contentEditableRef1.current.innerHTML;
-
-  //     // Create a temporary container to parse the HTML string
-  //     const tempContainer = document.createElement('div');
-  //     tempContainer.innerHTML = htmlString;
-
-  //     // Convert the child nodes to an array
-  //     // const elements = Array.from(tempContainer.childNodes);
-  //     // console.log(tempContainer.childNodes);
-
-  //     // tempContainer.childNodes.forEach((node, index) => {
-  //     //   console.log(node);
-  //     // })
-  //     // Update the state with the array of elements
-  //     // setParsedHtml(elements);
-
-  //     const elements: HTMLDivElement[] = Array.from(tempContainer.childNodes);
-  //     console.log(elements);
-
-  //     setParsedHtml(elements);
-  //   }
-  // }, [contentEditableRef1.current?.innerHTML]);
-
-  
   const handleScroll = () => {
     const element1 = contentEditableRef1.current;
     const element2 = contentEditableRef2.current;
@@ -91,7 +51,7 @@ function App() {
     }
     if (contentEditableRef1.current) {
       const elements = Array.from(contentEditableRef1.current.innerText);
-      setParsedHtmlCharacterLength(elements.length);
+      setWordCount(elements.length);
     }
   };
 
@@ -106,16 +66,20 @@ function App() {
     template.innerHTML = htmlString.trim();
     const elements: ReactNode[] = [];
     template.content.childNodes.forEach((node, index) => {
+      // console.log(node.textContent?.length);
+
       if (node.nodeType === Node.TEXT_NODE) {
         elements.push(node.textContent);
       } else if (node.nodeType === Node.ELEMENT_NODE) {
         elements.push(createElement((node as HTMLElement).tagName.toLowerCase(), { key: index }, (node as HTMLElement).innerHTML));
       }
     });
+    setChunks(chunkElements(elements, 2100));
     return elements;
   };
 
-  console.log(parsedHtmlCharacterLength);
+  console.log(parsedHtml?.length);
+  console.log(chunks);
 
   return (
     <div className="App">
@@ -131,7 +95,7 @@ function App() {
             width: '200px',
             flex: '0 0 auto',
           }}>
-            <fieldset style={{zoom:0.5, maxHeight: "500px", overflow: "hidden", overflowWrap: "break-word", marginBottom: "20px" }}>
+            {/* <fieldset style={{zoom:0.5, maxHeight: "500px", overflow: "hidden", overflowWrap: "break-word", marginBottom: "20px" }}>
               <legend>Page 1</legend>
                 <div>{parsedHtml && Array.from(parsedHtml).map((node, index) => cloneElement(node, { key: index }))}</div>
             </fieldset>
@@ -139,7 +103,23 @@ function App() {
             <fieldset style={{zoom:0.5, maxHeight: "500px", overflow: "hidden", overflowWrap: "break-word", marginBottom: "20px" }}>
               <legend>Page 1</legend>
                 <div>{parsedHtml && Array.from(parsedHtml).map((node, index) => cloneElement(node, { key: index }))}</div>
-            </fieldset>
+            </fieldset> */}
+
+            {/* {parsedHtml && Array.from(parsedHtml).map((node, index) => cloneElement(node, { key: index }))} */}
+
+            <div>
+            {parsedHtml &&parsedHtml.map((chunk, index) => (
+                <fieldset
+                    key={index}
+                    style={{ zoom: 0.5, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}
+                >
+                    <legend>Element {index + 1}</legend>
+                    <div>
+                      <Fragment key={index}>{chunk}</Fragment>
+                    </div>
+                </fieldset>
+            ))}
+        </div>
             
           {/* Content for the first div */}
         </div>
