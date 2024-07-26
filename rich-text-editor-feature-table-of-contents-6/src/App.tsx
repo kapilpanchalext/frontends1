@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, createElement } from 'react';
+import { ReactNode, createElement } from 'react';
 import { useState, useRef, useEffect } from 'react';
 
 function App() {
@@ -29,6 +29,10 @@ function App() {
   useEffect(() => {
     if (contentEditableRef1.current) {
       setParsedHtml(parseHtmlToReact(contentEditableRef1.current.innerHTML));
+      const ids = contentEditableRef1.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      ids.forEach((id, index) => {
+        id.setAttribute('id', `header-${index}`);
+      })
     }
   }, [contentEditableRef1.current?.innerHTML]);
 
@@ -38,20 +42,23 @@ function App() {
     const elements: ReactNode[] = [];
 
     template.content.childNodes.forEach((node, index) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-            const element = node as HTMLElement;
-            const tagName = element.tagName.toLowerCase();
-            if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
-                elements.push(createElement(
-                    tagName,
-                    { key: index },
-                    element.innerHTML
-                ));
-            }
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as HTMLElement;
+        const tagName = element.tagName.toLowerCase();
+
+        if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+          elements.push(createElement(
+              tagName,
+              { 
+                key: index,
+              },
+              element.innerHTML
+          ));
         }
+      }
     });
     return elements;
-};
+  };
 
   return (
     <div className="App">
@@ -88,7 +95,7 @@ function App() {
               >
                   <legend>Content {index + 1}</legend>
                   <div>
-                    <a href={`#header-${index * 2100}`} key={index} style={{ display: 'block', marginBottom: '10px' }}>
+                    <a href={`#header-${index}`} key={index} style={{ display: 'block', marginBottom: '10px' }}>
                         {chunk}
                     </a>
                   </div>
