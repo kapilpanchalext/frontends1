@@ -1,4 +1,4 @@
-import { Fragment, ReactNode, cloneElement, createElement } from 'react';
+import { Fragment, ReactNode, createElement } from 'react';
 import { useState, useRef, useEffect } from 'react';
 
 const A4_HEIGHT_PX = (297 / 25.4) * 96 * 2;
@@ -61,22 +61,45 @@ function App() {
     }
   }, [contentEditableRef1.current?.innerHTML]);
 
+  // const parseHtmlToReact = (htmlString: string) => {
+  //   const template = document.createElement('template');
+  //   template.innerHTML = htmlString.trim();
+  //   const elements: ReactNode[] = [];
+  //   template.content.childNodes.forEach((node, index) => {
+  //     // console.log(node.textContent?.length);
+
+  //     if (node.nodeType === Node.TEXT_NODE) {
+  //       elements.push(node.textContent);
+  //     } else if (node.nodeType === Node.ELEMENT_NODE) {
+  //       elements.push(createElement((node as HTMLElement).tagName.toLowerCase(), { key: index }, (node as HTMLElement).innerHTML));
+  //     }
+  //   });
+  //   setChunks(chunkElements(elements, 2100));
+  //   return elements;
+  // };
+
   const parseHtmlToReact = (htmlString: string) => {
     const template = document.createElement('template');
     template.innerHTML = htmlString.trim();
     const elements: ReactNode[] = [];
-    template.content.childNodes.forEach((node, index) => {
-      // console.log(node.textContent?.length);
 
-      if (node.nodeType === Node.TEXT_NODE) {
-        elements.push(node.textContent);
-      } else if (node.nodeType === Node.ELEMENT_NODE) {
-        elements.push(createElement((node as HTMLElement).tagName.toLowerCase(), { key: index }, (node as HTMLElement).innerHTML));
-      }
+    template.content.childNodes.forEach((node, index) => {
+        if (node.nodeType === Node.ELEMENT_NODE) {
+            const element = node as HTMLElement;
+            const tagName = element.tagName.toLowerCase();
+            if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
+                elements.push(createElement(
+                    tagName,
+                    { key: index },
+                    element.innerHTML
+                ));
+            }
+        }
     });
-    setChunks(chunkElements(elements, 2100));
+    const chunkedElements = chunkElements(elements, 2100);
+    setChunks(chunkedElements);
     return elements;
-  };
+};
 
   console.log(parsedHtml?.length);
   console.log(chunks);
@@ -108,18 +131,18 @@ function App() {
             {/* {parsedHtml && Array.from(parsedHtml).map((node, index) => cloneElement(node, { key: index }))} */}
 
             <div>
-            {parsedHtml &&parsedHtml.map((chunk, index) => (
-                <fieldset
-                    key={index}
-                    style={{ zoom: 0.5, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}
-                >
-                    <legend>Element {index + 1}</legend>
-                    <div>
-                      <Fragment key={index}>{chunk}</Fragment>
-                    </div>
-                </fieldset>
-            ))}
-        </div>
+              {parsedHtml && parsedHtml.map((chunk, index) => (
+                  <fieldset
+                      key={index}
+                      style={{ zoom: 0.5, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}
+                  >
+                      <legend>Content {index + 1}</legend>
+                      <div>
+                        <Fragment key={index}>{chunk}</Fragment>
+                      </div>
+                  </fieldset>
+              ))}
+          </div>
             
           {/* Content for the first div */}
         </div>
