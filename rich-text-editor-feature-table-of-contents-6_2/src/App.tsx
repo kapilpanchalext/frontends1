@@ -10,6 +10,7 @@ function App() {
   const richTextDataRef = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
   const [data, setData] = useState<string>('');
+  const [tocKey, setTocKey] = useState<number>(0);
 
   const onPasteHandler = (isEditable: boolean) => {
     setIsContentEditableEvent(isEditable);
@@ -19,17 +20,18 @@ function App() {
     if (richTextDataRef.current) {
       setData(richTextDataRef.current.getRichTextRefData()?.innerHTML || '');
       setIsContentEditableEvent(false);
+      setTocKey(prevKey => prevKey + 1);
     }
   }, [isContentEditableEvent]);
 
-  console.log(data);
+  // console.log(data);
 
   return (
     <>
       <div className="App">
       <h1>Table of Contents</h1>
       <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: "10px" }}>
-        <TableOfContents rawData={data}/>
+        <TableOfContents key={tocKey} rawData={data}/>
         <ContentEditable ref={richTextDataRef} onCustomPaste={onPasteHandler}/>
       </div>
     </div>

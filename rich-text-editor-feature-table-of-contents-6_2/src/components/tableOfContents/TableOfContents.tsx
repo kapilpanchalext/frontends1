@@ -1,4 +1,4 @@
-import { ReactNode, createElement } from "react";
+import { ReactElement, ReactNode, createElement, isValidElement } from "react";
 import log from "../../log";
 
 type Props = {
@@ -6,33 +6,56 @@ type Props = {
 }
 
 const TableOfContents = ({rawData}: Props) => {
-    log("<TableOfContents /> rendered");
+  log("<TableOfContents /> rendered");
 
-    const parseHtmlToReact = (htmlString: string) => {
-      const template = document.createElement('template');
-      template.innerHTML = htmlString.trim();
-      const elements: ReactNode[] = [];
-
-      template.content.childNodes.forEach((node, index) => {
-        if (node.nodeType === Node.ELEMENT_NODE) {
-          const element = node as HTMLElement;
-          const tagName = element.tagName.toLowerCase();
-
-          if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tagName)) {
-            elements.push(createElement(
-                tagName,
-                { 
-                  key: index,
-                },
-                element.innerHTML
-            ));
-          }
+  const parseHtmlToReact = (htmlString: string): ReactNode[] => {
+    const template = document.createElement('template');
+    template.innerHTML = htmlString.trim();
+    const elements: ReactNode[] = [];
+  
+    const processNode = (node: Node, index: number): ReactNode | null => {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const element = node as HTMLElement;
+        const tagName = element.tagName.toLowerCase();
+        
+        if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'].includes(tagName)) {
+          return createElement(tagName, { key: index },
+            Array.from(element.childNodes).map((child, childIndex) => processNode(child, childIndex))
+          );
         }
-      });
-      return elements;
+      } else if (node.nodeType === Node.TEXT_NODE) {
+        return node.textContent;
+      }
+      return null;
     };
-    const parsedHtml = rawData ? parseHtmlToReact(rawData) : null;
-    // console.log(rawData);
+
+    Array.from(template.content.childNodes).forEach((node, index) => {
+      const processedNode = processNode(node, index);
+      
+      if (processedNode && isReactElementWithChildren(processedNode)) {
+        elements.push(processedNode);
+      }
+    });
+  
+    return elements;
+  };
+
+  function isReactElementWithChildren(node: ReactNode): node is ReactElement {
+    if (isValidElement(node)) {
+      if (node?.props.children && node?.props.children[0] !== null) {
+        // console.log("TRUE: ", node?.props.children);
+        // if(node?.props.children[0] === null){
+        //   console.log("TRUE1: ");
+        // }
+        return true;
+      }
+    }
+    // console.log("FALSE: ", node);
+    return false;
+  }
+  
+  const parsedHtml = rawData ? parseHtmlToReact(rawData) : null;
+
   return (
     <div 
       style={{
