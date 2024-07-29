@@ -2,8 +2,10 @@ import React, { useRef, useState } from 'react'
 import { CMD, CMD_MAP } from '../../utils/Commands';
 import { FONT_SIZE_MAP, FontNames, FontSize } from '../../utils/FontNames';
 import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
+import log from '../../log';
 
 const ButtonControls = () => {
+  log("<ButtonControls /> rendered");
 
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);

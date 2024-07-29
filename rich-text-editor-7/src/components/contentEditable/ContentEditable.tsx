@@ -1,4 +1,5 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import log from '../../log';
 
 type Props = {
   onPaste: (isEditable: boolean) => void;
@@ -12,6 +13,7 @@ export interface ForwardRichTextData {
 }
 
 const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, ...props}: Props, ref) => {
+  log("<ContentEditable /> rendered");
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({

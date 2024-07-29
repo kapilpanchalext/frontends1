@@ -2,12 +2,15 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import ButtonControls from "../buttonControls/ButtonControls";
 import ContentEditable, { ForwardRichTextData } from "../contentEditable/ContentEditable";
 import "./RichTextModule.css";
+import TableOfContents from "../tableOfContents/TableOfContents";
+import log from "../../log";
 
 type Props = {
     layoutHeight: number;
 }
 
 const RichTextLayout = ({layoutHeight}: Props) => {
+  log("<RichTextLayout /> rendered");
   const [data, setData] = useState<string>(''); //Data to be sent to backend
   const richTextData = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
@@ -48,7 +51,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
       <div className="flex-container-row editor-content border-visible" style={{ height: `${layoutHeight}px` }}>
         <div className="flex-container-column editor-content border-visible flex-item-1"
           style={{ minWidth: "10%", marginRight: "10px", marginBottom: "10px" }}>
-            
+            <TableOfContents />
           </div>
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
