@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import './App.css'
+import './App.css';
 import ContentEditable from './components/contentEditable/ContentEditable';
 import TableOfContents from './components/tableOfContents/TableOfContents';
 import log from './log';
@@ -21,6 +21,8 @@ function App() {
       setIsContentEditableEvent(false);
     }
   }, [isContentEditableEvent]);
+
+  console.log(data);
 
   return (
     <>
