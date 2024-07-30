@@ -57,7 +57,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     <>
       <div className="flex-container-row editor-content border-visible" style={{ height: `${layoutHeight}px` }}>
         <div className="flex-container-column editor-content border-visible flex-item-1"
-          style={{ minWidth: "10%", marginRight: "0px", marginBottom: "10px", overflowY: "auto" }}>
+          style={{ minWidth: "10%", maxWidth: "10%", marginRight: "0px", marginBottom: "50px", overflowY: "auto" }}>
             <TableOfContents key={tocKey} rawData={data}/>
           </div>
 
