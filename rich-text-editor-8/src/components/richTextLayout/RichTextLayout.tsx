@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo, useCallback } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback, ChangeEvent } from "react";
 import ButtonControls from "../buttonControls/ButtonControls";
 import ContentEditable, { ForwardRichTextData } from "../contentEditable/ContentEditable";
 import "./RichTextModule.css";
@@ -45,7 +45,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     setIsContentEditableEvent(isEditable);
   };
 
-  const onZoomValueChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const onZoomValueChange = (event: ChangeEvent<HTMLInputElement>) => {
     setZoomValue(Number(event.target.value));
   }
 

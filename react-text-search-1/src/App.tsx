@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useEffect, useCallback, KeyboardEvent, ChangeEvent } from "react";
 import { Match } from "./model/Data_Model";
 import useSearchText from "./hooks/useSearchText";
 
@@ -9,7 +9,7 @@ function App() {
   const contentEditableRef = useRef<HTMLDivElement>(null);
   const originalHTML = useRef<Element>();
 
-  const fileReadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const fileReadHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -21,7 +21,7 @@ function App() {
     }
   };
 
-  const inputKeywordsHandler = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const inputKeywordsHandler = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       const inputValue = (event.target as HTMLInputElement).value;
       const keywordsArray = inputValue ? inputValue.split(',').map(keyword => keyword.trim()) : [];
@@ -40,7 +40,7 @@ function App() {
     });
   };
   
-  if(results &&results.length <= 0 && keywords.length <= 0){
+  if(results && results.length <= 0 && keywords.length <= 0){
     removeMarkTags();
   }
 
