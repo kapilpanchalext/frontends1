@@ -2,8 +2,6 @@ import { useState, useRef, useEffect, useMemo } from "react";
 import ButtonControls from "../buttonControls/ButtonControls";
 import ContentEditable, { ForwardRichTextData } from "../contentEditable/ContentEditable";
 import "./RichTextModule.css";
-import TableOfContents from "../tableOfContents/TableOfContents";
-import log from "../../log";
 import ZoomControls from "../zoomControls/ZoomControls";
 
 type Props = {
@@ -11,15 +9,13 @@ type Props = {
 }
 
 const RichTextLayout = ({layoutHeight}: Props) => {
-  log("<RichTextLayout /> rendered");
   const [data, setData] = useState<string>(''); //Data to be sent to backend
+  const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const richTextData = useRef<ForwardRichTextData>(null);
   const [isContentEditableEvent, setIsContentEditableEvent] = useState<boolean>(false);
   const [scrollProgress, setScrollProgress] = useState<number>(0);
   const pageMarkerRef = useRef<HTMLDivElement>(null);
-  const [tocKey, setTocKey] = useState<number>(0);
   const [zoomValue, setZoomValue] = useState<number>(100);
-  const [isReadonly, setIsReadonly] = useState<boolean>(true);
 
   const MAX_NUMBER_OF_PAGES = 1000;
   const a4HeightPx = useMemo(() => (297 / 25.4) * 96, []);
@@ -51,19 +47,14 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     if (richTextData.current) {
       setData(richTextData.current.getRichTextRefData()?.innerHTML || '');
       setIsContentEditableEvent(false);
-      setTocKey(prevKey => prevKey + 1);
     }
-  }, [isContentEditableEvent, data]);
-  
-  console.log("Data: ", data);
+  }, [isContentEditableEvent]);
 
   return (
     <>
       <div className="flex-container-row editor-content border-visible" style={{ height: `${layoutHeight}px` }}>
         <div className="flex-container-column editor-content border-visible flex-item-1"
-          style={{ minWidth: "10%", marginRight: "10px", marginBottom: "10px", overflowY: "auto" }}>
-            <TableOfContents key={tocKey} rawData={data}/>
-          </div>
+          style={{ minWidth: "10%", marginRight: "10px", marginBottom: "10px" }}></div>
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px" }}>
@@ -75,7 +66,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
           </div>
 
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px", height: "100%" }}>
-            <ContentEditable ref={richTextData} onScroll={handleScroll} onCustomPaste={() => onPasteHandler(false)} />
+            <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} isReadonly={isReadonly} zoomValue={zoomValue}/>
             <div
               ref={pageMarkerRef}
               className="flex-container-column editor-content border-visible"
@@ -94,7 +85,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
               ))}
             </div>
           </div>
-          <div className="flex-container-row editor-content border-visible" style={{ border: '1px solid #ccc', marginLeft: "10px", marginRight: "5px", minHeight: "30px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
+          <div className="flex-container-row editor-content" style={{ marginLeft: "10px", marginRight: "5px", minHeight: "30px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
             <div className="flex-container-column editor-content" style={{ minHeight: "30px", maxWidth: "10%", backgroundColor: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
               <ZoomControls zoomValue={zoomValue} setZoomValue={onZoomValueChange}/>
             </div>
@@ -102,50 +93,6 @@ const RichTextLayout = ({layoutHeight}: Props) => {
         </div>
       </div>
     </>
-    // <>
-    //   <div className="flex-container-row editor-content border-visible" style={{ height: `${layoutHeight}px` }}>
-    //     <div className="flex-container-column editor-content border-visible flex-item-1"
-    //       style={{ minWidth: "10%", marginRight: "10px", marginBottom: "10px", overflowY: "auto" }}>
-    //         <TableOfContents key={tocKey} rawData={data}/>
-    //       </div>
-
-    //     <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
-    //       <div className="flex-container-row editor-content border-visible" style={{ marginLeft: "5px" }}>
-    //         <ButtonControls isReadonly={isReadonly} setIsReadonly={setIsReadonly}/>
-    //       </div>
-
-    //       <div style={{ display: "flex", flexDirection: "row", height: "2px", background: "#ccc", marginLeft: "15px", marginRight: "15px" }}>
-    //         <div style={{ height: "2px", background: "#04AA6D", width: `${scrollProgress}%` }}></div>
-    //       </div>
-
-    //       <div className="flex-container-row editor-content" style={{ marginLeft: "5px", height: "100%" }}>
-    //         <ContentEditable ref={richTextData} onScroll={handleScroll} onPaste={() => onPasteHandler(false)} isReadonly={isReadonly} zoomValue={zoomValue}/>
-    //         <div
-    //           ref={pageMarkerRef}
-    //           className="flex-container-column editor-content border-visible"
-    //           style={{ marginLeft: "5px", width: "20px", position: "relative", overflow: "hidden" }}>
-    //           {a4Heights.map((height, index) => (
-    //             <div
-    //               key={index}
-    //               style={{
-    //                 position: "absolute",
-    //                 top: `${height}px`,
-    //                 width: "100%",
-    //               }}>
-    //               <hr className="moving-line" style={{ width: "100%" }} />
-    //               <h6 className="moving-line" style={{ marginTop: "1px" }}>A4</h6>
-    //             </div>
-    //           ))}
-    //         </div>
-    //       </div>
-    //       <div className="flex-container-row editor-content border-visible" style={{ border: '1px solid #ccc', marginLeft: "10px", marginRight: "5px", minHeight: "30px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
-    //         <div className="flex-container-column editor-content" style={{ minHeight: "30px", maxWidth: "10%", backgroundColor: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
-    //           <ZoomControls zoomValue={zoomValue} setZoomValue={onZoomValueChange}/>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </>
   )
 }
 

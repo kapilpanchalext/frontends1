@@ -1,0 +1,5 @@
+@supports (zoom: 1) {
+    .zoom-notice {
+      display: none;
+    }
+  }
