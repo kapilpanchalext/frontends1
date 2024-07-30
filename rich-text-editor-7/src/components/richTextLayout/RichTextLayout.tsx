@@ -55,7 +55,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
           </div>
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
-          <div className="flex-container-row editor-content border-visible" style={{ marginLeft: "5px" }}>
+          <div className="flex-container-row editor-content" style={{ marginLeft: "5px" }}>
             <ButtonControls />
           </div>
 
