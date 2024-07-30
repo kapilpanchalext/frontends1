@@ -39,7 +39,7 @@ function App() {
       parent?.removeChild(mark);
     });
   };
-
+  
   if(results &&results.length <= 0 && keywords.length <= 0){
     removeMarkTags();
   }

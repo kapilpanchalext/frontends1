@@ -1,4 +1,4 @@
-import React, { Dispatch, useRef, useState } from 'react'
+import React, { Dispatch, useRef, useState, KeyboardEvent, ChangeEvent } from 'react'
 import { CMD, CMD_MAP } from '../../utils/Commands';
 import { FONT_SIZE_MAP, FontNames, FontSize } from '../../utils/FontNames';
 import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
@@ -6,10 +6,10 @@ import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
 type Props = {
   isReadonly: boolean;
   setIsReadonly: Dispatch<React.SetStateAction<boolean>>;
+  getKeyWords: (keywords: string[]) => void;
 }
 
-const ButtonControls = ({ isReadonly, setIsReadonly }: Props) => {
-
+const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
@@ -96,18 +96,36 @@ const ButtonControls = ({ isReadonly, setIsReadonly }: Props) => {
     // setSavePdf(true);
   }
 
+  const inputSearchKeywordsHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+    // if (event.key === 'Enter') {
+    //   getKeyWords(event.currentTarget.value.split(',').map(keywords => keywords.trim()));
+    // }
+    if (event.key === 'Enter') {
+      const keywords = event.currentTarget.value
+        .split(',')
+        .map(keyword => keyword.trim())
+        .filter(keyword => keyword.length > 0);
+  
+      if (keywords.length > 0) {
+        getKeyWords(keywords);
+      } else {
+        getKeyWords([]);
+      }
+    }
+  }
+
   return (
     <>
       <div style={{ backgroundColor:"transparent" }}>
           <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
-          <input type="search" style={{ minHeight: '33px' }} placeholder="Search..." />
+          <input type="search" style={{ minHeight: '33px' }} placeholder="Search..." onKeyDown={inputSearchKeywordsHandler}/>
             {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
               let inputTypes;
               if(key === CMD.FONTNAME) {
-                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
               } 
               else if(key === CMD.FONTSIZE){
-                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: React.ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
+                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
               } 
               else if(key.startsWith(CMD.EMPTY)) {
                 inputTypes = <div key={key} style={{ width: '8px' }}></div>
