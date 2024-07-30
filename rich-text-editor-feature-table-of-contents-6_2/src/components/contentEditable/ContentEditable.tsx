@@ -30,13 +30,26 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onCustomPaste}:
 
   const enterKeyDownHandler = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
+        addIdTagsToHeaders();
         onCustomPaste(true);
     }
   };
 
   const pasteHandler = () => {
     onCustomPaste(true);
+    setTimeout(() => {
+      addIdTagsToHeaders();
+    }, 0);
   };
+
+  const addIdTagsToHeaders = () => {
+    if (richTextDataRef.current) {
+      const ids = richTextDataRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      ids.forEach((id, index) => {
+          id.setAttribute('id', `header-${index}`);
+      })
+    }
+  }
 
   return (
     <div contentEditable={true} ref={richTextDataRef}

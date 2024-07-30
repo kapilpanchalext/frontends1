@@ -22,12 +22,12 @@ const TableOfContents = ({rawData}: Props) => {
     const template = document.createElement('template');
     template.innerHTML = htmlString.trim();
     const elements: ReactNode[] = [];
-  
+
     const processNode = (node: Node, index: number): ReactNode | null => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as HTMLElement;
         const tagName = element.tagName.toLowerCase();
-        
+
         if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div'].includes(tagName)) {
           return createElement(tagName, { key: index },
             Array.from(element.childNodes).map((child, childIndex) => processNode(child, childIndex))
@@ -41,12 +41,12 @@ const TableOfContents = ({rawData}: Props) => {
 
     Array.from(template.content.childNodes).forEach((node, index) => {
       const processedNode = processNode(node, index);
-      
+
       if (processedNode && isReactElementWithChildren(processedNode)) {
         elements.push(processedNode);
       }
     });
-  
+
     return elements;
   };
 
@@ -63,9 +63,8 @@ const TableOfContents = ({rawData}: Props) => {
     // console.log("FALSE: ", node);
     return false;
   }
-  
+
   const parsedHtml = rawData ? parseHtmlToReact(rawData) : null;
-  console.log(parsedHtml);
 
   return (
     <div 
