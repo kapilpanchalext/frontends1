@@ -5,6 +5,16 @@ type Props = {
   rawData?: string;
 }
 
+const TagDisplayNameMap: { [key: string]: string } = {
+  h1: "Title",
+  h2: "Subtitle",
+  h3: "Heading 1",
+  h4: "Heading 2",
+  h5: "Sub Heading 1",
+  h6: "Sub Heading 2",
+  div: "Section",
+};
+
 const TableOfContents = ({rawData}: Props) => {
   log("<TableOfContents /> rendered");
 
@@ -55,6 +65,7 @@ const TableOfContents = ({rawData}: Props) => {
   }
   
   const parsedHtml = rawData ? parseHtmlToReact(rawData) : null;
+  console.log(parsedHtml);
 
   return (
     <div 
@@ -72,7 +83,7 @@ const TableOfContents = ({rawData}: Props) => {
           <fieldset
             key={index}
             style={{ zoom: 0.75, maxHeight: '500px', overflow: 'hidden', overflowWrap: 'break-word', marginBottom: '20px' }}>
-              <legend>Content {index + 1}</legend>
+              <legend> {isValidElement(chunk) && typeof chunk.type === 'string' ? TagDisplayNameMap[chunk.type] : 'Unknown'}</legend>
               <div>
                 <a href={`#header-${index}`} key={index} style={{ display: 'block', marginBottom: '10px' }}>
                     {chunk}
