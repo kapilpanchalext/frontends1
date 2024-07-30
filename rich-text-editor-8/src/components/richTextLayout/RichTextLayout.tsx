@@ -61,44 +61,11 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     setKeywords(keywords);
   }
 
-  // console.log("Keywords: ", keywords);
-
   const searchResults = useSearchText({keywords, text: data || '', onUpdateResults: setResults });
 
   useEffect(() => {
     setResults(searchResults.current!);
   }, [keywords]);
-  
-  // console.log(searchResults.current);
-
-  // const highlightText = useCallback(() => {
-  //   const LENGTH_OF_OFFSET = "<mark></mark>".length;
-
-  //   if (!richTextData.current || !results.length) {
-  //     return;
-  //   }
-
-  //   let innerHTML = richTextData.current?.getRichTextRefData()?.innerHTML;
-  //   let offset = 0;
-
-  //   results.forEach((result) => {
-  //     const { keyword } = result;
-  //     if(innerHTML){
-  //       const startIndex = innerHTML.indexOf(keyword, offset);
-
-  //       if (startIndex !== -1) {
-  //         const beforeKeyword = innerHTML.slice(0, startIndex);
-  //         const afterKeyword = innerHTML.slice(startIndex + keyword.length);
-  //         innerHTML = `${beforeKeyword}<mark>${keyword}</mark>${afterKeyword}`;
-  //         offset = startIndex + keyword.length + LENGTH_OF_OFFSET;
-  //       }
-  //     }
-      
-  //   });
-  //   richTextData.current.getRichTextRefData()?.innerHTML = innerHTML;
-  // }, [richTextData.current, results]);
-
-  // highlightText();
 
   const removeMarkTags = () => {
     const marks = document.querySelectorAll('mark');
@@ -111,8 +78,6 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     });
   };
 
-  console.log(keywords.length);
-  
   if(results && results.length <= 0 && keywords.length <= 0){
     removeMarkTags();
   }
