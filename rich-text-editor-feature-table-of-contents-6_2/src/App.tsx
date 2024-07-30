@@ -24,8 +24,6 @@ function App() {
     }
   }, [isContentEditableEvent]);
 
-  // console.log(data);
-
   return (
     <>
       <div className="App">

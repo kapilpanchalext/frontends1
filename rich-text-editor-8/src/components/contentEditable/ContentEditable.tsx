@@ -1,9 +1,9 @@
-import { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef, KeyboardEvent } from 'react';
 import "./ContentEditable.module.css";
 
 type Props = {
   isReadonly: boolean;
-  onPaste: (isEditable: boolean) => void;
+  onCustomPaste: (isEditable: boolean) => void;
   zoomValue: number;
 } & React.HTMLAttributes<HTMLDivElement>;
 
@@ -14,7 +14,7 @@ export interface ForwardRichTextData {
   getClientHeight: () => number;
 }
 
-const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isReadonly, zoomValue, ...props}: Props, ref) => {
+const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onCustomPaste, isReadonly, zoomValue, ...props}: Props, ref) => {
   const contentEditableRef = useRef<HTMLDivElement>(null);
 
   useImperativeHandle(ref, () => ({
@@ -32,64 +32,28 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
     }
   }),[]);
 
-  useEffect(() => {
-    const editableDiv = contentEditableRef.current;
-
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Enter') {
-        if (editableDiv) {
-          onPaste(true);
-        }
-      }
-    };
-
-    const handleInput = () => {
-      onPaste(true);
-    };
-
-    const handlePaste = (event: ClipboardEvent) => {
-      if (editableDiv) {
-        event.preventDefault();
-        const html = event.clipboardData?.getData('text/html') || '';
-        const text = event.clipboardData?.getData('text/plain') || '';
-
-        // Fallback to plain text if HTML is not available
-        const content = html || text;
-
-        // Insert the content at the current cursor position
-        const selection = window.getSelection();
-        if (!selection?.rangeCount) {
-          return;
-        }
-
-        const range = selection.getRangeAt(0);
-        range.deleteContents();
-
-        const fragment = range.createContextualFragment(content);
-        range.insertNode(fragment);
-
-        // Move the cursor to the end of the inserted content
-        range.collapse(false);
-        selection.removeAllRanges();
-        selection.addRange(range);
-        onPaste(true);
-      }
-    };
-
-    if (editableDiv) {
-      editableDiv.addEventListener('keydown', handleKeyDown);
-      editableDiv.addEventListener('input', handleInput);
-      editableDiv.addEventListener('paste', handlePaste);
+  const enterKeyDownHandler = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+        addIdTagsToHeaders();
+        onCustomPaste(true);
     }
+  };
 
-    return () => {
-      if (editableDiv) {
-        editableDiv.removeEventListener('keydown', handleKeyDown);
-        editableDiv.removeEventListener('input', handleInput);
-        editableDiv.removeEventListener('paste', handlePaste);
-      }
-    };
-  }, [onPaste]);
+  const pasteHandler = () => {
+    onCustomPaste(true);
+    setTimeout(() => {
+      addIdTagsToHeaders();
+    }, 0);
+  };
+
+  const addIdTagsToHeaders = () => {
+    if (contentEditableRef.current) {
+      const ids = contentEditableRef.current.querySelectorAll('h1, h2, h3, h4, h5, h6');
+      ids.forEach((id, index) => {
+          id.setAttribute('id', `header-${index}`);
+      })
+    }
+  }
 
   return (
     <div
@@ -105,7 +69,8 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onPaste, isRead
               overflow: "auto",
               zoom: zoomValue + '%',
             }}
-            >
+              onPaste={pasteHandler}
+              onKeyDown={(event: KeyboardEvent<HTMLDivElement>) => enterKeyDownHandler(event)}>
     </div>
   );
 });
