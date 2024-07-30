@@ -111,10 +111,9 @@ const RichTextLayout = ({layoutHeight}: Props) => {
     });
   };
 
-  console.log(keywords);
+  console.log(keywords.length);
   
   if(results && results.length <= 0 && keywords.length <= 0){
-    console.log("INSIDE IF: ");
     removeMarkTags();
   }
 
@@ -192,7 +191,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
           </div>
           <div className="flex-container-row editor-content" style={{ marginLeft: "10px", marginRight: "5px", minHeight: "30px", display: "flex", justifyContent: "flex-end", alignItems: "center" }}>
             <div className="flex-container-column editor-content" style={{ minHeight: "30px", maxWidth: "10%", backgroundColor: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <ZoomControls zoomValue={zoomValue} setZoomValue={onZoomValueChange}/>
+              <ZoomControls zoomValue={zoomValue} setZoomValue={onZoomValueChange} setZoomLevel={setZoomValue}/>
             </div>
           </div>
         </div>
