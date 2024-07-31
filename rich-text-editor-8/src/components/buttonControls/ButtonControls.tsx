@@ -2,14 +2,17 @@ import React, { Dispatch, useRef, useState, KeyboardEvent, ChangeEvent } from 'r
 import { CMD, CMD_MAP } from '../../utils/Commands';
 import { FONT_SIZE_MAP, FontNames, FontSize } from '../../utils/FontNames';
 import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
+import { DownloadFile } from './downloadFile/DownloadFile';
 
 type Props = {
+  data: string;
   isReadonly: boolean;
   setIsReadonly: Dispatch<React.SetStateAction<boolean>>;
   getKeyWords: (keywords: string[]) => void;
+  updateTOC: (isEditable: boolean) => void;
 }
 
-const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
+const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTOC }: Props) => {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
@@ -43,7 +46,7 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
     const fileInput = event.target;
     if (fileInput && fileInput.files && fileInput.files.length > 0) {
       const file = fileInput.files[0];
-      if (file.type === 'text/html') {
+      if (file.name.endsWith('.hdoc') || file.type === 'application/x-hdoc') {
         const reader = new FileReader();
         reader.onload = (e) => {
           if (e.target?.result) {
@@ -54,13 +57,13 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
               // Convert ArrayBuffer to string
               insertHTML = new TextDecoder().decode(new Uint8Array(e.target.result));
             }
-            console.log(insertHTML);
             documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
+            updateTOC(true);
           }
         };
         reader.readAsText(file);
       } else {
-        alert('Please select a valid HTML file.');
+        alert('Please select a valid HDOC file.');
       }
     } else {
       alert('No file selected or invalid file.');
@@ -111,17 +114,7 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
       return;
     }
     else if (command === CMD.INSERT_HTML) {
-      fileInputRef.current?.click();
-      // const defaultHTML = "<p>Insert HTML</p>";
-      // const insertHTML = prompt("Enter HTML...", defaultHTML);
-      // if (insertHTML) {
-      //   documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
-      // }
-      // documentExecCommand(CMD.INSERT_HTML, false, "<h1>Hello World</h1>");
-      // fileInputRef.current?.click();
-      //   // if (insertHTML) {
-      //   //   documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
-      //   // }
+        fileInputRef.current?.click();
       return;
     }
     else if(command === CMD.FORMATBLOCK){
@@ -130,6 +123,10 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
       if (insertText) {
         documentExecCommand(CMD.FORMATBLOCK, false, insertText);
       }
+      return;
+    }
+    else if(command === CMD.SAVE_FILE){
+        DownloadFile({data:data});
       return;
     }
     documentExecCommand(command, false, value);
@@ -220,7 +217,7 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
       </div>
       <input
         type="file"
-        accept=".html"
+        accept=".hdoc"
         ref={fileInputRef}
         style={{ display: 'none' }}
         onChange={handleFileChange}

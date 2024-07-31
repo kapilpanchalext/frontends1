@@ -63,6 +63,10 @@ const RichTextLayout = ({layoutHeight}: Props) => {
 
   const searchResults = useSearchText({keywords, text: data || '', onUpdateResults: setResults });
 
+  const updateTOCOnHTMLUploadHandler = (isEditable: boolean) => {
+    setIsContentEditableEvent(isEditable);
+  }
+
   useEffect(() => {
     setResults(searchResults.current!);
   }, [keywords]);
@@ -127,7 +131,7 @@ const RichTextLayout = ({layoutHeight}: Props) => {
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px" }}>
-            <ButtonControls isReadonly={isReadonly} setIsReadonly={setIsReadonly} getKeyWords={getKeyWordsHandler}/>
+            <ButtonControls data={data} isReadonly={isReadonly} setIsReadonly={setIsReadonly} getKeyWords={getKeyWordsHandler} updateTOC={updateTOCOnHTMLUploadHandler}/>
           </div>
 
           <div style={{ display: "flex", flexDirection: "row", height: "2px", background: "#ccc", marginLeft: "15px", marginRight: "15px" }}>

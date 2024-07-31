@@ -41,7 +41,7 @@ export enum CMD {
     CLOSE = "close",
     EMPTY = "empty",
     PDF_DOWNLOAD = "pdf",
-    UPLOAD_FILE = "uploadFile",
+    SAVE_FILE = "saveFile",
     READONLY = "readonly",
 }
 
@@ -209,9 +209,9 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         value: ""
     }],
     [CMD.INSERT_HTML, {
-        name: "Insert HTML",
-        icon: "html",
-        description: "Inserts HTML File.",
+        name: "Upload HTML",
+        icon: "upload",
+        description: "Upload File.",
         value: ""
     }],
     [CMD.EMPTY + "_5", {
@@ -322,10 +322,10 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Empty Separator.",
         value: ""
     }],
-    [CMD.UPLOAD_FILE, {
-        name: "Upload File",
-        icon: "upload",
-        description: "Open A File.",
+    [CMD.SAVE_FILE, {
+        name: "Save File",
+        icon: "save",
+        description: "Save A File.",
         value: ""
     }],
     [CMD.PDF_DOWNLOAD, {

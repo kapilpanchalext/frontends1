@@ -12,7 +12,7 @@ function App() {
       const htmlContent = richTextDataRef.current.innerHTML;
 
       // Create a Blob with the HTML content
-      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const blob = new Blob([htmlContent], { type: 'application/x-hdoc' });
       // const blob = new Blob([htmlContent], { type: 'text/markdown' });
 
       // Create a URL for the Blob
@@ -21,7 +21,7 @@ function App() {
       // Create an <a> element and set its href and download attributes
       const link = document.createElement('a');
       link.href = url;
-      link.download = 'content.html';
+      link.download = 'content.hdoc';
       // link.download = 'content.md';
 
       // Append the link to the document and trigger the download
