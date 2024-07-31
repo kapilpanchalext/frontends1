@@ -208,6 +208,12 @@ export const CMD_MAP = new Map<string, CommandParameter>([
         description: "Inserts the given plain text.",
         value: ""
     }],
+    [CMD.INSERT_HTML, {
+        name: "Insert HTML",
+        icon: "html",
+        description: "Inserts HTML File.",
+        value: ""
+    }],
     [CMD.EMPTY + "_5", {
         name: "Empty",
         icon: "",

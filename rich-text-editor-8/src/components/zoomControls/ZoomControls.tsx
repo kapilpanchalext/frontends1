@@ -20,7 +20,7 @@ const ZoomControls = ({zoomValue, setZoomValue, setZoomLevel}: Props) => {
   return (
     <>
       <div style={{ display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
-        <input id="zoomRangeId" type="range" min="50" max="200" onDoubleClick={onDoubleClickChangeZoomValueHandler} defaultValue={100} value={zoomValue} step={1} onChange={setZoomValue} className="slider"></input>
+        <input id="zoomRangeId" type="range" min="50" max="200" onDoubleClick={onDoubleClickChangeZoomValueHandler} value={zoomValue} step={1} onChange={setZoomValue} className="slider"></input>
         <div>{zoomValue}%</div>
       </div>
     </>

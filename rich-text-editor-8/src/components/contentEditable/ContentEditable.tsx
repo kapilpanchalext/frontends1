@@ -16,7 +16,7 @@ export interface ForwardRichTextData {
 
 const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onCustomPaste, isReadonly, zoomValue, ...props}: Props, ref) => {
   const contentEditableRef = useRef<HTMLDivElement>(null);
-
+  contentEditableRef.current?.focus();
   useImperativeHandle(ref, () => ({
     getRichTextRefData() {
       return contentEditableRef.current;

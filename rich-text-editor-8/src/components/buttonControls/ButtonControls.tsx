@@ -14,6 +14,7 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useFloatingToolbar({ draggableRef, closeButtonRef, showColorPicker });
 
@@ -37,6 +38,34 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
   const documentExecCommand = (command: string, showUI: boolean = false, value: string = "") => {    
     document.execCommand(command, showUI, value);
   }
+
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const fileInput = event.target;
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      const file = fileInput.files[0];
+      if (file.type === 'text/html') {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          if (e.target?.result) {
+            let insertHTML: string;
+            if (typeof e.target.result === 'string') {
+              insertHTML = e.target.result;
+            } else {
+              // Convert ArrayBuffer to string
+              insertHTML = new TextDecoder().decode(new Uint8Array(e.target.result));
+            }
+            console.log(insertHTML);
+            documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
+          }
+        };
+        reader.readAsText(file);
+      } else {
+        alert('Please select a valid HTML file.');
+      }
+    } else {
+      alert('No file selected or invalid file.');
+    }
+  };
 
   const applyExecCommandHandler = (command: string, value: string = "") => {
     if(command === CMD.BACKCOLOR) {
@@ -81,6 +110,20 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
       }
       return;
     }
+    else if (command === CMD.INSERT_HTML) {
+      fileInputRef.current?.click();
+      // const defaultHTML = "<p>Insert HTML</p>";
+      // const insertHTML = prompt("Enter HTML...", defaultHTML);
+      // if (insertHTML) {
+      //   documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
+      // }
+      // documentExecCommand(CMD.INSERT_HTML, false, "<h1>Hello World</h1>");
+      // fileInputRef.current?.click();
+      //   // if (insertHTML) {
+      //   //   documentExecCommand(CMD.INSERT_HTML, false, insertHTML);
+      //   // }
+      return;
+    }
     else if(command === CMD.FORMATBLOCK){
       const defaultText = "<blockquote>";
       const insertText = prompt("Add an HTML Block <h1..h6, blockquote>: ", defaultText);
@@ -118,14 +161,14 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
     <>
       <div style={{ backgroundColor:"transparent" }}>
           <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
-          <input type="search" style={{ minHeight: '33px' }} placeholder="Search..." onKeyDown={inputSearchKeywordsHandler}/>
+          <input type="search" name="search" style={{ minHeight: '33px' }} placeholder="Search..." onKeyDown={inputSearchKeywordsHandler}/>
             {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
               let inputTypes;
               if(key === CMD.FONTNAME) {
-                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+                inputTypes = <select name='fontName' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
               } 
               else if(key === CMD.FONTSIZE){
-                inputTypes = <select key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
+                inputTypes = <select name='fontSize' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
               } 
               else if(key.startsWith(CMD.EMPTY)) {
                 inputTypes = <div key={key} style={{ width: '8px' }}></div>
@@ -175,6 +218,13 @@ const ButtonControls = ({ isReadonly, setIsReadonly, getKeyWords }: Props) => {
           </div>
         )}
       </div>
+      <input
+        type="file"
+        accept=".html"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
     </>
   )
 }
