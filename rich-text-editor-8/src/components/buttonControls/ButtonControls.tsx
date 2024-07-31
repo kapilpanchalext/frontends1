@@ -141,6 +141,7 @@ const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTO
     //   getKeyWords(event.currentTarget.value.split(',').map(keywords => keywords.trim()));
     // }
     if (event.key === 'Enter') {
+      event.preventDefault();
       const keywords = event.currentTarget.value
         .split(',')
         .map(keyword => keyword.trim())
