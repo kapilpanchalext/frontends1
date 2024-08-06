@@ -34,8 +34,8 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onCustomPaste, 
 
   const enterKeyDownHandler = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Enter') {
-        addIdTagsToHeaders();
-        onCustomPaste(true);
+      addIdTagsToHeaders();
+      onCustomPaste(true);
     }
   };
 

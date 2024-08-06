@@ -6,13 +6,14 @@ import ZoomControls from "../zoomControls/ZoomControls";
 import TableOfContents from "../tableOfContents/TableOfContents";
 import { Match } from "../../model/Data_Model";
 import useSearchText from "../../hooks/useSearchText";
+import "../../theme/theme.css";
 
 type Props = {
   layoutHeight: number;
   activeTheme: string;
 }
 
-const RichTextLayout = ({ layoutHeight, activeTheme}: Props) => {
+const RichTextLayout = ({ layoutHeight, activeTheme }: Props) => {
   const [data, setData] = useState<string>(''); //Data to be sent to backend
   const [isReadonly, setIsReadonly] = useState<boolean>(true);
   const richTextData = useRef<ForwardRichTextData>(null);
@@ -128,15 +129,15 @@ const RichTextLayout = ({ layoutHeight, activeTheme}: Props) => {
         <div className="flex-container-column editor-content border-visible flex-item-1"
           style={{ minWidth: "10%", maxWidth: "10%", marginRight: "0px", marginBottom: "50px", overflowY: "auto" }}>
             <TableOfContents key={tocKey} rawData={data}/>
-          </div>
+        </div>
 
         <div className="flex-container-column editor-content flex-item-8" style={{ marginLeft: "5px", padding: "5px" }}>
           <div className="flex-container-row editor-content" style={{ marginLeft: "5px" }}>
-            <ButtonControls  data={data} isReadonly={isReadonly} setIsReadonly={setIsReadonly} getKeyWords={getKeyWordsHandler} updateTOC={updateTOCOnHTMLUploadHandler}/>
+            <ButtonControls activeTheme={activeTheme} data={data} isReadonly={isReadonly} setIsReadonly={setIsReadonly} getKeyWords={getKeyWordsHandler} updateTOC={updateTOCOnHTMLUploadHandler}/>
           </div>
 
           <div style={{ display: "flex", flexDirection: "row", height: "2px", background: "#ccc", marginLeft: "15px", marginRight: "15px" }}>
-            <div style={{ height: "2px", background: "#04AA6D", width: `${scrollProgress}%` }}></div>
+            <div style={{ height: "2px", background: "var(--success-600)", width: `${scrollProgress}%` }}></div>
           </div>
 
           <div className={`flex-container-row editor-content ${activeTheme === 'dark-mode' ? 'dark-mode-content-editable' : 'light-mode-content-editable'}`} style={{ marginLeft: "5px", height: "100%" }}>

@@ -5,6 +5,7 @@ import useFloatingToolbar from '../../hooks/floatingtoolbar/useFloatingToolbar';
 import { DownloadFile } from './downloadFile/DownloadFile';
 
 type Props = {
+  activeTheme: string;
   data: string;
   isReadonly: boolean;
   setIsReadonly: Dispatch<React.SetStateAction<boolean>>;
@@ -12,7 +13,7 @@ type Props = {
   updateTOC: (isEditable: boolean) => void;
 }
 
-const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTOC }: Props) => {
+const ButtonControls = ({ activeTheme, data, isReadonly, setIsReadonly, getKeyWords, updateTOC }: Props) => {
   const [showColorPicker, setShowColorPicker] = useState<boolean>(false);
   const [fontColor, setFontColor] = useState<boolean>(false);
   const draggableRef = useRef<HTMLDivElement>(null);
@@ -157,32 +158,32 @@ const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTO
 
   return (
     <>
-      <div style={{ backgroundColor:"transparent" }}>
-          <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
-          <input type="search" name="search" style={{ minHeight: '33px' }} placeholder="Search..." onKeyDown={inputSearchKeywordsHandler}/>
-            {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
-              let inputTypes;
-              if(key === CMD.FONTNAME) {
-                inputTypes = <select name='fontName' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
-              } 
-              else if(key === CMD.FONTSIZE){
-                inputTypes = <select name='fontSize' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
-              } 
-              else if(key.startsWith(CMD.EMPTY)) {
-                inputTypes = <div key={key} style={{ width: '8px' }}></div>
-              }
-              else if(key === CMD.PDF_DOWNLOAD) {
-                inputTypes = <button key={key} title={cmd.description} onClick={pdfDownloadFileHandler}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
-              }
-              else if(key === CMD.READONLY) {
-                inputTypes = <button key={key} title={cmd.description} onClick={() => setIsReadonly(!isReadonly)}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{isReadonly ? cmd.icon : "done_all"}</span></button>
-              }
-              else {
-                inputTypes = <button key={key} title={cmd.description} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
-              }
-              return (inputTypes)
-            })}
-          </div>
+      <div className={activeTheme}>
+        <div style={{ margin: "5px", justifyContent: 'left', alignItems: 'left', display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2px', alignContent: 'center', justifyItems: 'center' }}>
+        <input type="search" name="search" style={{ minHeight: '33px' }} placeholder="Search..." onKeyDown={inputSearchKeywordsHandler}/>
+          {Array.from(CMD_MAP.entries()).map(([key, cmd]) => {
+            let inputTypes;
+            if(key === CMD.FONTNAME) {
+              inputTypes = <select name='fontName' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontNames.map((font) =><option key={font} value={font}>{font}</option>)}</select>
+            } 
+            else if(key === CMD.FONTSIZE){
+              inputTypes = <select name='fontSize' key={key} style={{ minHeight: '33px' }} onChange={(event: ChangeEvent<HTMLSelectElement>) => applyExecCommandHandler(key, event.target.value)}>{FontSize.map((size) =><option key={size} value={size}>{size}</option>)}</select>
+            } 
+            else if(key.startsWith(CMD.EMPTY)) {
+              inputTypes = <div key={key} style={{ width: '8px' }}></div>
+            }
+            else if(key === CMD.PDF_DOWNLOAD) {
+              inputTypes = <button key={key} title={cmd.description} onClick={pdfDownloadFileHandler}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
+            }
+            else if(key === CMD.READONLY) {
+              inputTypes = <button key={key} title={cmd.description} onClick={() => setIsReadonly(!isReadonly)}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{isReadonly ? cmd.icon : "done_all"}</span></button>
+            }
+            else {
+              inputTypes = <button key={key} title={cmd.description} onClick={() => applyExecCommandHandler(key, String(cmd.value))}><span className="material-symbols-outlined" style={{ fontSize: "24px" }}>{cmd.icon}</span></button>
+            }
+            return (inputTypes)
+          })}
+        </div>
           
         {showColorPicker && (
           <div ref={draggableRef} style={{ width: '100px', height: '100px', backgroundColor: 'transparent', position: 'absolute', top: '20%', left: '50%', justifyContent: 'center', alignItems: 'center' }}>
@@ -200,8 +201,8 @@ const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTO
               margin: '4px',
               width: '24px',
               height: '24px',
-              background: 'black',
-              color: 'white',
+              // background: 'black',
+              // color: 'white',
               alignItems: 'center',
               justifyContent: 'center',
               border: '2px solid black',
@@ -209,7 +210,7 @@ const ButtonControls = ({ data, isReadonly, setIsReadonly, getKeyWords, updateTO
               borderRadius: '50%',
               cursor: 'pointer',
             }}
-            onClick={colorPickerCloseHandler}
+            onClick={ colorPickerCloseHandler }
           >
             X
           </button>

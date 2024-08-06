@@ -83,7 +83,7 @@
   --success-950: #0a2919;
 }
   
-.dark-mode, .dark-mode a {
+.dark-mode, .dark-mode a, .dark-mode button {
   --background-color: #6d6d6d;
   --text-color: #33407c;
   --primary-color: #6175de;
@@ -179,7 +179,7 @@
   color: var(--neutral-100);
 }
   
-.light-mode, .light-mode a {
+.light-mode, .light-mode a, .light-mode button {
   --background-color: #6d6d6d;
   --text-color: #33407c;
   --primary-color: #6175de;
@@ -377,7 +377,7 @@
 
 
 
-.dark-mode-content-editable, .dark-mode-content-editable * {
+.dark-mode-content-editable, .dark-mode-content-editable *, .dark-mode-content-editable input {
   --background-color: #6d6d6d;
   --text-color: #33407c;
   --primary-color: #6175de;
@@ -469,11 +469,11 @@
   --breadcrumb-text-color: var(--primary-800);
   --breadcrumb-background-color: var(--primary-300);
 
-  background-color: var(--neutral-600);
+  background-color: var(--neutral-700);
   color: var(--neutral-50);
 }
   
-.light-mode-content-editable, .light-mode-content-editable * {
+.light-mode-content-editable, .light-mode-content-editable *, .light-mode-content-editable input {
   --background-color: #6d6d6d;
   --text-color: #33407c;
   --primary-color: #6175de;
