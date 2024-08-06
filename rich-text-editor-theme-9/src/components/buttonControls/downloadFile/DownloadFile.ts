@@ -4,8 +4,6 @@ type Props = {
 
 export const DownloadFile = ({data}: Props) => {
 
-  console.log("DownloadFile: ", data);
-
   if (data) {
     const htmlContent = data;
     const blob = new Blob([htmlContent], { type: 'application/x-hdoc' });

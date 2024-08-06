@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react';
-import './ZoomControlsModule.css';
+import './ZoomControls.css';
 
 type Props = {
   zoomValue: number;

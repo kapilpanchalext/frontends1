@@ -1,5 +1,5 @@
 import { forwardRef, useImperativeHandle, useRef, KeyboardEvent } from 'react';
-import "./ContentEditable.module.css";
+import "./ContentEditable.css";
 
 type Props = {
   isReadonly: boolean;
@@ -62,7 +62,7 @@ const ContentEditable = forwardRef<ForwardRichTextData, Props>(({onCustomPaste, 
       contentEditable={isReadonly}
       style={{
               border: `1px solid #525252`, 
-              backgroundColor: 'white', 
+              // backgroundColor: 'white', 
               padding: '10px', 
               width: '100%',
               borderRadius: '10px', 

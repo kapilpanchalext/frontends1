@@ -26,19 +26,19 @@
 .flex-container-row {
   display: flex;
   align-items: stretch;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   flex-direction: row;
 }
 
 .flex-container-column {
   display: flex;
   align-items: stretch;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
   flex-direction: column;
 }
   
 .flex-item {
-  background-color: transparent;
+  /* background-color: transparent; */
   text-align: center;
   line-height: 75px;
   font-size: 30px;
@@ -73,7 +73,7 @@
 
 .color-fill {
   width: 100%;
-  background-color: transparent;
+  /* background-color: transparent; */
   position: absolute;
   top: 0;
   left: 0;
