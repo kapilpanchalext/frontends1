@@ -27,12 +27,12 @@ function App() {
   return (
     <>
       <div className="App">
-      <h1>Table of Contents</h1>
-      <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: "10px" }}>
-        <TableOfContents key={tocKey} rawData={data}/>
-        <ContentEditable ref={richTextDataRef} onCustomPaste={onPasteHandler}/>
+        <h1>Table of Contents</h1>
+        <div style={{ display: "flex", flexDirection: "row", justifyContent: "center", gap: "10px" }}>
+          <TableOfContents key={tocKey} rawData={data}/>
+          <ContentEditable ref={richTextDataRef} onCustomPaste={onPasteHandler}/>
+        </div>
       </div>
-    </div>
     </>
   )
 }
