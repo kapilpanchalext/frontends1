@@ -113,12 +113,12 @@ const editorRef = useRef<HTMLDivElement>(null);
 
     <>
       <div className="flex gap-2 mb-4">
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.bold}>Bold</button>
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.italic}>Italic</button>
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.underline}>Underline</button>
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.highlight}>Highlight</button>
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.code}>Code</button>
-        <button className="px-3 py-1.5 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.alignCenter}>Center</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.bold}>Bold</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.italic}>Italic</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.underline}>Underline</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.highlight}>Highlight</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.code}>Code</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.alignCenter}>Center</button>
       </div>
 
       <div
