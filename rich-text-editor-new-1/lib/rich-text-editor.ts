@@ -1,5 +1,5 @@
 // lib/useRichTextEditor.ts
-export function useRichTextEditor(ref: React.RefObject<HTMLDivElement>) {
+export function useRichTextEditor() {
   const getSelectionRange = () => {
     const selection = window.getSelection();
     return selection?.rangeCount ? selection.getRangeAt(0) : null;

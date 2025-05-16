@@ -1,5 +1,4 @@
 "use client"
-import { useRef } from "react";
 import { useRichTextEditor } from "../../lib/rich-text-editor";
 
 export default function Home() {
@@ -71,8 +70,7 @@ export default function Home() {
 //   });
 // }
 
-const editorRef = useRef<HTMLDivElement>(null);
-  const editor = useRichTextEditor(editorRef);
+  const editor = useRichTextEditor();
 
   return (
     // <>
@@ -122,7 +120,6 @@ const editorRef = useRef<HTMLDivElement>(null);
       </div>
 
       <div
-        ref={editorRef}
         contentEditable
         suppressContentEditableWarning
         className="min-h-[200px] border rounded p-3"
