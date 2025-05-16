@@ -1,6 +1,7 @@
 // lib/useRichTextEditor.ts
 export function useRichTextEditor() {
-  const getSelectionRange = () => {
+  const getSelectionRange = 
+  () => {
     const selection = window.getSelection();
     return selection?.rangeCount ? selection.getRangeAt(0) : null;
   };
@@ -17,7 +18,9 @@ export function useRichTextEditor() {
 
   const format = (tag: keyof HTMLElementTagNameMap) => {
     const range = getSelectionRange();
-    if (!range) return;
+    if (!range) {
+      return;
+    }
 
     const content = range.extractContents();
     const temp = document.createElement('div');
@@ -59,6 +62,8 @@ export function useRichTextEditor() {
   return {
     format,
     align,
+    normal: () => format('div'),
+    h1: () => format('h1'),
     bold: () => format('strong'),
     italic: () => format('em'),
     underline: () => format('u'),
@@ -66,6 +71,8 @@ export function useRichTextEditor() {
     code: () => format('code'),
     kbd: () => format('kbd'),
     blockquote: () => format('blockquote'),
+    paragraph: () => format('p'),
+    clearFormat: () => stripTags(getSelectionRange()?.commonAncestorContainer as HTMLElement, ['strong', 'em', 'u', 'mark', 'code', 'kbd', 'blockquote']),
     alignLeft: () => align('left'),
     alignCenter: () => align('center'),
     alignRight: () => align('right'),

@@ -111,12 +111,20 @@ export default function Home() {
 
     <>
       <div className="flex gap-2 mb-4">
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.normal}>Normal</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.h1}>h1</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.bold}>Bold</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.italic}>Italic</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.underline}>Underline</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.highlight}>Highlight</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.code}>Code</button>
         <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.alignCenter}>Center</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.alignLeft}>Left</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.alignRight}>Right</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.kbd}>Kbd</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.blockquote}>BlockQuote</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.paragraph}>Paragraph</button>
+        <button className="p-3 rounded-md border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-100 active:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-blue-500" onClick={editor.clearFormat}>Clear Formatting</button>
       </div>
 
       <div
