@@ -1,9 +1,9 @@
 // lib/useRichTextEditor.ts
 export function useRichTextEditor() {
-  const getSelectionRange = 
-  () => {
-    const selection = window.getSelection();
-    return selection?.rangeCount ? selection.getRangeAt(0) : null;
+  const getSelectionRange = () => {
+    const selection = document.getSelection();
+    const val = selection?.rangeCount ? selection.getRangeAt(0) : null;
+    return val;
   };
 
   const stripTags = (element: HTMLElement, tags: string[]) => {
@@ -17,25 +17,29 @@ export function useRichTextEditor() {
   };
 
   const format = (tag: keyof HTMLElementTagNameMap) => {
+    debugger;
     const range = getSelectionRange();
     if (!range) {
       return;
     }
+    try {
+      const content = range.extractContents();
+      const temp = document.createElement('div');
+      temp.appendChild(content);
+      stripTags(temp, [tag]);
 
-    const content = range.extractContents();
-    const temp = document.createElement('div');
-    temp.appendChild(content);
-    stripTags(temp, [tag]);
+      const wrapper = document.createElement(tag);
+      wrapper.append(...temp.childNodes);
+      range.insertNode(wrapper);
 
-    const wrapper = document.createElement(tag);
-    wrapper.append(...temp.childNodes);
-    range.insertNode(wrapper);
-
-    const selection = window.getSelection();
-    selection?.removeAllRanges();
-    const newRange = document.createRange();
-    newRange.selectNodeContents(wrapper);
-    selection?.addRange(newRange);
+      const selection = window.getSelection();
+      selection?.removeAllRanges();
+      const newRange = document.createRange();
+      newRange.selectNodeContents(wrapper);
+      selection?.addRange(newRange);
+    } catch (error) {
+        console.error('Error formatting text:', error);
+    }
   };
 
   const align = (alignment: 'left' | 'center' | 'right') => {
